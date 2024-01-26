@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Title>STX.REST.RESTFulSense</Title>
+		<Product>STX.REST.RESTFulSense</Product>
+		<PackageId>STX.REST.RESTFulSense</PackageId>
+		<Authors>The Standard Community</Authors>
+		<Company>The Standard Community</Company>
+		<Description>RESTFul Integration w/ Love &lt;3</Description>
+		<Copyright>The Standard Community 2024 (c)</Copyright>
+		<PackageIcon>RESTFulSense.png</PackageIcon>
+		<PackageProjectUrl>https://github.com/The-Standard-Organization/STX.REST.RESTFulSense</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/The-Standard-Organization/STX.REST.RESTFulSense</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>Standard; REST; RESTFulSense; API; .NET; Client; Server; The Standard</PackageTags>
+		<PackageReleaseNotes>
+			Initial release of STX.REST.RESTFulSense.
+		</PackageReleaseNotes>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<Version>0.1</Version>
+		<AssemblyVersion>0.1</AssemblyVersion>
+		<FileVersion>0.1</FileVersion>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseFile>License.txt</PackageLicenseFile>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md">
+			<Pack>true</Pack>
+			<PackagePath></PackagePath>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Include="..\License.txt">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\Resources\RESTFulSense.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="STX.REST.RESTFulSense.Tests.Unit" />
+		<InternalsVisibleTo Include="STX.REST.RESTFulSense.Tests.Acceptance" />
+		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+	</ItemGroup>
+
+</Project>
