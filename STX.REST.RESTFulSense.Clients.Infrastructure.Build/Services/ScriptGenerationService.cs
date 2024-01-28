@@ -9,7 +9,7 @@ using ADotNet.Models.Pipelines.GithubPipelines.DotNets;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks;
 using ADotNet.Models.Pipelines.GithubPipelines.DotNets.Tasks.SetupDotNetTaskV3s;
 
-namespace STX.REST.RESTFulSense.Infrastructure.Build.Services
+namespace STX.REST.RESTFulSense.Clients.Infrastructure.Build.Services
 {
     internal class ScriptGenerationService
     {
@@ -92,7 +92,7 @@ namespace STX.REST.RESTFulSense.Infrastructure.Build.Services
                         new TagJob(
                             runsOn: BuildMachines.UbuntuLatest,
                             dependsOn: "build",
-                            projectRelativePath: "STX.REST.RESTFulSense/STX.REST.RESTFulSense.csproj",
+                            projectRelativePath: "STX.REST.RESTFulSense.Clients/STX.REST.RESTFulSense.Clients.csproj",
                             githubToken: "${{ secrets.PAT_FOR_TAGGING }}",
                             branchName: branchName)
                     },

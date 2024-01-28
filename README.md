@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="../Resources/Image/rs_git_logo.png">
+  <img src="Resources/Images/rs_git_logo.png">
 </p>
 
 # The Standard Organization RESTFulSense
@@ -37,7 +37,7 @@ In the outset of this endeavor we plan to re-write the existing popular library 
 ### Current Architecture Plan Diagram
 
 <p align="center">
-  <img src="../Resources/Diagram/stx-rs.drawio.png">
+  <img src="Resources/Diagrams/stx-rs.drawio.png">
 </p>
 
 ## Contact
