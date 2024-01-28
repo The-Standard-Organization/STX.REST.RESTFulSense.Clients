@@ -3,15 +3,15 @@
   <img src="Resources/Images/rs_git_logo.png">
 </p>
 
-# The Standard Organization RESTFulSense
+# STX.REST.RESTFulSense.Clients
 
-[![Build](https://github.com/The-Standard-Organization/STX.REST.RESTFulSense/actions/workflows/build.yml/badge.svg)](https://github.com/The-Standard-Organization/STX.REST.RESTFulSense/actions/workflows/build.yml)
+[![Build](https://github.com/The-Standard-Organization/STX.REST.RESTFulSense.Clients/actions/workflows/build.yml/badge.svg)](https://github.com/The-Standard-Organization/STX.REST.RESTFulSense.Clients/actions/workflows/build.yml)
 [![The Standard](https://img.shields.io/github/v/release/hassanhabib/The-Standard?filter=v2.10.0&style=default&label=Standard%20Version&color=2ea44f)](https://github.com/hassanhabib/The-Standard)
 [![The Standard - COMPLIANT](https://img.shields.io/badge/The_Standard-COMPLIANT-2ea44f)](https://github.com/hassanhabib/The-Standard)
 [![The Standard Community](https://img.shields.io/discord/934130100008538142?color=%237289da&label=The%20Standard%20Community&logo=Discord)](https://discord.gg/vdPZ7hS52X)
 
 ## Introduction
-Is a Standard Compliant (Client / Server) library wrapper around the existing .NET Core `HttpClient` implementation.
+Is a Standard Compliant Client library wrapper around the existing .NET Core `HttpClient` implementation.
 
 Provides meaningful exceptions for the API Http request/response status codes.
 
