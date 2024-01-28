@@ -1,7 +1,5 @@
 
-<p align="center">
-  <img src="Resources/Images/rs_git_logo.png">
-</p>
+![RESTFulSense.Client](https://raw.githubusercontent.com/The-Standard-Organization/STX.REST.RESTFulSense.Clients/main/Resources/Images/rs_git_logo.png)
 
 # STX.REST.RESTFulSense.Clients
 
@@ -11,7 +9,7 @@
 [![The Standard Community](https://img.shields.io/discord/934130100008538142?color=%237289da&label=The%20Standard%20Community&logo=Discord)](https://discord.gg/vdPZ7hS52X)
 
 ## Introduction
-Is a Standard Compliant Client library wrapper around the existing .NET Core `HttpClient` implementation.
+This is a Standard Compliant Client library wrapper around the existing .NET Core `HttpClient` implementation.
 
 Provides meaningful exceptions for the API Http request/response status codes.
 
@@ -36,9 +34,7 @@ In the outset of this endeavor we plan to re-write the existing popular library 
 
 ### Current Architecture Plan Diagram
 
-<p align="center">
-  <img src="Resources/Diagrams/stx-rs.drawio.png">
-</p>
+![Planned Architechure](https://raw.githubusercontent.com/The-Standard-Organization/STX.REST.RESTFulSense.Clients/main/Resources/Diagrams/stx-rs.drawio.png)
 
 ## Contact
 
