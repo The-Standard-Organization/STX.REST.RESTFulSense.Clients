@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>disable</ImplicitUsings>
-		<Nullable>enable</Nullable>
+		<Nullable>disable</Nullable>
 		<Title>STX.REST.RESTFulSense</Title>
 		<Product>STX.REST.RESTFulSense</Product>
 		<PackageId>STX.REST.RESTFulSense</PackageId>
