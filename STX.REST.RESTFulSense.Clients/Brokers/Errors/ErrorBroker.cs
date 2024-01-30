@@ -3,12 +3,13 @@
 // ----------------------------------------------------------------------------------
 
 using System.Linq;
-using STX.REST.RESTFulSense.Clients.Models.Brokers.StatusDetails;
+using STX.REST.RESTFulSense.Clients.Models.Brokers.Errors;
 
-namespace STX.REST.RESTFulSense.Clients.Brokers.ErrorBrokers
+namespace STX.REST.RESTFulSense.Clients.Brokers.Errors
 {
-    internal interface IErrorBroker
+    internal partial class ErrorBroker : IErrorBroker
     {
-        IQueryable<StatusDetail> SelectAllStatusDetails();
+        public IQueryable<StatusDetail> SelectAllStatusDetails() =>
+            statusDetails.AsQueryable();
     }
 }
