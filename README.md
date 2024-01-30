@@ -46,5 +46,9 @@ If you have any suggestions, comments or questions, please feel free to contact 
 
 [E-Mail](mailto:hassanhabib@live.com)
 
+### Past Sessions
+
+[YouTube-Rethinking RESTFulSense](https://www.youtube.com/watch?v=Krju03DqW4I)
+
 ### Important Notice
 A special thanks to Mr. Hassan Habib and Mr. Christo du Toit for their continuing dedicated contributions.
