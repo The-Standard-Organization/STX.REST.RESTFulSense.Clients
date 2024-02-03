@@ -1,5 +1,5 @@
 
-![RESTFulSense.Client](https://raw.githubusercontent.com/The-Standard-Organization/STX.REST.RESTFulSense.Clients/main/Resources/Images/rs_git_logo.png)
+![RESTFulSense.Clients](https://raw.githubusercontent.com/The-Standard-Organization/STX.REST.RESTFulSense.Clients/main/Resources/Images/rs_git_logo.png)
 
 # STX.REST.RESTFulSense.Clients
 
@@ -32,23 +32,25 @@ The Standard Community as a promise to you is in upholding these values.
 ## Current Outlook of the Project
 In the outset of this endeavor we plan to re-write the existing popular library RESTFulSense to enhance and bring current to modern Standard compliancy. 
 
-### Current Architecture Plan Diagram
+### Architecture
 
-![Planned Architechure](https://raw.githubusercontent.com/The-Standard-Organization/STX.REST.RESTFulSense.Clients/main/Resources/Diagrams/stx-rs.drawio.png)
+![Planned Architechure](https://raw.githubusercontent.com/The-Standard-Organization/STX.REST.RESTFulSense.Clients/main/Resources/Diagrams/stx-restFulSense.drawio.png)
 
 ## Contact
 
 If you have any suggestions, comments or questions, please feel free to contact me on:
 
-[Twitter](https://twitter.com/hassanrezkhabib)
-
-[LinkedIn](https://www.linkedin.com/in/hassanrezkhabib/)
-
-[E-Mail](mailto:hassanhabib@live.com)
+>[Twitter](https://twitter.com/hassanrezkhabib)
+>
+>[LinkedIn](https://www.linkedin.com/in/hassanrezkhabib/)
+>
+>[E-Mail](mailto:hassanhabib@live.com)
 
 ### Past Sessions
 
-[YouTube-Rethinking RESTFulSense](https://www.youtube.com/watch?v=Krju03DqW4I)
+>Youtube
+>
+>[Rethinking RESTFulSense](https://www.youtube.com/watch?v=Krju03DqW4I)
 
 ### Important Notice
 A special thanks to Mr. Hassan Habib and Mr. Christo du Toit for their continuing dedicated contributions.
