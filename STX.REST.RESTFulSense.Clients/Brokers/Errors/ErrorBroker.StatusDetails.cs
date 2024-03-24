@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using STX.REST.RESTFulSense.Clients.Models.Brokers.Errors;
+using STX.REST.RESTFulSense.Clients.Models.Errors;
 
 namespace STX.REST.RESTFulSense.Clients.Brokers.Errors
 {
