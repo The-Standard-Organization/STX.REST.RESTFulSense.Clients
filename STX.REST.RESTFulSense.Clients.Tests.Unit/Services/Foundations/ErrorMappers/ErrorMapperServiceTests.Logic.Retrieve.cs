@@ -19,26 +19,25 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
         [Fact]
         private async Task ShouldRetrieveStatusDetailByStatusCodeAsync()
         {
-            //given
+            // given
             HttpStatusCode randomStatusCode = GetRandomHttpStatusCode();
             int randomStatusCodeValue = (int)randomStatusCode;
             StatusDetail expectedStatusDetail = CreateRandomStatusDetail(randomStatusCodeValue);
-            
 
             this.errorBrokerMock.Setup(broker =>
                     broker.SelectAllStatusDetails())
                 .Returns(new List<StatusDetail> { expectedStatusDetail }.AsQueryable());
 
-            //when
+            // when
             StatusDetail actualStatusDetail =
                 await errorMapperService.RetrieveStatusDetailByStatusCodeAsync(randomStatusCodeValue);
 
-            //then
+            // then
             actualStatusDetail.Should().BeEquivalentTo(expectedStatusDetail);
-            
-            this.errorBrokerMock.Verify(broker=> 
+
+            this.errorBrokerMock.Verify(broker =>
                 broker.SelectAllStatusDetails(), Times.Once);
-            
+
             this.errorBrokerMock.VerifyNoOtherCalls();
         }
     }

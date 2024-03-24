@@ -35,11 +35,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
 
         private static StatusDetail CreateRandomStatusDetail(int statusCode) =>
             CreateStatusDetailFiller(statusCode).Create();
-        
 
         private static Filler<StatusDetail> CreateStatusDetailFiller(int statusCode)
         {
             var filler = new Filler<StatusDetail>();
+            
             filler.Setup()
                 .OnProperty(statusDetail => statusDetail.Code)
                 .Use(statusCode);
