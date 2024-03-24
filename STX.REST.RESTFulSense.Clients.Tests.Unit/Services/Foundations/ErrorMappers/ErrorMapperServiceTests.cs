@@ -2,44 +2,33 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Linq;
+using System;
 using System.Net;
-using System.Threading.Tasks;
-using FluentAssertions;
 using Moq;
-using STX.REST.RESTFulSense.Clients.Models.Errors;
-using Tynamix.ObjectFiller;
-using Xunit;
+using STX.REST.RESTFulSense.Clients.Brokers.Errors;
+using STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMappers
 {
     public partial class ErrorMapperServiceTests
     {
-        [Fact]
-        private async Task ShouldRetrieveStatusDetailByStatusCodeAsync()
+        private readonly Mock<IErrorBroker> errorBrokerMock;
+        private readonly ErrorMapperService errorMapperService;
+
+        public ErrorMapperServiceTests()
         {
-            //given
-            HttpStatusCode randomStatusCode = GetRandomHttpStatusCode();
-            int randomStatusCodeValue = (int)randomStatusCode;
+            this.errorBrokerMock = new Mock<IErrorBroker>();
+            this.errorMapperService = new ErrorMapperService(errorBrokerMock.Object);
+        }
 
-            StatusDetail expectedStatusDetail = new Filler<StatusDetail>().Create();
+        private static HttpStatusCode GetRandomHttpStatusCode()
+        {
+            int min = (int)HttpStatusCode.Continue;
+            int max = (int)HttpStatusCode.HttpVersionNotSupported;
+            Random random = new Random();
+            HttpStatusCode randomHttpStatusCode = (HttpStatusCode)random.Next(min, max + 1);
 
-            this.errorBrokerMock.Setup(broker =>
-                    broker.SelectAllStatusDetails())
-                .Returns(new List<StatusDetail> { expectedStatusDetail }.AsQueryable());
-
-            //when
-            StatusDetail actualStatusDetail =
-                await errorMapperService.RetrieveStatusDetailByStatusCodeAsync(randomStatusCodeValue);
-
-            //then
-            actualStatusDetail.Should().BeEquivalentTo(expectedStatusDetail);
-            
-            this.errorBrokerMock.Verify(broker=> 
-                broker.SelectAllStatusDetails(), Times.Once);
-            
-            this.errorBrokerMock.VerifyNoOtherCalls();
+            return randomHttpStatusCode;
         }
     }
 }
