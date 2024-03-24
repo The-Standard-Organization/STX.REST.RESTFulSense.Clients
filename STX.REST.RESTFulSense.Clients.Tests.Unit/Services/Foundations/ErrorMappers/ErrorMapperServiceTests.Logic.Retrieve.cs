@@ -22,8 +22,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             //given
             HttpStatusCode randomStatusCode = GetRandomHttpStatusCode();
             int randomStatusCodeValue = (int)randomStatusCode;
-
-            StatusDetail expectedStatusDetail = new Filler<StatusDetail>().Create();
+            StatusDetail expectedStatusDetail = CreateRandomStatusDetail(randomStatusCodeValue);
+            
 
             this.errorBrokerMock.Setup(broker =>
                     broker.SelectAllStatusDetails())

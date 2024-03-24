@@ -6,7 +6,9 @@ using System;
 using System.Net;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Brokers.Errors;
+using STX.REST.RESTFulSense.Clients.Models.Errors;
 using STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers;
+using Tynamix.ObjectFiller;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMappers
 {
@@ -29,6 +31,20 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             HttpStatusCode randomHttpStatusCode = (HttpStatusCode)random.Next(min, max + 1);
 
             return randomHttpStatusCode;
+        }
+
+        private static StatusDetail CreateRandomStatusDetail(int statusCode) =>
+            CreateStatusDetailFiller(statusCode).Create();
+        
+
+        private static Filler<StatusDetail> CreateStatusDetailFiller(int statusCode)
+        {
+            var filler = new Filler<StatusDetail>();
+            filler.Setup()
+                .OnProperty(statusDetail => statusDetail.Code)
+                .Use(statusCode);
+
+            return filler;
         }
     }
 }
