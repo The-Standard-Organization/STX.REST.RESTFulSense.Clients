@@ -25,8 +25,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             StatusDetail expectedStatusDetail = CreateRandomStatusDetail(randomStatusCodeValue);
 
             this.errorBrokerMock.Setup(broker =>
-                    broker.SelectAllStatusDetails())
-                .Returns(new List<StatusDetail> { expectedStatusDetail }.AsQueryable());
+                 broker.SelectAllStatusDetails())
+                     .Returns(new List<StatusDetail> { expectedStatusDetail }.AsQueryable());
 
             // when
             StatusDetail actualStatusDetail =
