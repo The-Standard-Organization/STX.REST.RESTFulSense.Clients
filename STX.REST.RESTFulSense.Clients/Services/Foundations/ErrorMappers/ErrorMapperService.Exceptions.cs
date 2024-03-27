@@ -10,13 +10,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
 {
     internal partial class ErrorMapperService
     {
-        private delegate ValueTask<StatusDetail> ReturningErrorMappersFunction();
+        private delegate ValueTask<StatusDetail> ReturningStatusDetailFunction();
 
-        private static async ValueTask<StatusDetail> TryCatch(ReturningErrorMappersFunction returningErrorMappersFunction)
+        private static async ValueTask<StatusDetail> TryCatch(ReturningStatusDetailFunction returningStatusDetailFunction)
         {
             try
             {
-                return await returningErrorMappersFunction();
+                return await returningStatusDetailFunction();
             }
             catch (InvalidErrorMapperException invalidErrorMapperException)
             {

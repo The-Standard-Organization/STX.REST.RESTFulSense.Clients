@@ -17,12 +17,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
             this.errorBroker = errorBroker;
 
         public ValueTask<StatusDetail> RetrieveStatusDetailByStatusCodeAsync(int statusCode) =>
-            TryCatch(() =>
+            TryCatch(async () =>
             {
                 ValidateStatusCode(statusCode);
-                IQueryable<StatusDetail> statusDetails = errorBroker.SelectAllStatusDetails();
 
-                return new ValueTask<StatusDetail>(statusDetails.FirstOrDefault(statusDetail => statusDetail.Code == statusCode));
+                StatusDetail statusDetail = errorBroker.SelectAllStatusDetails()
+                    .FirstOrDefault(statusDetail => statusDetail.Code == statusCode);
+
+                return await ValueTask.FromResult(statusDetail);
             });
     }
 }
