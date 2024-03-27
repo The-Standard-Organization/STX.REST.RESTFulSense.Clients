@@ -12,7 +12,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         {
             if (statusCode == default(int))
             {
-                throw new InvalidErrorMapperException();
+                throw new InvalidErrorMapperException(message: "Status code is invalid.");
             }
         }
     }

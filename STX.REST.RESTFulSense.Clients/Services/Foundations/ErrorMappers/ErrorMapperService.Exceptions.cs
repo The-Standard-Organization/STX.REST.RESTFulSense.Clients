@@ -12,7 +12,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
     {
         private delegate ValueTask<StatusDetail> ReturningStatusDetailFunction();
 
-        private static async ValueTask<StatusDetail> TryCatch(ReturningStatusDetailFunction returningStatusDetailFunction)
+        private static async ValueTask<StatusDetail> TryCatch(
+            ReturningStatusDetailFunction returningStatusDetailFunction)
         {
             try
             {
@@ -21,7 +22,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
             catch (InvalidErrorMapperException invalidErrorMapperException)
             {
                 var errorMapperValidationException =
-                    new ErrorMapperValidationException(invalidErrorMapperException);
+                    new ErrorMapperValidationException(
+                        message: "Error mapper validation errors occurred, please try again.",
+                        innerException: invalidErrorMapperException);
 
                 throw errorMapperValidationException;
             }

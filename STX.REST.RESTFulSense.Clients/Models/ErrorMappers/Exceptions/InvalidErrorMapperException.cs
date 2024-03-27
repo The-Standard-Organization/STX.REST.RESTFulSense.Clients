@@ -8,8 +8,8 @@ namespace STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions
 {
     public class InvalidErrorMapperException : Xeption
     {
-        public InvalidErrorMapperException()
-            : base(message: "Status code is invalid.")
+        public InvalidErrorMapperException(string message)
+            : base(message)
         { }
     }
 }
