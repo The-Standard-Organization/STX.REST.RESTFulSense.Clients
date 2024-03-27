@@ -21,7 +21,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         public ValueTask<StatusDetail> RetrieveStatusDetailByStatusCodeAsync(int statusCode)
         {
             IQueryable<StatusDetail> statusDetails = errorBroker.SelectAllStatusDetails();
-            
+
             return new ValueTask<StatusDetail>(
                 statusDetails.FirstOrDefault(statusDetail => statusDetail.Code == statusCode));
         }
