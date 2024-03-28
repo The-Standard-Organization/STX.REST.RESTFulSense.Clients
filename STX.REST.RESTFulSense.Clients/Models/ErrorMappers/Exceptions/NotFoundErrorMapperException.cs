@@ -6,13 +6,13 @@ using Xeptions;
 
 namespace STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions
 {
-    public class InvalidErrorMapperException : Xeption
+    public class NotFoundErrorMapperException : Xeption
     {
-        public InvalidErrorMapperException()
-            : base(message: "Status code is invalid.")
+        public NotFoundErrorMapperException()
+        : base(message: "Couldn't find any status detail")
         { }
         
-        public InvalidErrorMapperException(string message)
+        public NotFoundErrorMapperException(string message)
             : base(message)
         { }
     }

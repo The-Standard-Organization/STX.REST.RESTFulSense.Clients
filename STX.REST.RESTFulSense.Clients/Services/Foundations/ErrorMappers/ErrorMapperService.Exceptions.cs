@@ -23,7 +23,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
             {
                 var errorMapperValidationException =
                     new ErrorMapperValidationException(
-                        message: "Error mapper validation errors occurred, please try again.",
                         innerException: invalidErrorMapperException);
 
                 throw errorMapperValidationException;
