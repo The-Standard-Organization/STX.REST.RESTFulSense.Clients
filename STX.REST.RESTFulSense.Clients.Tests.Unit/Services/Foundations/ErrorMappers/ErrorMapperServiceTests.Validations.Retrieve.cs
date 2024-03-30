@@ -2,14 +2,15 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.Errors;
+using Xeptions;
 using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMappers
@@ -53,9 +54,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             int randomStatusCode = (int)GetRandomHttpStatusCode();
             int randomStatusCodeValue = randomStatusCode;
             StatusDetail nullStatusDetail = null;
+            var innerException = new Exception();
 
             var notFoundErrorMapperException =
-                new NotFoundErrorMapperException(message: "Couldn't find any status detail");
+                new NotFoundErrorMapperException(
+                    message: "Status detail not found",
+                    innerException: innerException.InnerException.As<Xeption>());
 
             var expectedErrorMapperValidationException =
                 new ErrorMapperValidationException(
@@ -64,7 +68,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
 
             this.errorBrokerMock.Setup(broker =>
                     broker.SelectAllStatusDetails())
-                .Returns(new List<StatusDetail> { }.AsQueryable());
+                .Returns(new List<StatusDetail> { nullStatusDetail }.AsQueryable());
 
             // when
             ValueTask<StatusDetail> retrieveStatusDetailByStatusCodeTask =
