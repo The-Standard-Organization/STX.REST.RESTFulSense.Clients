@@ -22,7 +22,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
                 ValidateStatusCode(statusCode);
 
                 StatusDetail statusDetail = errorBroker.SelectAllStatusDetails()
-                    .FirstOrDefault(statusDetail => statusDetail.Code == statusCode);
+                    .FirstOrDefault(statusDetail =>
+                        statusDetail != null && statusDetail.Code == statusCode);
 
                 return await ValueTask.FromResult(statusDetail);
             });
