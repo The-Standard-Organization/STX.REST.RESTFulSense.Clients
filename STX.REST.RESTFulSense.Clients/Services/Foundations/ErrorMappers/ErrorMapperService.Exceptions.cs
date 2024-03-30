@@ -27,6 +27,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
 
                 throw errorMapperValidationException;
             }
+            catch (NotFoundErrorMapperException notFoundErrorMapperException)
+            {
+                var errorMapperValidationException =
+                    new ErrorMapperValidationException(
+                        innerException: notFoundErrorMapperException);
+
+                throw errorMapperValidationException;
+            }
         }
     }
 }

@@ -24,6 +24,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
                 StatusDetail statusDetail = errorBroker.SelectAllStatusDetails()
                     .FirstOrDefault(statusDetail =>
                         statusDetail != null && statusDetail.Code == statusCode);
+                
+                ValidateStatusDetail(statusDetail);
 
                 return await ValueTask.FromResult(statusDetail);
             });
