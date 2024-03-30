@@ -64,7 +64,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
 
             this.errorBrokerMock.Setup(broker =>
                     broker.SelectAllStatusDetails())
-                .Returns(new List<StatusDetail> { }.AsQueryable());
+                .Returns(new List<StatusDetail> { nullStatusDetail }.AsQueryable());
 
             // when
             ValueTask<StatusDetail> retrieveStatusDetailByStatusCodeTask =
