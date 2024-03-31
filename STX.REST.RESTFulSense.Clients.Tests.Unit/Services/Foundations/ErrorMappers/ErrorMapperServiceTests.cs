@@ -20,7 +20,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
         public ErrorMapperServiceTests()
         {
             this.errorBrokerMock = new Mock<IErrorBroker>();
-            this.errorMapperService = new ErrorMapperService(errorBrokerMock.Object);
+            
+            this.errorMapperService =
+                new ErrorMapperService(errorBrokerMock.Object);
         }
 
         private static HttpStatusCode GetRandomHttpStatusCode()
@@ -28,7 +30,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             int min = (int)HttpStatusCode.Continue;
             int max = (int)HttpStatusCode.HttpVersionNotSupported;
             Random random = new Random();
-            HttpStatusCode randomHttpStatusCode = (HttpStatusCode)random.Next(min, max + 1);
+            
+            HttpStatusCode randomHttpStatusCode =
+                (HttpStatusCode)random.Next(min, max + 1);
 
             return randomHttpStatusCode;
         }

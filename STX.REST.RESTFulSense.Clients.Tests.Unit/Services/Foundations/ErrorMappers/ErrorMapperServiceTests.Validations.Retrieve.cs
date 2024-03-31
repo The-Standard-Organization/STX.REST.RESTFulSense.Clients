@@ -67,8 +67,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
                     innerException: notFoundErrorMapperException);
 
             this.errorBrokerMock.Setup(broker =>
-                    broker.SelectAllStatusDetails())
-                .Returns(new List<StatusDetail> { nullStatusDetail }.AsQueryable());
+                broker.SelectAllStatusDetails())
+                    .Returns(new List<StatusDetail> { nullStatusDetail }.AsQueryable());
 
             // when
             ValueTask<StatusDetail> retrieveStatusDetailByStatusCodeTask =
@@ -76,8 +76,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
                     randomStatusCodeValue);
 
             ErrorMapperValidationException actualErrorMapperValidationException =
-                await Assert.ThrowsAsync<ErrorMapperValidationException>(
-                    () => retrieveStatusDetailByStatusCodeTask.AsTask());
+                await Assert.ThrowsAsync<ErrorMapperValidationException>(() =>
+                    retrieveStatusDetailByStatusCodeTask.AsTask());
 
             // then
             actualErrorMapperValidationException.Should().BeEquivalentTo(

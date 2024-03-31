@@ -17,7 +17,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
             }
         }
 
-        private void ValidateStatusDetail(StatusDetail maybeStatusDetail)
+        private static void ValidateStatusDetail(StatusDetail maybeStatusDetail)
         {
             if (maybeStatusDetail is null)
             {

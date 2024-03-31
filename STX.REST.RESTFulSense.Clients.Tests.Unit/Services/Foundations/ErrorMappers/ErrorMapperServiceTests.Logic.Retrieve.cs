@@ -22,11 +22,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             // given
             HttpStatusCode randomStatusCode = GetRandomHttpStatusCode();
             int randomStatusCodeValue = (int)randomStatusCode;
-            StatusDetail expectedStatusDetail = CreateRandomStatusDetail(randomStatusCodeValue);
+            
+            StatusDetail expectedStatusDetail =
+                CreateRandomStatusDetail(randomStatusCodeValue);
 
             this.errorBrokerMock.Setup(broker =>
                  broker.SelectAllStatusDetails())
-                     .Returns(new List<StatusDetail> { expectedStatusDetail }.AsQueryable());
+                    .Returns(new List<StatusDetail> { expectedStatusDetail }
+                    .AsQueryable());
 
             // when
             StatusDetail actualStatusDetail =
