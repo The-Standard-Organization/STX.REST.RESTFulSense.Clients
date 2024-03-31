@@ -16,8 +16,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         public ErrorMapperService(IErrorBroker errorBroker) =>
             this.errorBroker = errorBroker;
 
-        public ValueTask<StatusDetail> RetrieveStatusDetailByStatusCodeAsync(int
-            statusCode) =>
+        public ValueTask<StatusDetail> RetrieveStatusDetailByStatusCodeAsync(int statusCode) =>
             TryCatch(async () =>
             {
                 ValidateStatusCode(statusCode);
@@ -25,7 +24,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
                 StatusDetail statusDetail = errorBroker.SelectAllStatusDetails()
                     .FirstOrDefault(statusDetail =>
                         statusDetail != null && statusDetail.Code == statusCode);
-                
+
                 ValidateStatusDetail(statusDetail);
 
                 return await ValueTask.FromResult(statusDetail);
