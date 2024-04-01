@@ -33,7 +33,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
 
             // when
             StatusDetail actualStatusDetail =
-                await errorMapperService.RetrieveStatusDetailByStatusCodeAsync(randomStatusCodeValue);
+                await errorMapperService.RetrieveStatusDetailByStatusCodeAsync(
+                    randomStatusCodeValue);
 
             // then
             actualStatusDetail.Should().BeEquivalentTo(expectedStatusDetail);

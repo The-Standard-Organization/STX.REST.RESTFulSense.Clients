@@ -22,12 +22,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
             catch (InvalidErrorMapperException invalidErrorMapperException)
             {
                 throw new ErrorMapperValidationException(
-                        innerException: invalidErrorMapperException);
+                    innerException: invalidErrorMapperException);
             }
             catch (NotFoundErrorMapperException notFoundErrorMapperException)
             {
                 throw new ErrorMapperValidationException(
-                        innerException: notFoundErrorMapperException);
+                    innerException: notFoundErrorMapperException);
             }
         }
     }
