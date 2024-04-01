@@ -38,8 +38,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
                     invalidStatusCodeValue);
 
             ErrorMapperValidationException actualErrorMapperValidationException =
-                await Assert.ThrowsAsync<ErrorMapperValidationException>(
-                    () => retrieveStatusDetailByStatusCodeTask.AsTask());
+                await Assert.ThrowsAsync<ErrorMapperValidationException>(() =>
+                    retrieveStatusDetailByStatusCodeTask.AsTask());
             // then
             actualErrorMapperValidationException.Should().BeEquivalentTo(
                 expectedErrorMapperValidationException);
