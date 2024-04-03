@@ -13,7 +13,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         {
             if (statusCode == default(int))
             {
-                throw new InvalidErrorMapperException();
+                throw new InvalidErrorMapperException(message: "Status code is invalid.");
             }
         }
 
@@ -21,7 +21,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         {
             if (maybeStatusDetail is null)
             {
-                throw new NotFoundErrorMapperException();
+                throw new NotFoundErrorMapperException(message: "Status detail not found");
             }
         }
     }

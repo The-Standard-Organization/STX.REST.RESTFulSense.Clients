@@ -8,16 +8,6 @@ namespace STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions
 {
     public class ErrorMapperValidationException : Xeption
     {
-        public ErrorMapperValidationException()
-            : base(message: "Error mapper validation errors occurred, please try again.")
-        { }
-        
-        public ErrorMapperValidationException(Xeption innerException)
-            : base(
-                message: "Error mapper validation errors occurred, please try again.",
-                innerException: innerException)
-        { }
-        
         public ErrorMapperValidationException(string message, Xeption innerException)
             : base(message, innerException)
         { }
