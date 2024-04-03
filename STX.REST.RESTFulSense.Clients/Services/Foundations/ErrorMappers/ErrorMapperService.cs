@@ -25,7 +25,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
                 .FirstOrDefault(statusDetail =>
                     statusDetail != null && statusDetail.Code == statusCode);
 
-            ValidateStatusDetail(statusDetail);
+            ValidateStatusDetail(statusDetail, statusCode);
 
             return await ValueTask.FromResult(statusDetail);
         });

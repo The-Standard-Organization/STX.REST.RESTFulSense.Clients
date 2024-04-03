@@ -13,15 +13,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         {
             if (statusCode == default(int))
             {
-                throw new InvalidErrorMapperException(message: "Status code is invalid.");
+                throw new InvalidErrorMapperException();
             }
         }
 
-        private static void ValidateStatusDetail(StatusDetail maybeStatusDetail)
+        private static void ValidateStatusDetail(
+            StatusDetail maybeStatusDetail,
+            int statusCode)
         {
             if (maybeStatusDetail is null)
             {
-                throw new NotFoundErrorMapperException(message: "Status detail not found");
+                throw new NotFoundErrorMapperException(statusCode);
             }
         }
     }

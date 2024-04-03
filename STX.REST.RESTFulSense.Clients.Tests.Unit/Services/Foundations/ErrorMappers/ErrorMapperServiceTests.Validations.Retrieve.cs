@@ -18,7 +18,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
     public partial class ErrorMapperServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnRetrieveIfStatusCodeIsInvalid()
+        private async Task ShouldThrowValidationExceptionOnRetrieveIfStatusCodeIsInvalid()
         {
             // given
             int invalidStatusCode = default;
@@ -48,7 +48,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnRetrieveIfStatusDetailNotFound()
+        private async Task ShouldThrowValidationExceptionOnRetrieveIfStatusDetailNotFound()
         {
             // given
             int randomStatusCode = (int)GetRandomHttpStatusCode();
@@ -58,7 +58,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
 
             var notFoundErrorMapperException =
                 new NotFoundErrorMapperException(
-                    message: "Status detail not found",
+                    message: $"Status detail with {randomStatusCode} not found, please correct and try again.",
                     innerException: innerException.InnerException.As<Xeption>());
 
             var expectedErrorMapperValidationException =
