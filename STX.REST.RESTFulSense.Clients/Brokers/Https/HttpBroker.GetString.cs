@@ -10,12 +10,17 @@ namespace STX.REST.RESTFulSense.Clients.Brokers.Https
 {
     internal partial class HttpBroker
     {
-        public ValueTask<HttpResponseMessage> GetStringAsync(
-            string relativeUrl) => GetContentAsync(relativeUrl);
+        public async ValueTask<HttpResponseMessage> GetStringAsync(
+            string relativeUrl) =>
+                await this.httpClient.GetAsync(relativeUrl);
 
-        public ValueTask<HttpResponseMessage> GetStringAsync(
+        public async ValueTask<HttpResponseMessage> GetStringAsync(
             string relativeUrl,
-            CancellationToken cancellationToken) =>
-                GetContentAsync(relativeUrl, cancellationToken);
+            CancellationToken cancellationToken)
+        {
+            return await this.httpClient.GetAsync(
+                relativeUrl,
+                cancellationToken);
+        }
     }
 }
