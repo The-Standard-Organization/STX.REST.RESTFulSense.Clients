@@ -3,6 +3,8 @@
 // ----------------------------------------------------------------------------------
 
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace STX.REST.RESTFulSense.Clients.Brokers.Https
 {
@@ -14,5 +16,10 @@ namespace STX.REST.RESTFulSense.Clients.Brokers.Https
         {
             this.httpClient = httpClient;
         }
+
+        public async ValueTask<HttpResponseMessage> SendRequestAsync(
+            HttpRequestMessage httpRequestMessage,
+            CancellationToken cancellationToken) =>
+            await this.httpClient.SendAsync(httpRequestMessage, cancellationToken);
     }
 }
