@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace STX.REST.RESTFulSense.Clients.Brokers.Https
 {
-    internal class HttpClientBroker : IHttpBroker
+    internal class HttpClientBroker : IHttpClientBroker
     {
         private readonly HttpClient httpClient;
 

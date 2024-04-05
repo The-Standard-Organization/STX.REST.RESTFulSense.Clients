@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace STX.REST.RESTFulSense.Clients.Brokers.Https
 {
-    internal interface IHttpBroker
+    internal interface IHttpClientBroker
     {
         ValueTask<HttpResponseMessage> SendRequestAsync(
             HttpRequestMessage httpRequestMessage,
