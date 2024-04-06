@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace STX.REST.RESTFulSense.Clients.Brokers.Https
 {
     internal interface IHttpClientBroker
