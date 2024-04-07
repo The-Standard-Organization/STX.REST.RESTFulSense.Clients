@@ -13,6 +13,6 @@ namespace STX.REST.RESTFulSense.Clients.Brokers.Https
     {
         ValueTask<HttpResponseMessage> SendRequestAsync(
             HttpRequestMessage httpRequestMessage,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default);
     }
 }
