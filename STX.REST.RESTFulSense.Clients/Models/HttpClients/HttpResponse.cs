@@ -2,12 +2,12 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.IO;
+using System.Net.Http;
 
 namespace STX.REST.RESTFulSense.Clients.Models.HttpClients
 {
     internal class HttpResponse
     {
-        public Stream ContentStream { get; set; }
+        public StreamContent StreamContent { get; set; }
     }
 }

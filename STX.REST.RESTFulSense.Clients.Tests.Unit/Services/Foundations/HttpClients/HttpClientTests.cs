@@ -2,7 +2,11 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Brokers.Https;
 using STX.REST.RESTFulSense.Clients.Services.Foundations.HttpClients;
@@ -24,15 +28,22 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
         
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
-
-        private static Stream GetRandomStream() =>
-            GetRandomStreamFiller().Create();
-
-        private static Filler<Stream> GetRandomStreamFiller()
+        
+        private static StreamContent CreateStreamContent(string content)
         {
-            var filler = new Filler<Stream>();
+            byte[] contentBytes = Encoding.ASCII.GetBytes(content);
+            var stream = new MemoryStream(contentBytes);
 
-            return filler;
+            return new StreamContent(stream);
         }
+        
+        private HttpResponseMessage CreateHttpResponseMessage(HttpStatusCode statusCode, string content)
+        {
+            return new HttpResponseMessage(statusCode)
+            {
+                Content = CreateStreamContent(content)
+            };
+        }
+        
     }
 }

@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,11 +22,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
         public async Task ShouldGetAsync()
         {
             // given
-            string randomRelativeUrl = GetRandomString();
-            string inputRelativeUrl = randomRelativeUrl;
-            Stream randomStream = GetRandomStream();
-
-            var httpResponseMessage = new HttpResponseMessage();
+            string randomString = GetRandomString();
+            string randomContent = randomString;
+            string inputRelativeUrl = randomString;
+            StreamContent streamContent = CreateStreamContent(randomContent);
+            var inputHttpRequestMessage = new HttpRequestMessage();
+            
+            var expectedHttpResponseMessage = CreateHttpResponseMessage(
+                statusCode: HttpStatusCode.OK,
+                content: randomContent);
 
             var inputHttpClient = new HttpClient
             {
@@ -35,17 +40,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
                 },
             };
 
-            var httpRequestMessage = new HttpRequestMessage();
-
+            
             var expectedHttpClient = inputHttpClient.DeepClone();
+            
             expectedHttpClient.HttpResponse = new HttpResponse
             {
-                ContentStream = randomStream
+                StreamContent = streamContent
             };
 
             this.httpClientBroker.Setup(broker =>
-                    broker.SendRequestAsync(httpRequestMessage, default))
-                .ReturnsAsync(httpResponseMessage);
+                broker.SendRequestAsync(
+                    inputHttpRequestMessage, default))
+                        .ReturnsAsync(expectedHttpResponseMessage);
 
             // when
             HttpClient actualHttpClient =
@@ -55,7 +61,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
             actualHttpClient.Should().BeEquivalentTo(expectedHttpClient);
             
             this.httpClientBroker.Verify(broker =>
-                broker.SendRequestAsync(httpRequestMessage, default), Times.Once);
+                broker.SendRequestAsync(
+                    inputHttpRequestMessage, default),
+                    Times.Once);
             
             this.httpClientBroker.VerifyNoOtherCalls();
         }
