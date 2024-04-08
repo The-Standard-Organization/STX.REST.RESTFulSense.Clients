@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.LocalHttpClients
 {
-    internal class LocalHttpClients
+    internal class LocalHttpClient
     {
         public LocalHttpClientRequest HttpRequest { get; set; }
         public LocalHttpClientResponse HttpResponse { get; set; }
