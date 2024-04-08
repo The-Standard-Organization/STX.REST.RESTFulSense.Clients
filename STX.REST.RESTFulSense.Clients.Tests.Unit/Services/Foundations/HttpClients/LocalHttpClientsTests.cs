@@ -80,7 +80,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
         {
             return new LocalHttpClients
             {
-                HttpRequest = new HttpRequest
+                HttpRequest = new LocalHttpClientRequest
                 {
                     RelativeUrl = randomProperties.RelativeUrl
                 }
@@ -91,7 +91,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
         {
             LocalHttpClients clonedLocalHttpClients = localHttpClients.DeepClone();
 
-            clonedLocalHttpClients.HttpResponse = new HttpResponse
+            clonedLocalHttpClients.HttpResponse = new LocalHttpClientResponse
             {
                 StreamContent = randomProperties.ResponseStreamContent
             };

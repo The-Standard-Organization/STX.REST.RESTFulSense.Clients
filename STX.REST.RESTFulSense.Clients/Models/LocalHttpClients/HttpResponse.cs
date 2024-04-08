@@ -6,7 +6,7 @@ using System.Net.Http;
 
 namespace STX.REST.RESTFulSense.Clients.Models.LocalHttpClients
 {
-    internal class HttpResponse
+    internal class LocalHttpClientResponse
     {
         public StreamContent StreamContent { get; set; }
     }
