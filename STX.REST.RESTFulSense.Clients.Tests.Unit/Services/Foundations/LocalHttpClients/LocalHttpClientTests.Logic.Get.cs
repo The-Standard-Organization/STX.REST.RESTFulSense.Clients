@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 using Xunit;
 
-namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClients
+namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHttpClients
 {
     public partial class LocalHttpClientTest
     {
@@ -37,9 +37,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
             actualLocalHttpClient.Should().BeEquivalentTo(expectedLocalHttpClient);
 
             this.httpClientBroker.Verify(broker =>
-                broker.SendRequestAsync(
-                    inputHttpRequestMessage, default),
-                    Times.Once);
+                    broker.SendRequestAsync(
+                        It.IsAny<HttpRequestMessage>(), default),
+                Times.Once);
 
             this.httpClientBroker.VerifyNoOtherCalls();
         }

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 
-namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpClients
+namespace STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients
 {
     internal interface ILocalHttpClientService
     {
