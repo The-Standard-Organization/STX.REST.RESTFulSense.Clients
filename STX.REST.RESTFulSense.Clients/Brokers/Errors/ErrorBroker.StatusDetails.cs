@@ -9,7 +9,7 @@ namespace STX.REST.RESTFulSense.Clients.Brokers.Errors
 {
     internal partial class ErrorBroker : IErrorBroker
     {
-        private IEnumerable<StatusDetail> statusDetails = new List<StatusDetail>
+        private static IEnumerable<StatusDetail> statusDetails = new List<StatusDetail>
         {
             new StatusDetail
             {
