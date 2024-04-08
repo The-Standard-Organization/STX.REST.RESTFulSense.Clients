@@ -4,7 +4,7 @@
 
 using Force.DeepCloner;
 using Moq;
-using STX.REST.RESTFulSense.Clients.Brokers.LocalHttpClientBrokers;
+using STX.REST.RESTFulSense.Clients.Brokers.HttpClients;
 using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 using STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients;
 using System;
@@ -18,12 +18,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
 {
     public partial class LocalHttpClientTest
     {
-        private readonly Mock<ILocalHttpClientBroker> httpClientBroker;
+        private readonly Mock<IHttpClientBroker> httpClientBroker;
         private readonly ILocalHttpClientService localHttpClientService;
 
         public LocalHttpClientTest()
         {
-            this.httpClientBroker = new Mock<ILocalHttpClientBroker>();
+            this.httpClientBroker = new Mock<IHttpClientBroker>();
             this.localHttpClientService =
                 new LocalHttpClientService(httpClientBroker.Object);
         }

@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace STX.REST.RESTFulSense.Clients.Brokers.LocalHttpClientBrokers
+namespace STX.REST.RESTFulSense.Clients.Brokers.HttpClients
 {
-    internal interface ILocalHttpClientBroker
+    internal interface IHttpClientBroker
     {
         ValueTask<HttpResponseMessage> SendRequestAsync(
             HttpRequestMessage httpRequestMessage,
