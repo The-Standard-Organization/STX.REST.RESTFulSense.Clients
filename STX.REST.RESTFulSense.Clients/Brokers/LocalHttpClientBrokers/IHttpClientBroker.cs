@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 
-namespace STX.REST.RESTFulSense.Clients.Brokers.Https
+namespace STX.REST.RESTFulSense.Clients.Brokers.LocalHttpClientBrokers
 {
     internal interface IHttpClientBroker
     {

@@ -11,15 +11,15 @@ using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClients
 {
-    public partial class LocalHttpClientsTests
+    public partial class LocalHttpClientTest
     {
         [Fact]
         public async Task ShouldGetAsync()
         {
             // given
             dynamic randomProperties = CreateRandomProperties();
-            LocalHttpClients inputLocalHttpClients = CreateHttpClient(randomProperties);
-            LocalHttpClients expectedLocalHttpClients = CreateHttpClientResponse(inputLocalHttpClients, randomProperties);
+            LocalHttpClient inputLocalHttpClient = CreateHttpClient(randomProperties);
+            LocalHttpClient expectedLocalHttpClient = CreateHttpClientResponse(inputLocalHttpClient, randomProperties);
 
             HttpRequestMessage inputHttpRequestMessage = CreateHttpRequestMessage(randomProperties);
             HttpResponseMessage expectedHttpResponseMessage = CreateHttpResponseMessage(randomProperties);
@@ -30,11 +30,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
                         .ReturnsAsync(expectedHttpResponseMessage);
 
             // when
-            LocalHttpClients actualLocalHttpClients =
-                await this._localHttpClientService.GetAsync(inputLocalHttpClients);
+            LocalHttpClient actualLocalHttpClient =
+                await this.localHttpClientService.GetAsync(inputLocalHttpClient);
 
             // then
-            actualLocalHttpClients.Should().BeEquivalentTo(expectedLocalHttpClients);
+            actualLocalHttpClient.Should().BeEquivalentTo(expectedLocalHttpClient);
 
             this.httpClientBroker.Verify(broker =>
                 broker.SendRequestAsync(

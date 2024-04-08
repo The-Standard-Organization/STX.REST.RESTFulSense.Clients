@@ -4,7 +4,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using STX.REST.RESTFulSense.Clients.Brokers.Https;
+using STX.REST.RESTFulSense.Clients.Brokers.LocalHttpClientBrokers;
 using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpClients
@@ -18,7 +18,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpClients
             this.httpClientBroker = httpClientBroker;
         }
 
-        public ValueTask<LocalHttpClients> GetAsync(LocalHttpClients localHttpClients, CancellationToken cancellationToken = default)
+        public ValueTask<LocalHttpClient> GetAsync(LocalHttpClient localHttpClient, CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }
