@@ -31,7 +31,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
 
             // when
             LocalHttpClients actualLocalHttpClients =
-                await this.httpClientService.GetAsync(inputLocalHttpClients);
+                await this._localHttpClientService.GetAsync(inputLocalHttpClients);
 
             // then
             actualLocalHttpClients.Should().BeEquivalentTo(expectedLocalHttpClients);

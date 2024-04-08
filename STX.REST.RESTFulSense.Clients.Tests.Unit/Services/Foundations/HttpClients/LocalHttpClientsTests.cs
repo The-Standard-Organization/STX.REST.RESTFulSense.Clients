@@ -19,13 +19,13 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
     public partial class LocalHttpClientsTests
     {
         private readonly Mock<IHttpClientBroker> httpClientBroker;
-        private readonly IHttpClientService httpClientService;
+        private readonly ILocalHttpClientService _localHttpClientService;
 
         public LocalHttpClientsTests()
         {
             this.httpClientBroker = new Mock<IHttpClientBroker>();
-            this.httpClientService =
-                new HttpClientService(httpClientBroker.Object);
+            this._localHttpClientService =
+                new LocalHttpClientService(httpClientBroker.Object);
         }
 
         private static string GetRandomString() =>
