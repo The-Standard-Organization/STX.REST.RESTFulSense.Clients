@@ -6,7 +6,7 @@ using System;
 using System.Net;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Brokers.Errors;
-using STX.REST.RESTFulSense.Clients.Models.Errors;
+using STX.REST.RESTFulSense.Clients.Models;
 using STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers;
 using Tynamix.ObjectFiller;
 

@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System.Threading.Tasks;
-using STX.REST.RESTFulSense.Clients.Models.Errors;
+using STX.REST.RESTFulSense.Clients.Models;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
 {
