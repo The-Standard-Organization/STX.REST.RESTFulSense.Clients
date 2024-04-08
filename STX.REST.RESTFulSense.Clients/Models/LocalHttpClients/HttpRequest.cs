@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.LocalHttpClients
 {
-    internal class HttpRequest
+    internal class LocalHttpClientRequest
     {
         public string RelativeUrl { get; set; }
     }
