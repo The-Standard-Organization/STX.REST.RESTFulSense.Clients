@@ -4,12 +4,12 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using STX.REST.RESTFulSense.Clients.Models.HttpClients;
+using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpClients
 {
     internal interface IHttpClientService
     {
-        ValueTask<HttpClient> GetAsync(HttpClient httpClient, CancellationToken cancellationToken = default);
+        ValueTask<LocalHttpClients> GetAsync(LocalHttpClients localHttpClients, CancellationToken cancellationToken = default);
     }
 }

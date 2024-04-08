@@ -5,7 +5,7 @@
 using Force.DeepCloner;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Brokers.Https;
-using STX.REST.RESTFulSense.Clients.Models.HttpClients;
+using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 using STX.REST.RESTFulSense.Clients.Services.Foundations.HttpClients;
 using System;
 using System.IO;
@@ -16,12 +16,12 @@ using Tynamix.ObjectFiller;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClients
 {
-    public partial class HttpClientTests
+    public partial class LocalHttpClientsTests
     {
         private readonly Mock<IHttpClientBroker> httpClientBroker;
         private readonly IHttpClientService httpClientService;
 
-        public HttpClientTests()
+        public LocalHttpClientsTests()
         {
             this.httpClientBroker = new Mock<IHttpClientBroker>();
             this.httpClientService =
@@ -76,9 +76,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
             };
         }
 
-        private static Models.HttpClients.HttpClient CreateHttpClient(dynamic randomProperties)
+        private static LocalHttpClients CreateHttpClient(dynamic randomProperties)
         {
-            return new Models.HttpClients.HttpClient
+            return new LocalHttpClients
             {
                 HttpRequest = new HttpRequest
                 {
@@ -87,16 +87,16 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpClie
             };
         }
 
-        private static Models.HttpClients.HttpClient CreateHttpClientResponse(Models.HttpClients.HttpClient httpClient, dynamic randomProperties)
+        private static LocalHttpClients CreateHttpClientResponse(LocalHttpClients localHttpClients, dynamic randomProperties)
         {
-            Models.HttpClients.HttpClient clonedHttpClient = httpClient.DeepClone();
+            LocalHttpClients clonedLocalHttpClients = localHttpClients.DeepClone();
 
-            clonedHttpClient.HttpResponse = new HttpResponse
+            clonedLocalHttpClients.HttpResponse = new HttpResponse
             {
                 StreamContent = randomProperties.ResponseStreamContent
             };
 
-            return clonedHttpClient;
+            return clonedLocalHttpClients;
         }
 
     }
