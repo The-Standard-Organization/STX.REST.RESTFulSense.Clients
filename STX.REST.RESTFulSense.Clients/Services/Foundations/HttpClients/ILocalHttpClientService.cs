@@ -8,7 +8,7 @@ using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpClients
 {
-    internal interface IHttpClientService
+    internal interface ILocalHttpClientService
     {
         ValueTask<LocalHttpClients> GetAsync(LocalHttpClients localHttpClients, CancellationToken cancellationToken = default);
     }

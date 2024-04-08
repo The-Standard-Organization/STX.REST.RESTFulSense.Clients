@@ -9,11 +9,11 @@ using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpClients
 {
-    internal class HttpClientService : IHttpClientService
+    internal class LocalHttpClientService : ILocalHttpClientService
     {
         private readonly IHttpClientBroker httpClientBroker;
 
-        internal HttpClientService(IHttpClientBroker httpClientBroker)
+        internal LocalHttpClientService(IHttpClientBroker httpClientBroker)
         {
             this.httpClientBroker = httpClientBroker;
         }
