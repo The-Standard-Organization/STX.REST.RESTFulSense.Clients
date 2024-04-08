@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Brokers.LocalHttpClientBrokers;
 using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 
-namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpClients
+namespace STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients
 {
     internal class LocalHttpClientService : ILocalHttpClientService
     {
-        private readonly IHttpClientBroker httpClientBroker;
+        private readonly ILocalHttpClientBroker _localHttpClientBroker;
 
-        internal LocalHttpClientService(IHttpClientBroker httpClientBroker)
+        internal LocalHttpClientService(ILocalHttpClientBroker localHttpClientBroker)
         {
-            this.httpClientBroker = httpClientBroker;
+            this._localHttpClientBroker = localHttpClientBroker;
         }
 
         public ValueTask<LocalHttpClient> GetAsync(LocalHttpClient localHttpClient, CancellationToken cancellationToken = default)
