@@ -4,7 +4,7 @@
 
 using System.Net.Http;
 
-namespace STX.REST.RESTFulSense.Clients.Models.HttpClients
+namespace STX.REST.RESTFulSense.Clients.Models.LocalHttpClients
 {
     internal class HttpResponse
     {
