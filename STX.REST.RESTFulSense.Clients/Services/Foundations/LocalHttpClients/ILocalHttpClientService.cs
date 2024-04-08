@@ -10,6 +10,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients
 {
     internal interface ILocalHttpClientService
     {
-        ValueTask<LocalHttpClient> GetAsync(LocalHttpClient localHttpClient, CancellationToken cancellationToken = default);
+        ValueTask<LocalHttpClient> GetAsync(
+            LocalHttpClient localHttpClient,
+            CancellationToken cancellationToken = default);
     }
 }

@@ -4,21 +4,23 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using STX.REST.RESTFulSense.Clients.Brokers.LocalHttpClientBrokers;
+using STX.REST.RESTFulSense.Clients.Brokers.HttpClients;
 using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients
 {
     internal class LocalHttpClientService : ILocalHttpClientService
     {
-        private readonly ILocalHttpClientBroker _localHttpClientBroker;
+        private readonly IHttpClientBroker httpClientBroker;
 
-        internal LocalHttpClientService(ILocalHttpClientBroker localHttpClientBroker)
+        internal LocalHttpClientService(IHttpClientBroker httpClientBroker)
         {
-            this._localHttpClientBroker = localHttpClientBroker;
+            this.httpClientBroker = httpClientBroker;
         }
 
-        public ValueTask<LocalHttpClient> GetAsync(LocalHttpClient localHttpClient, CancellationToken cancellationToken = default)
+        public ValueTask<LocalHttpClient> GetAsync(
+            LocalHttpClient localHttpClient,
+            CancellationToken cancellationToken = default)
         {
             throw new System.NotImplementedException();
         }
