@@ -45,7 +45,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             this.httpClientBroker.Verify(broker =>
                     broker.SendRequestAsync(
                         It.IsAny<HttpRequestMessage>(), default),
-                Times.Once);
+                        Times.Once);
 
             this.httpClientBroker.VerifyNoOtherCalls();
         }
