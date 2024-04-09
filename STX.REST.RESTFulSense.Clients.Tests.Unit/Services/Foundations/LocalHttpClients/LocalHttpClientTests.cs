@@ -32,12 +32,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
 
-        private static StreamContent CreateStreamContent(string content)
+        private static Stream CreateStreamContent(string content)
         {
             byte[] contentBytes = Encoding.ASCII.GetBytes(content);
             var stream = new MemoryStream(contentBytes);
 
-            return new StreamContent(stream);
+            return stream;
         }
 
         private static Uri GetRandomUri(string relativeUrl)
@@ -88,7 +88,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             };
         }
 
-        private static LocalHttpClient CreateHttpClientResponse(LocalHttpClient localHttpClient, dynamic randomProperties)
+        private static LocalHttpClient CreateHttpClientResponse(
+            LocalHttpClient localHttpClient, dynamic randomProperties)
         {
             LocalHttpClient clonedLocalHttpClient = localHttpClient.DeepClone();
 

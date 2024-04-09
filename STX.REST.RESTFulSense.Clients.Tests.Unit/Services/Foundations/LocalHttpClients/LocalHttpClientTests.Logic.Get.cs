@@ -18,6 +18,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
         {
             // given
             dynamic randomProperties = CreateRandomProperties();
+            
             LocalHttpClient inputLocalHttpClient =
                 CreateHttpClient(randomProperties);
             
@@ -43,8 +44,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             actualLocalHttpClient.Should().BeEquivalentTo(expectedLocalHttpClient);
 
             this.httpClientBroker.Verify(broker =>
-                    broker.SendRequestAsync(
-                        It.IsAny<HttpRequestMessage>(), default),
+                broker.SendRequestAsync(
+                    It.IsAny<HttpRequestMessage>(), default),
                         Times.Once);
 
             this.httpClientBroker.VerifyNoOtherCalls();
