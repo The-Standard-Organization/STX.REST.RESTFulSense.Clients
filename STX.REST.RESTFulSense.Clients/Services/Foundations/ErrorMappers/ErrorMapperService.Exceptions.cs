@@ -4,7 +4,7 @@
 
 using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions;
-using STX.REST.RESTFulSense.Clients.Models;
+using STX.REST.RESTFulSense.Clients.Models.ErrorMappers;
 using Xeptions;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
