@@ -18,11 +18,17 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
         {
             // given
             dynamic randomProperties = CreateRandomProperties();
-            LocalHttpClient inputLocalHttpClient = CreateHttpClient(randomProperties);
-            LocalHttpClient expectedLocalHttpClient = CreateHttpClientResponse(inputLocalHttpClient, randomProperties);
+            LocalHttpClient inputLocalHttpClient =
+                CreateHttpClient(randomProperties);
+            
+            LocalHttpClient expectedLocalHttpClient =
+                CreateHttpClientResponse(inputLocalHttpClient, randomProperties);
 
-            HttpRequestMessage inputHttpRequestMessage = CreateHttpRequestMessage(randomProperties);
-            HttpResponseMessage expectedHttpResponseMessage = CreateHttpResponseMessage(randomProperties);
+            HttpRequestMessage inputHttpRequestMessage =
+                CreateHttpRequestMessage(randomProperties);
+            
+            HttpResponseMessage expectedHttpResponseMessage =
+                CreateHttpResponseMessage(randomProperties);
 
             this.httpClientBroker.Setup(broker =>
                 broker.SendRequestAsync(

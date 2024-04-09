@@ -22,7 +22,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
             }
             catch (InvalidErrorMapperException invalidErrorMapperException)
             {
-                throw  CreateErrorMapperException(invalidErrorMapperException);
+                throw CreateErrorMapperException(invalidErrorMapperException);
             }
             catch (NotFoundErrorMapperException notFoundErrorMapperException)
             {

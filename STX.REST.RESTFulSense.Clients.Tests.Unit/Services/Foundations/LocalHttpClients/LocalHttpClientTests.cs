@@ -24,6 +24,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
         public LocalHttpClientTest()
         {
             this.httpClientBroker = new Mock<IHttpClientBroker>();
+            
             this.localHttpClientService =
                 new LocalHttpClientService(httpClientBroker.Object);
         }
