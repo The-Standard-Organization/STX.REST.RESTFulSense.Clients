@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions;
-using STX.REST.RESTFulSense.Clients.Models;
+using STX.REST.RESTFulSense.Clients.Models.ErrorMappers;
 using Xeptions;
 using Xunit;
 
@@ -35,7 +35,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             // when
             ValueTask<StatusDetail> retrieveStatusDetailByStatusCodeTask =
                 this.errorMapperService.RetrieveStatusDetailByStatusCodeAsync(
-                    invalidStatusCodeValue);
+                        invalidStatusCodeValue);
 
             ErrorMapperValidationException actualErrorMapperValidationException =
                 await Assert.ThrowsAsync<ErrorMapperValidationException>(() =>

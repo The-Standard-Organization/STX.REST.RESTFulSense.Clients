@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions;
-using STX.REST.RESTFulSense.Clients.Models;
+using STX.REST.RESTFulSense.Clients.Models.ErrorMappers;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
 {

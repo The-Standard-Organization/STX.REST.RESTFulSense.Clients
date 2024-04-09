@@ -5,7 +5,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Brokers.Errors;
-using STX.REST.RESTFulSense.Clients.Models;
+using STX.REST.RESTFulSense.Clients.Models.ErrorMappers;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
 {
