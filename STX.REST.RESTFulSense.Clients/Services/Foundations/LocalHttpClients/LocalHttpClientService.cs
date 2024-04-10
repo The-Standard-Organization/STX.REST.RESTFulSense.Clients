@@ -2,13 +2,13 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using STX.REST.RESTFulSense.Clients.Brokers.HttpClients;
+using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 using System;
 using System.IO;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using STX.REST.RESTFulSense.Clients.Brokers.HttpClients;
-using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients
 {
@@ -33,16 +33,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients
 
             return await ConvertToLocalHttpClient(localHttpClient, httpResponseMessage);
         }
-        
+
         private static HttpRequestMessage ConvertToHttpRequest(
             LocalHttpClientRequest localHttpClientRequest)
         {
-            Uri baseUri = new Uri(localHttpClientRequest.BaseAddress);
+            Uri baseAddress = new Uri(localHttpClientRequest.BaseAddress);
             string relativeUrl = localHttpClientRequest.RelativeUrl;
-            
+
             return new HttpRequestMessage
             {
-                RequestUri = new Uri(baseUri,relativeUrl)
+                RequestUri = new Uri(baseAddress, relativeUrl)
             };
         }
 
@@ -52,7 +52,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients
         {
             Stream externalStreamContent =
                 await httpResponseMessage.Content.ReadAsStreamAsync();
-            
+
             localHttpClient.HttpResponse = new LocalHttpClientResponse
             {
                 StreamContent = externalStreamContent

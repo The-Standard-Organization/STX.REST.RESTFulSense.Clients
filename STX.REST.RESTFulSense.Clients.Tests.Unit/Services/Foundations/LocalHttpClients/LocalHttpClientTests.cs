@@ -24,7 +24,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
         public LocalHttpClientTest()
         {
             this.httpClientBroker = new Mock<IHttpClientBroker>();
-            
+
             this.localHttpClientService =
                 new LocalHttpClientService(httpClientBroker.Object);
         }
@@ -40,40 +40,47 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             return stream;
         }
 
-        private static Uri GetRandomUri(string relativeUrl)
+        private static string GetRandomBaseAddressUri()
         {
             string randomHost = GetRandomString();
 
-            return new Uri($"https://{randomHost}/{relativeUrl}");
+            return $"{Uri.UriSchemeHttps}://{randomHost}";
         }
 
         private static dynamic CreateRandomProperties()
         {
-            string randomContent = GetRandomString();
+            string baseAddress = GetRandomBaseAddressUri();
             string randomRelativeURL = GetRandomString();
+            string randomContent = GetRandomString();
 
             return new
             {
-                Url = GetRandomUri(randomRelativeURL),
+                BaseAddress = baseAddress,
                 RelativeUrl = randomRelativeURL,
+                Url = new Uri(
+                    new Uri(baseAddress),
+                    randomRelativeURL),
+
                 HttpMethod = HttpMethod.Get,
                 ResponseStreamContent = CreateStreamContent(randomContent),
                 ResponseHttpStatus = HttpStatusCode.OK
             };
         }
 
-        private static HttpRequestMessage CreateHttpRequestMessage(dynamic randomProperties) =>
-            new HttpRequestMessage()
+        private static HttpRequestMessage CreateHttpRequestMessage(dynamic randomProperties)
+        {
+            return new HttpRequestMessage()
             {
                 RequestUri = randomProperties.Url,
                 Method = randomProperties.HttpMethod
             };
+        }
 
         private static HttpResponseMessage CreateHttpResponseMessage(dynamic randomProperties)
         {
             return new HttpResponseMessage(randomProperties.ResponseHttpStatus)
             {
-                Content = randomProperties.ResponseStreamContent
+                Content = new StreamContent(randomProperties.ResponseStreamContent)
             };
         }
 
@@ -83,13 +90,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             {
                 HttpRequest = new LocalHttpClientRequest
                 {
+                    BaseAddress = randomProperties.BaseAddress,
                     RelativeUrl = randomProperties.RelativeUrl
                 }
             };
         }
 
         private static LocalHttpClient CreateHttpClientResponse(
-            LocalHttpClient localHttpClient, dynamic randomProperties)
+            LocalHttpClient localHttpClient,
+            dynamic randomProperties)
         {
             LocalHttpClient clonedLocalHttpClient = localHttpClient.DeepClone();
 
