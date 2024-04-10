@@ -32,10 +32,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
 
-        private static Stream CreateStreamContent(string content)
+        private static Stream CreateStream(string content)
         {
             byte[] contentBytes = Encoding.ASCII.GetBytes(content);
-            var stream = new MemoryStream(contentBytes);
+            var stream = new ReadOnlyMemoryContent(contentBytes)
+                .ReadAsStream();
 
             return stream;
         }
@@ -62,7 +63,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
                     randomRelativeURL),
 
                 HttpMethod = HttpMethod.Get,
-                ResponseStreamContent = CreateStreamContent(randomContent),
+                ResponseStream = CreateStream(randomContent),
                 ResponseHttpStatus = HttpStatusCode.OK
             };
         }
@@ -78,10 +79,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
 
         private static HttpResponseMessage CreateHttpResponseMessage(dynamic randomProperties)
         {
-            return new HttpResponseMessage(randomProperties.ResponseHttpStatus)
-            {
-                Content = new StreamContent(randomProperties.ResponseStreamContent)
-            };
+            HttpResponseMessage httpResponseMessage =
+                new HttpResponseMessage(randomProperties.ResponseHttpStatus)
+                {
+                    StatusCode = randomProperties.ResponseHttpStatus,
+                    Content = new StreamContent(randomProperties.ResponseStream)
+                };
+
+            return httpResponseMessage;
         }
 
         private static LocalHttpClient CreateHttpClient(dynamic randomProperties)
@@ -101,14 +106,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             dynamic randomProperties)
         {
             LocalHttpClient clonedLocalHttpClient = localHttpClient.DeepClone();
+            Stream responseStream = randomProperties.ResponseStream;
 
             clonedLocalHttpClient.HttpResponse = new LocalHttpClientResponse
             {
-                StreamContent = randomProperties.ResponseStreamContent
+                StreamContent = responseStream.DeepClone()
             };
 
             return clonedLocalHttpClient;
         }
-
     }
 }
