@@ -40,8 +40,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             // when
             LocalHttpClient actualLocalHttpClient =
                 await this.localHttpClientService.GetAsync(inputLocalHttpClient);
-
-
+            
             // then
             actualLocalHttpClient.Should().BeEquivalentTo(
                 expectedLocalHttpClient,
@@ -49,13 +48,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
 
             using MemoryStream actualContentStream = new MemoryStream();
             await actualLocalHttpClient.HttpResponse.StreamContent.CopyToAsync(actualContentStream);
-
             using MemoryStream expectedContentStream = new MemoryStream();
             await expectedLocalHttpClient.HttpResponse.StreamContent.CopyToAsync(expectedContentStream);
-
             actualContentStream.ToArray().Should().BeEquivalentTo(expectedContentStream.ToArray());
-
-
 
             this.httpClientBroker.Verify(broker =>
                 broker.SendRequestAsync(
