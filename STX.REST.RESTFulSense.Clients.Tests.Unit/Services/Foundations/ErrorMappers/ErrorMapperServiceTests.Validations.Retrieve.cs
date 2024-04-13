@@ -8,8 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
-using STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.ErrorMappers;
+using STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions;
 using Xeptions;
 using Xunit;
 

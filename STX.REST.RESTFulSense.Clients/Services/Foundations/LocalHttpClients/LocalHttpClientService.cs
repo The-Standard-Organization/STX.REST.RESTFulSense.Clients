@@ -2,14 +2,13 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using STX.REST.RESTFulSense.Clients.Brokers.HttpClients;
-using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 using System;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using STX.REST.RESTFulSense.Clients.Brokers.HttpClients;
+using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients
 {
