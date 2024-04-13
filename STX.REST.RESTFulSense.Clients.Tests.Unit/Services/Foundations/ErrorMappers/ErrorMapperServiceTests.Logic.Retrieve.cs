@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
-using STX.REST.RESTFulSense.Clients.Models.ErrorMappers;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers;
 using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMappers
@@ -21,7 +21,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             // given
             HttpStatusCode randomStatusCode = GetRandomHttpStatusCode();
             int randomStatusCodeValue = (int)randomStatusCode;
-            
+
             StatusDetail expectedStatusDetail =
                 CreateRandomStatusDetail(randomStatusCodeValue);
 

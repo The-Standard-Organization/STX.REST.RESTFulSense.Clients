@@ -2,8 +2,8 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions;
-using STX.REST.RESTFulSense.Clients.Models.ErrorMappers;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers.Exceptions;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
 {
@@ -13,15 +13,18 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         {
             if (statusCode == default(int))
             {
-                throw new InvalidErrorMapperException(message: "Status code is invalid.");
+                throw new InvalidErrorMapperException(
+                    message: "Status code is invalid.");
             }
         }
 
-        private static void ValidateStatusDetail(StatusDetail maybeStatusDetail)
+        private static void ValidateStatusDetail(
+            StatusDetail maybeStatusDetail)
         {
             if (maybeStatusDetail is null)
             {
-                throw new NotFoundErrorMapperException(message: "Status detail not found");
+                throw new NotFoundErrorMapperException(
+                    message: "Status detail not found");
             }
         }
     }

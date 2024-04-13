@@ -6,13 +6,13 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace STX.REST.RESTFulSense.Clients.Brokers.HttpClients
+namespace STX.REST.RESTFulSense.Clients.Brokers.Https
 {
-    internal class HttpClientBroker : IHttpClientBroker
+    internal class HttpBroker : IHttpBroker
     {
         private readonly HttpClient httpClient;
 
-        public HttpClientBroker(HttpClient httpClient) =>
+        public HttpBroker(HttpClient httpClient) =>
             this.httpClient = httpClient;
 
         public async ValueTask<HttpResponseMessage> SendRequestAsync(

@@ -4,12 +4,12 @@
 
 using Xeptions;
 
-namespace STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions
+namespace STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers.Exceptions
 {
-    public class InvalidErrorMapperException : Xeption
+    public class ErrorMapperValidationException : Xeption
     {
-        public InvalidErrorMapperException(string message)
-            : base(message)
+        public ErrorMapperValidationException(string message, Xeption innerException)
+            : base(message, innerException)
         { }
     }
 }

@@ -4,7 +4,7 @@
 
 using Xeptions;
 
-namespace STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions
+namespace STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers.Exceptions
 {
     public class NotFoundErrorMapperException : Xeption
     {
