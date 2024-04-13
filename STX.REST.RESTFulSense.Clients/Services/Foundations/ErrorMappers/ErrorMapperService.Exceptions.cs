@@ -3,8 +3,8 @@
 // ----------------------------------------------------------------------------------
 
 using System.Threading.Tasks;
-using STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions;
-using STX.REST.RESTFulSense.Clients.Models.ErrorMappers;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers.Exceptions;
 using Xeptions;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
@@ -29,12 +29,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
                 throw CreateErrorMapperException(notFoundErrorMapperException);
             }
         }
-        
+
         private static ErrorMapperValidationException CreateErrorMapperException(
-            Xeption innerException) =>
-            new ErrorMapperValidationException(
+            Xeption innerException) => new ErrorMapperValidationException(
                 message: "Error mapper validation errors occurred, please try again.",
                 innerException: innerException);
-        
     }
 }

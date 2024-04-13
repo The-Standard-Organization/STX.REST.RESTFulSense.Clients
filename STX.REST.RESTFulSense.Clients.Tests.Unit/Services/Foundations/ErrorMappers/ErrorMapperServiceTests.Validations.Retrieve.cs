@@ -8,8 +8,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
-using STX.REST.RESTFulSense.Clients.Models.ErrorMappers;
-using STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers.Exceptions;
 using Xeptions;
 using Xunit;
 
@@ -18,7 +18,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
     public partial class ErrorMapperServiceTests
     {
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnRetrieveIfStatusCodeIsInvalid()
+        private async Task ShouldThrowValidationExceptionOnRetrieveIfStatusCodeIsInvalid()
         {
             // given
             int invalidStatusCode = default;
@@ -48,7 +48,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
         }
 
         [Fact]
-        public async Task ShouldThrowValidationExceptionOnRetrieveIfStatusDetailNotFound()
+        private async Task ShouldThrowValidationExceptionOnRetrieveIfStatusDetailNotFound()
         {
             // given
             int randomStatusCode = (int)GetRandomHttpStatusCode();

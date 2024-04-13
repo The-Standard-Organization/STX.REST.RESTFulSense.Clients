@@ -9,24 +9,24 @@ using System.Net.Http;
 using System.Text;
 using Force.DeepCloner;
 using Moq;
-using STX.REST.RESTFulSense.Clients.Brokers.HttpClients;
-using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
-using STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients;
+using STX.REST.RESTFulSense.Clients.Brokers.Https;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
+using STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges;
 using Tynamix.ObjectFiller;
 
-namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHttpClients
+namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
 {
-    public partial class LocalHttpClientTest
+    public partial class HttpExchangeServiceTests
     {
-        private readonly Mock<IHttpClientBroker> httpClientBroker;
-        private readonly ILocalHttpClientService localHttpClientService;
+        private readonly Mock<IHttpBroker> httpBroker;
+        private readonly IHttpExchangeService httpExchangeService;
 
-        public LocalHttpClientTest()
+        public HttpExchangeServiceTests()
         {
-            this.httpClientBroker = new Mock<IHttpClientBroker>();
+            this.httpBroker = new Mock<IHttpBroker>();
 
-            this.localHttpClientService =
-                new LocalHttpClientService(httpClientBroker.Object);
+            this.httpExchangeService =
+                new HttpExchangeService(httpBroker.Object);
         }
 
         private static string GetRandomString() =>
@@ -48,7 +48,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             return $"{Uri.UriSchemeHttps}://{randomHost}";
         }
 
-        private static dynamic CreateRandomProperties()
+        private static dynamic CreateRandomExchangeProperties()
         {
             string baseAddress = GetRandomBaseAddressUri();
             string randomRelativeURL = GetRandomString();
@@ -68,7 +68,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             };
         }
 
-        private static HttpRequestMessage CreateHttpRequestMessage(dynamic randomProperties)
+        private static HttpRequestMessage CreateExchangeRequestMessage(dynamic randomProperties)
         {
             return new HttpRequestMessage()
             {
@@ -77,7 +77,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             };
         }
 
-        private static HttpResponseMessage CreateHttpResponseMessage(dynamic randomProperties)
+        private static HttpResponseMessage CreateExchangeResponseMessage(dynamic randomProperties)
         {
             HttpResponseMessage httpResponseMessage =
                 new HttpResponseMessage(randomProperties.ResponseHttpStatus)
@@ -89,11 +89,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             return httpResponseMessage;
         }
 
-        private static LocalHttpClient CreateHttpClient(dynamic randomProperties)
+        private static HttpExchange CreateHttpExchangeRequest(dynamic randomProperties)
         {
-            return new LocalHttpClient
+            return new HttpExchange
             {
-                HttpRequest = new LocalHttpClientRequest
+                Request = new HttpExchangeRequest
                 {
                     BaseAddress = randomProperties.BaseAddress,
                     RelativeUrl = randomProperties.RelativeUrl
@@ -101,19 +101,19 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHtt
             };
         }
 
-        private static LocalHttpClient CreateHttpClientResponse(
-            LocalHttpClient localHttpClient,
-            dynamic randomProperties)
+        private static HttpExchange CreateHttpExchangeResponse(
+           HttpExchange httpExchange,
+           dynamic randomProperties)
         {
-            LocalHttpClient clonedLocalHttpClient = localHttpClient.DeepClone();
+            HttpExchange mappedHttpExchange = httpExchange.DeepClone();
             Stream responseStream = randomProperties.ResponseStream;
 
-            clonedLocalHttpClient.HttpResponse = new LocalHttpClientResponse
+            mappedHttpExchange.Response = new HttpExchangeResponse
             {
                 StreamContent = responseStream.DeepClone()
             };
 
-            return clonedLocalHttpClient;
+            return mappedHttpExchange;
         }
     }
 }

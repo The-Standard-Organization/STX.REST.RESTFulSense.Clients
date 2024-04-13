@@ -2,11 +2,11 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-namespace STX.REST.RESTFulSense.Clients.Models.LocalHttpClients
+namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
-    internal class LocalHttpClientRequest
+    internal class HttpExchange
     {
-        public string BaseAddress { get; set; }
-        public string RelativeUrl { get; set; }
+        public HttpExchangeRequest Request { get; set; }
+        public HttpExchangeResponse Response { get; set; }
     }
 }

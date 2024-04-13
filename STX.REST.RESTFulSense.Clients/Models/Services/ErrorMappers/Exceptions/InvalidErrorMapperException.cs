@@ -2,12 +2,14 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.IO;
+using Xeptions;
 
-namespace STX.REST.RESTFulSense.Clients.Models.LocalHttpClients
+namespace STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers.Exceptions
 {
-    internal class LocalHttpClientResponse
+    public class InvalidErrorMapperException : Xeption
     {
-        public Stream StreamContent { get; set; }
+        public InvalidErrorMapperException(string message)
+            : base(message)
+        { }
     }
 }
