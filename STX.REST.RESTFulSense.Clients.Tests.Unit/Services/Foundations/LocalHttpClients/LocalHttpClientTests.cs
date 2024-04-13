@@ -2,16 +2,16 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using Force.DeepCloner;
-using Moq;
-using STX.REST.RESTFulSense.Clients.Brokers.HttpClients;
-using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
-using STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients;
 using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using Force.DeepCloner;
+using Moq;
+using STX.REST.RESTFulSense.Clients.Brokers.HttpClients;
+using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
+using STX.REST.RESTFulSense.Clients.Services.Foundations.LocalHttpClients;
 using Tynamix.ObjectFiller;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHttpClients

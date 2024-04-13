@@ -2,12 +2,12 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using FluentAssertions;
-using Moq;
-using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Moq;
+using STX.REST.RESTFulSense.Clients.Models.LocalHttpClients;
 using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.LocalHttpClients
