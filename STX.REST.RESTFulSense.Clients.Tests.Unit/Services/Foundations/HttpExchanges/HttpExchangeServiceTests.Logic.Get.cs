@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -50,20 +49,16 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 options => options.Excluding(
                     x => x.Response.StreamContent));
 
-            using MemoryStream actualContentStream =
-                new MemoryStream();
+            byte[] actualStreamContent =
+                ConvertStreamToByteArray(
+                    actualHttpExchange.Response.StreamContent);
 
-            await actualHttpExchange.Response.StreamContent
-                .CopyToAsync(actualContentStream);
+            byte[] expectedStreamContent =
+                ConvertStreamToByteArray(
+                    expectedHttpExchage.Response.StreamContent);
 
-            using MemoryStream expectedContentStream =
-                new MemoryStream();
-
-            await expectedHttpExchage.Response.StreamContent
-                .CopyToAsync(expectedContentStream);
-
-            actualContentStream.ToArray().Should().BeEquivalentTo(
-                expectedContentStream.ToArray());
+            actualStreamContent.Should().BeEquivalentTo(
+                expectedStreamContent);
 
             this.httpBroker.Verify(broker =>
                 broker.SendRequestAsync(

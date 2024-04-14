@@ -115,5 +115,13 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             return mappedHttpExchange;
         }
+
+        private static byte[] ConvertStreamToByteArray(Stream stream)
+        {
+            using MemoryStream memoryStream = new MemoryStream();
+            stream.CopyTo(memoryStream);
+
+            return memoryStream.ToArray();
+        }
     }
 }
