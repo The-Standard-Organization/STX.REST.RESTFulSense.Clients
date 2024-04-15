@@ -5,6 +5,8 @@
 using System;
 using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
+using Xeptions;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
@@ -19,11 +21,18 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 return await returningHttpExchangeFunction();
             }
-            catch (Exception e)
+            catch (NullHttpExchangeException nullHttpExchangeException)
             {
-                Console.WriteLine(e); //@Monk @Barak Is this for the sake of testing the compare??
-                throw;
+                throw CreateHttpExchangeValidationException(nullHttpExchangeException);
             }
+        }
+
+        private static HttpExchangeValidationException CreateHttpExchangeValidationException(
+            Xeption innerException)
+        {
+            return new HttpExchangeValidationException(
+                message: "Http exchange validation errors occurred, please try again.",
+                innerException: innerException);
         }
     }
 }

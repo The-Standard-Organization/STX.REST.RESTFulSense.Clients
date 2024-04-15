@@ -21,22 +21,25 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             this.httpBroker = httpClientBroker;
         }
 
-        public async ValueTask<HttpExchange> GetAsync(
+        public  ValueTask<HttpExchange> GetAsync(
             HttpExchange httpExchange,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default) =>
+        TryCatch(async () =>
         {
+            ValidateHttpExchange(httpExchange);
+            
             HttpRequestMessage httpRequestMessage =
                 ConvertToHttpRequest(httpExchange.Request);
 
             HttpResponseMessage httpResponseMessage =
-               await httpBroker.SendRequestAsync(
-                   httpRequestMessage,
-                   cancellationToken);
+                await httpBroker.SendRequestAsync(
+                    httpRequestMessage,
+                    cancellationToken);
 
             return await ConvertToLocalHttpClient(
                 httpExchange,
                 httpResponseMessage);
-        }
+        });
 
         private static HttpRequestMessage ConvertToHttpRequest(
             HttpExchangeRequest httpExchangeRequest)
