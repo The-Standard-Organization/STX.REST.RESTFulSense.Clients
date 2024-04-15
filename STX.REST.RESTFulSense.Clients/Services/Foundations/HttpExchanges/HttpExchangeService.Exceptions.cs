@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System;
 using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
@@ -23,7 +22,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             }
             catch (NullHttpExchangeException nullHttpExchangeException)
             {
-                throw CreateHttpExchangeValidationException(nullHttpExchangeException);
+                throw CreateHttpExchangeValidationException(
+                    nullHttpExchangeException);
             }
         }
 

@@ -29,19 +29,19 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             ValidateHttpExchange(httpExchange);
             
             HttpRequestMessage httpRequestMessage =
-                ConvertToHttpRequest(httpExchange.Request);
+                MapToHttpRequest(httpExchange.Request);
 
             HttpResponseMessage httpResponseMessage =
                 await httpBroker.SendRequestAsync(
                     httpRequestMessage,
                     cancellationToken);
 
-            return await ConvertToLocalHttpClient(
+            return await MapToHttpExchange(
                 httpExchange,
                 httpResponseMessage);
         });
 
-        private static HttpRequestMessage ConvertToHttpRequest(
+        private static HttpRequestMessage MapToHttpRequest(
             HttpExchangeRequest httpExchangeRequest)
         {
             Uri baseAddress = new Uri(httpExchangeRequest.BaseAddress);
@@ -53,7 +53,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             };
         }
 
-        private static async ValueTask<HttpExchange> ConvertToLocalHttpClient(
+        private static async ValueTask<HttpExchange> MapToHttpExchange(
             HttpExchange httpExchange,
             HttpResponseMessage httpResponseMessage)
         {
