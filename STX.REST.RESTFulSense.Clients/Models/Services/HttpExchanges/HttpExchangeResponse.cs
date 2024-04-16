@@ -8,6 +8,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
     {
         public int StatusCode { get; init; }
         public int Version { get; init; }
+        public bool IsSuccessStatusCode { get; init; }
         public HttpExchangeHeaders Headers { get; init; }
         public string ReasonPhrase { get; init; }
         public HttpExchangeContent Content { get; init; }
