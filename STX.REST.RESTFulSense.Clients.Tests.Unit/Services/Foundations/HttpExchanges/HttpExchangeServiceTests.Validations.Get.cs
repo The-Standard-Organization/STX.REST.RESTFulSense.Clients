@@ -24,7 +24,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var expectedHttpExchangeValidationException =
                 new HttpExchangeValidationException(
-                    message: "Http exchange validation errors occurred, please try again.",
+                    message: "HttpExchange validation errors occurred, please try again.",
                     innerException: nullHttpExchangeException);
 
             // when
@@ -33,7 +33,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             HttpExchangeValidationException actualHttpExchangeValidationException =
                 await Assert.ThrowsAsync<HttpExchangeValidationException>(
-                    () => getAsyncTask.AsTask());
+                    getAsyncTask.AsTask);
             
             //then
             actualHttpExchangeValidationException.Should().BeEquivalentTo(
