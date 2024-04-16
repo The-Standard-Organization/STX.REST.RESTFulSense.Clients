@@ -10,7 +10,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public string RelativeUrl { get; init; }
         public string HttpMethod { get; init; }
         public string Version { get; init; }
-        public HttpExchangeHeaders Headers { get; init; }
+        public HttpExchangeRequestHeaders Headers { get; init; }
         public HttpExchangeContent Content { get; init; }
     }
 }

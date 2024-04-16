@@ -2,13 +2,12 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.IO;
-
-namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
+namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class HttpExchangeContent
+    internal class ProductInfoHeader
     {
-        public HttpExchangeContentHeaders Headers { get; init; }
-        public Stream StreamContent { get; set; }
+        public string Name { get; init; }
+        public string Version { get; init; }
+        public string Comment { get; init; }
     }
 }

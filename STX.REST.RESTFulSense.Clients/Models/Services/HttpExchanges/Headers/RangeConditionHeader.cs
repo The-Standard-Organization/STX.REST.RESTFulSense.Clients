@@ -2,13 +2,13 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.IO;
+using System;
 
-namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
+namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class HttpExchangeContent
+    internal class RangeConditionHeader
     {
-        public HttpExchangeContentHeaders Headers { get; init; }
-        public Stream StreamContent { get; set; }
+        public DateTimeOffset Date { get; init; }
+        public string EntityTag { get; init; }
     }
 }
