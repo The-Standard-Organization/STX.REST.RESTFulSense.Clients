@@ -4,13 +4,13 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
-    internal class HttpExchangeResponse
+    internal class HttpExchangeRequest
     {
-        public int StatusCode { get; init; }
-        public int Version { get; init; }
-        public bool IsSuccessStatusCode { get; init; }
-        public HttpExchangeHeaders Headers { get; init; }
-        public string ReasonPhrase { get; init; }
+        public string BaseAddress { get; init; }
+        public string RelativeUrl { get; init; }
+        public string HttpMethod { get; init; }
+        public string Version { get; init; }
+        public HttpExchangeRequestHeaders Headers { get; init; }
         public HttpExchangeContent Content { get; init; }
     }
 }

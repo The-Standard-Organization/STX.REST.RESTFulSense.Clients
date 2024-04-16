@@ -2,13 +2,12 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.IO;
-
-namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
+namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class HttpExchangeContent
+    internal class MediaTypeHeader
     {
-        public HttpExchangeContentHeaders Headers { get; init; }
-        public Stream StreamContent { get; set; }
+        public string CharSet { get; init; }
+        public string MediaType { get; init; }
+        public double? Quality { get; init; }
     }
 }
