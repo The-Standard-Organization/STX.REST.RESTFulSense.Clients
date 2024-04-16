@@ -7,7 +7,7 @@ using System;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
-    internal class HttpExchangeContentHeaders : HttpExchangeContent
+    internal class HttpExchangeContentHeaders
     {
         public string[] Allow { get; init; }
         public ContentDispositionHeader ContentDisposition { get; init; }
@@ -17,8 +17,8 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public Uri ContentLocation { get; init; }
         public byte[] ContentMD5 { get; init; }
         public ContentRangeHeader ContentRange { get; init; }
-        public MediaTypeHeader MediaType { get; init; }
         public DateTimeOffset Expires { get; init; }
+        public MediaTypeHeader MediaType { get; init; }
         public DateTimeOffset LastModified { get; init; }
 
     }
