@@ -110,7 +110,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             mappedHttpExchange.Response = new HttpExchangeResponse
             {
-                StreamContent = responseStream.DeepClone()
+                Content = new HttpExchangeContent
+                {
+                    StreamContent = responseStream.DeepClone()
+                }
             };
 
             return mappedHttpExchange;

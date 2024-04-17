@@ -48,15 +48,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 expectedHttpExchage,
                 options => options.Excluding(
                     httpExchange => 
-                    httpExchange.Response.StreamContent));
+                    httpExchange.Response.Content.StreamContent));
 
             byte[] actualStreamContent =
                 ConvertStreamToByteArray(
-                    actualHttpExchange.Response.StreamContent);
+                    actualHttpExchange.Response.Content.StreamContent);
 
             byte[] expectedStreamContent =
                 ConvertStreamToByteArray(
-                    expectedHttpExchage.Response.StreamContent);
+                    expectedHttpExchage.Response.Content.StreamContent);
 
             actualStreamContent.Should().BeEquivalentTo(
                 expectedStreamContent);

@@ -62,7 +62,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             httpExchange.Response = new HttpExchangeResponse
             {
-                StreamContent = externalStreamContent
+                Content = new HttpExchangeContent
+                {
+                     StreamContent = externalStreamContent
+                }
             };
 
             return httpExchange;
