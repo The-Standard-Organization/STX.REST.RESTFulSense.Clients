@@ -2,11 +2,13 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
+using System;
+
+namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class HttpExchange
+    internal class RetryConditionHeader
     {
-        public HttpExchangeRequest Request { get; set; }
-        public HttpExchangeResponse Response { get; set; }
+        public DateTimeOffset? Date { get; init; }
+        public TimeSpan? Delta { get; init; }
     }
 }
