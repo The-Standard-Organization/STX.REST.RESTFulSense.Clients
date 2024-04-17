@@ -2,12 +2,11 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.Collections.Generic;
-
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
-    internal class HttpExchangeHeaders
+    internal class HttpExchange
     {
-        public IEnumerable<KeyValuePair<string, IEnumerable<string>>> Headers { get; init; }
+        public HttpExchangeRequest Request { get; set; }
+        public HttpExchangeResponse Response{ get; set; }
     }
 }
