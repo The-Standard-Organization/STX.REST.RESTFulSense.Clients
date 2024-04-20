@@ -6,9 +6,9 @@ using Xeptions;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions
 {
-    public class InvalidHttpExchangeException : Xeption
+    public class InvalidHttpExchangeRequestException : Xeption
     {
-        public InvalidHttpExchangeException(string message) : base(message)
+        public InvalidHttpExchangeRequestException(string message) : base(message)
         { }
     }
 }

@@ -14,16 +14,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             ValidateHttpExchangeNotNull(httpExchange);
             ValidateHttpExchangeRequestNotNull(httpExchange);
         }
-        
+
         private static void ValidateHttpExchangeNotNull(HttpExchange httpExchange)
         {
             if (httpExchange is null)
             {
                 throw new NullHttpExchangeException(
-                    message: "Null HttpExchange error occurred, fix errors and try again.");
+                    message: "Null HttpExchange error occurred, " +
+                             "fix errors and try again.");
             }
         }
-        
+
         private static void ValidateHttpExchangeRequestNotNull(HttpExchange httpExchange)
         {
             if (httpExchange.Request is null)
