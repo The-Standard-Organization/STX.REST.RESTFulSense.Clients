@@ -46,11 +46,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsNullAsync()
         {
             // given
-            var invalidHttpExchange = new HttpExchange();
-            invalidHttpExchange.Request = null;
+            var httpExchange = new HttpExchange();
+            httpExchange.Request = null;
 
-            var invalidHttpExchangeException = new InvalidHttpExchangeException(
-                message: "Invalid HttpExchange error occurred, fix errors and try again.");
+            var invalidHttpExchangeException = new NullHttpExchangeRequestException(
+                message: "Null HttpExchange request error occurred, fix errors and try again.");
             
             invalidHttpExchangeException.AddData(
                 key: nameof(HttpExchange.Request),
@@ -61,7 +61,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 innerException: invalidHttpExchangeException);
 
             // when
-            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(invalidHttpExchange);
+            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
 
             HttpExchangeValidationException actualHttpExchangeValidationException =
                 await Assert.ThrowsAsync<HttpExchangeValidationException>(

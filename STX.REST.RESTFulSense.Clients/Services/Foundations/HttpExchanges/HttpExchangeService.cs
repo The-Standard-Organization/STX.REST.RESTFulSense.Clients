@@ -26,7 +26,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             CancellationToken cancellationToken = default) =>
         TryCatch(async () =>
         {
-            ValidateHttpExchange(httpExchange);
+            ValidateHttpExchangeNotNull(httpExchange);
             
             HttpRequestMessage httpRequestMessage =
                 MapToHttpRequest(
@@ -47,9 +47,11 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             HttpExchangeRequest httpExchangeRequest,
             HttpMethod defaultHttpMethod)
         {
-            Uri baseAddress = new Uri(httpExchangeRequest.BaseAddress);
+            var baseAddress = new Uri(httpExchangeRequest.BaseAddress);
             string relativeUrl = httpExchangeRequest.RelativeUrl;
-            var httpMethod = GetHttpMethod(httpExchangeRequest, defaultHttpMethod);
+            HttpMethod httpMethod = GetHttpMethod(
+                customHttpMethod: httpExchangeRequest.HttpMethod,
+                defaultHttpMethod);
             
             return new HttpRequestMessage
             {
@@ -60,15 +62,15 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         }
         
         private static HttpMethod GetHttpMethod(
-            HttpExchangeRequest httpExchangeRequest,
+            string customHttpMethod,
             HttpMethod defaultHttpMethod)
         {
-            if (string.IsNullOrEmpty(httpExchangeRequest.HttpMethod))
+            if (string.IsNullOrEmpty(customHttpMethod))
             {
                 return defaultHttpMethod;
             }
 
-            return HttpMethod.Parse(httpExchangeRequest.HttpMethod);
+            return HttpMethod.Parse(customHttpMethod);
         }
         
         private static async ValueTask<HttpExchange> MapToHttpExchange(
