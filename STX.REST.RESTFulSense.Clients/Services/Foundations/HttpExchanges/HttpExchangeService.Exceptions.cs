@@ -31,7 +31,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Xeption exception)
         {
             return new HttpExchangeValidationException(
-                message: "HttpExchange validation errors occurred, please try again.",
+                message: "HttpExchange validation errors occurred, fix errors and try again.",
                 innerException: exception);
         }
     }
