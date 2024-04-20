@@ -22,7 +22,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             HttpExchange inputHttpExchange =
                 CreateHttpExchangeRequest(randomProperties);
 
-            HttpExchange expectedHttpExchage =
+            HttpExchange expectedHttpExchange =
                 CreateHttpExchangeResponse(
                      httpExchange: inputHttpExchange,
                      randomProperties: randomProperties);
@@ -45,7 +45,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             // then
             actualHttpExchange.Should().BeEquivalentTo(
-                expectedHttpExchage,
+                expectedHttpExchange,
                 options => options.Excluding(
                     httpExchange => 
                     httpExchange.Response.Content.StreamContent));
@@ -56,7 +56,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             byte[] expectedStreamContent =
                 ConvertStreamToByteArray(
-                    expectedHttpExchage.Response.Content.StreamContent);
+                    expectedHttpExchange.Response.Content.StreamContent);
 
             actualStreamContent.Should().BeEquivalentTo(
                 expectedStreamContent);

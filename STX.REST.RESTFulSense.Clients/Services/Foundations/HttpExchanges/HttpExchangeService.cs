@@ -29,7 +29,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             ValidateHttpExchange(httpExchange);
             
             HttpRequestMessage httpRequestMessage =
-                MapToHttpRequest(httpExchange.Request);
+                MapToHttpRequest(
+                    httpExchangeRequest: httpExchange.Request,
+                    defaultHttpMethod: HttpMethod.Get);
 
             HttpResponseMessage httpResponseMessage =
                 await httpBroker.SendRequestAsync(
@@ -40,19 +42,35 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 httpExchange,
                 httpResponseMessage);
         });
-
+        
         private static HttpRequestMessage MapToHttpRequest(
-            HttpExchangeRequest httpExchangeRequest)
+            HttpExchangeRequest httpExchangeRequest,
+            HttpMethod defaultHttpMethod)
         {
             Uri baseAddress = new Uri(httpExchangeRequest.BaseAddress);
             string relativeUrl = httpExchangeRequest.RelativeUrl;
-
+            var httpMethod = GetHttpMethod(httpExchangeRequest, defaultHttpMethod);
+            
             return new HttpRequestMessage
             {
-                RequestUri = new Uri(baseAddress, relativeUrl)
+                RequestUri = new Uri(baseAddress, relativeUrl),
+                Version = new Version(httpExchangeRequest.Version),
+                Method = httpMethod
             };
         }
+        
+        private static HttpMethod GetHttpMethod(
+            HttpExchangeRequest httpExchangeRequest,
+            HttpMethod defaultHttpMethod)
+        {
+            if (string.IsNullOrEmpty(httpExchangeRequest.HttpMethod))
+            {
+                return defaultHttpMethod;
+            }
 
+            return HttpMethod.Parse(httpExchangeRequest.HttpMethod);
+        }
+        
         private static async ValueTask<HttpExchange> MapToHttpExchange(
             HttpExchange httpExchange,
             HttpResponseMessage httpResponseMessage)

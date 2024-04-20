@@ -32,6 +32,20 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
 
+        private static string GetRandomHttpVersion()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, 2);
+            
+            switch (randomNumber)
+            {
+                case 0:
+                    return "1.1";
+                default:
+                    return "2.0";
+            }
+        }
+
         private static Stream CreateStream(string content)
         {
             byte[] contentBytes = Encoding.ASCII.GetBytes(content);
@@ -53,6 +67,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             string baseAddress = GetRandomBaseAddressUri();
             string randomRelativeURL = GetRandomString();
             string randomContent = GetRandomString();
+            string randomVersion = GetRandomHttpVersion();
 
             return new
             {
@@ -64,7 +79,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
                 HttpMethod = HttpMethod.Get,
                 ResponseStream = CreateStream(randomContent),
-                ResponseHttpStatus = HttpStatusCode.OK
+                ResponseHttpStatus = HttpStatusCode.OK,
+                Version = randomVersion
             };
         }
 
@@ -73,7 +89,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return new HttpRequestMessage()
             {
                 RequestUri = randomProperties.Url,
-                Method = randomProperties.HttpMethod
+                Method = randomProperties.HttpMethod,
             };
         }
 
@@ -96,7 +112,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 Request = new HttpExchangeRequest
                 {
                     BaseAddress = randomProperties.BaseAddress,
-                    RelativeUrl = randomProperties.RelativeUrl
+                    RelativeUrl = randomProperties.RelativeUrl,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = randomProperties.Version
                 }
             };
         }

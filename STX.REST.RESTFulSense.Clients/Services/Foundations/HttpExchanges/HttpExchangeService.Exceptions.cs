@@ -23,7 +23,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             catch (NullHttpExchangeException nullHttpExchangeException)
             {
                 throw CreateHttpExchangeValidationException(
-                    nullHttpExchangeException);
+                    exception: nullHttpExchangeException);
             }
         }
 
