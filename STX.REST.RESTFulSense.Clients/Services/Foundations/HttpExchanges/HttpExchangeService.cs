@@ -4,6 +4,7 @@
 
 using System;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,7 +32,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             HttpRequestMessage httpRequestMessage =
                 MapToHttpRequest(
                     httpExchangeRequest: httpExchange.Request,
-                    defaultHttpMethod: HttpMethod.Get);
+                    defaultHttpMethod: HttpMethod.Get,
+                    defaultHttpVersion: HttpVersion.Version11);
 
             HttpResponseMessage httpResponseMessage =
                 await httpBroker.SendRequestAsync(
@@ -45,18 +47,23 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         
         private static HttpRequestMessage MapToHttpRequest(
             HttpExchangeRequest httpExchangeRequest,
-            HttpMethod defaultHttpMethod)
+            HttpMethod defaultHttpMethod,
+            Version defaultHttpVersion)
         {
             var baseAddress = new Uri(httpExchangeRequest.BaseAddress);
             string relativeUrl = httpExchangeRequest.RelativeUrl;
             HttpMethod httpMethod = GetHttpMethod(
                 customHttpMethod: httpExchangeRequest.HttpMethod,
                 defaultHttpMethod);
-            
+
+            Version httpVersion = GetHttpVersion(
+                customHttpVersion: httpExchangeRequest.Version,
+                defaultHttpVersion: defaultHttpVersion);
+
             return new HttpRequestMessage
             {
                 RequestUri = new Uri(baseAddress, relativeUrl),
-                Version = new Version(httpExchangeRequest.Version),
+                Version = httpVersion,
                 Method = httpMethod
             };
         }
@@ -72,7 +79,19 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             return HttpMethod.Parse(customHttpMethod);
         }
-        
+
+        private static Version GetHttpVersion(
+           string customHttpVersion,
+           Version defaultHttpVersion)
+        {
+            if (string.IsNullOrEmpty(customHttpVersion))
+            {
+                return defaultHttpVersion;
+            }
+
+            return Version.Parse(customHttpVersion);
+        }
+
         private static async ValueTask<HttpExchange> MapToHttpExchange(
             HttpExchange httpExchange,
             HttpResponseMessage httpResponseMessage)
