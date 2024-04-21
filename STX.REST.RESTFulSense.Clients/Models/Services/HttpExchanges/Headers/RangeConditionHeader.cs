@@ -6,7 +6,7 @@ using System;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class RangeConditionHeader
+    public class RangeConditionHeader
     {
         public DateTimeOffset Date { get; init; }
         public string EntityTag { get; init; }

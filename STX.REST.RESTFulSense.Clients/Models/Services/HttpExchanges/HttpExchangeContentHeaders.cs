@@ -7,7 +7,7 @@ using System;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
-    internal class HttpExchangeContentHeaders
+    public class HttpExchangeContentHeaders
     {
         public string[] Allow { get; init; }
         public ContentDispositionHeader ContentDisposition { get; init; }

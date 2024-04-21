@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class ViaHeader
+    public class ViaHeader
     {
         public string ProtocolName { get; init; }
         public string ProtocolVersion { get; init; }

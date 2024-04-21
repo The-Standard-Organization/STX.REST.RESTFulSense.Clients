@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class RangeHeader
+    public class RangeHeader
     {
         public string Unit { get; init; }
         public RangeItemHeader[] Ranges { get; init; }

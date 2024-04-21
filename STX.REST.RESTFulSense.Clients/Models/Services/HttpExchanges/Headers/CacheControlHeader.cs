@@ -6,7 +6,7 @@ using System;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class CacheControlHeader
+    public class CacheControlHeader
     {
         public bool NoCache { get; init; }
         public string[] NoCacheHeaders { get; init; }

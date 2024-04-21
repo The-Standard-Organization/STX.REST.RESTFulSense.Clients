@@ -6,7 +6,7 @@ using System.IO;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
-    internal class HttpExchangeContent
+    public class HttpExchangeContent
     {
         public HttpExchangeContentHeaders Headers { get; init; }
         public Stream StreamContent { get; set; }

@@ -7,7 +7,7 @@ using System;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
-    internal class HttpExchangeResponseHeaders
+    public class HttpExchangeResponseHeaders
     {
         public string[] AcceptRanges { get; init; }
         public TimeSpan? Age { get; init; }

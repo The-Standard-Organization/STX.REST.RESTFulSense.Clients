@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class NameValueWithParameters
+    public class NameValueWithParameters
     {
         public string Name { get; init; }
         public NameValueHeader[] Parameters { get; init; }
