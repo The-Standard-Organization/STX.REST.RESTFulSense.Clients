@@ -51,6 +51,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Condition = @object is null,
             Message = "Value is required"
         };
+
+        private static dynamic IsInvalid(string text) => new
+        {
+            Condition = string.IsNullOrWhiteSpace(text),
+            Message = "Value is required"
+        };
         
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
@@ -66,9 +72,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         key: parameter,
                         value: rule.Message);
                 }
-                
-                invalidHttpExchangeRequestException.ThrowIfContainsErrors();
             }
+            
+            invalidHttpExchangeRequestException.ThrowIfContainsErrors();
         }
     }
 }

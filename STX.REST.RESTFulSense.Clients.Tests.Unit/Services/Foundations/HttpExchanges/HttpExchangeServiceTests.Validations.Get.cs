@@ -70,38 +70,42 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             this.httpBroker.VerifyNoOtherCalls();
         }
 
-        [Fact]
-        private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsInvalidAsync()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsInvalidAsync(
+            string invalidString)
         {
             // given
             var httpExchange = new HttpExchange();
 
             httpExchange.Request = new HttpExchangeRequest
             {
-                BaseAddress = null,
-                RelativeUrl = null,
-                HttpMethod = null,
-                Version = null,
+                BaseAddress = invalidString,
+                RelativeUrl = invalidString,
+                HttpMethod = invalidString,
+                Version = invalidString,
             };
 
             var invalidHttpExchangeRequestException = new InvalidHttpExchangeRequestException(
                 message: "Invalid HttpExchange request error occurred, fix errors and try again.");
             
-            invalidHttpExchangeRequestException.Data.Add(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.BaseAddress),
                 value: "Value is required");
             
-            invalidHttpExchangeRequestException.AddData(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.RelativeUrl),
-                values: "Value is required");
+                value: "Value is required");
             
-            invalidHttpExchangeRequestException.AddData(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.HttpMethod),
-                values: "Value is required");
+                value: "Value is required");
             
-            invalidHttpExchangeRequestException.AddData(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.Version),
-                values: "Value is required");
+                value: "Value is required");
             
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",
