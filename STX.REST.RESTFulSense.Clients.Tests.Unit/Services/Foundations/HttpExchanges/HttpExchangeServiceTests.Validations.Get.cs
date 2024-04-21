@@ -75,21 +75,24 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Theory]
-        [InlineData(null)]
-        [InlineData("")]
-        [InlineData(" ")]
+        [InlineData(null, null, "POST", "0.1")]
+        [InlineData("", "", "POST", "0,1")]
+        [InlineData(" ", " ", "POST", "0.1")]
         private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsInvalidAsync(
-            string invalidString)
+            string invalidBaseAddress,
+            string invalidRelativeUrl,
+            string invalidHttpMethod,
+            string invalidHttpVersion)
         {
             // given
             var httpExchange = new HttpExchange();
 
             httpExchange.Request = new HttpExchangeRequest
             {
-                BaseAddress = invalidString,
-                RelativeUrl = invalidString,
-                HttpMethod = invalidString,
-                Version = invalidString,
+                BaseAddress = invalidBaseAddress,
+                RelativeUrl = invalidRelativeUrl,
+                HttpMethod = invalidHttpMethod,
+                Version = invalidHttpVersion,
             };
 
             var invalidHttpExchangeRequestException = new InvalidHttpExchangeRequestException(
@@ -105,11 +108,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             
             invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.HttpMethod),
-                value: "Value is required");
+                value: "HttpMethod required is invalid");
             
             invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.Version),
-                value: "Value is required");
+                value: "HttpVersion required is invalid");
             
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",

@@ -2,22 +2,24 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System;
-using System.Data;
-using System.Net;
-using System.Net.Http;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
+using System;
+using System.Net;
+using System.Net.Http;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
-        private static void ValidateHttpExchange(HttpExchange httpExchange)
+        private static void ValidateHttpExchange(
+            HttpExchange httpExchange,
+            HttpMethod defaultHttpMethod,
+            Version defaultHttpVersion)
         {
             ValidateHttpExchangeNotNull(httpExchange);
             ValidateHttpExchangeRequestNotNull(httpExchange.Request);
-            ValidateHttpExchangeRequestNotInvalid(httpExchange.Request);
+            ValidateHttpExchangeRequestNotInvalid(httpExchange.Request, defaultHttpMethod, defaultHttpVersion);
         }
 
         private static void ValidateHttpExchangeNotNull(HttpExchange httpExchange)
@@ -35,7 +37,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 (Rule: IsInvalid(httpExchangeRequest), Parameter: nameof(HttpExchange.Request)));
         }
 
-        private static void ValidateHttpExchangeRequestNotInvalid(HttpExchangeRequest httpExchangeRequest)
+        private static void ValidateHttpExchangeRequestNotInvalid(
+            HttpExchangeRequest httpExchangeRequest,
+            HttpMethod defaultHttpMethod,
+            Version defaultHttpVersion)
         {
             Validate(
                 (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
@@ -44,10 +49,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 (Rule: IsInvalid(httpExchangeRequest.RelativeUrl),
                     Parameter: nameof(HttpExchangeRequest.RelativeUrl)),
 
-                (Rule: IsInvalid(httpExchangeRequest.HttpMethod),
+                (Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, defaultHttpMethod),
                     Parameter: nameof(HttpExchangeRequest.HttpMethod)),
 
-                (Rule: IsInvalid(httpExchangeRequest.Version),
+                (Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, defaultHttpVersion),
                     Parameter: nameof(HttpExchangeRequest.Version)));
         }
 
@@ -61,6 +66,30 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             Condition = string.IsNullOrWhiteSpace(text),
             Message = "Value is required"
+        };
+
+        private static dynamic IsInvalidHttpMethod(string customHttpMethod, HttpMethod defaultHttpMethod) => new
+        {
+            Condition =
+                (defaultHttpMethod is null
+                    && string.IsNullOrWhiteSpace(customHttpMethod))
+                || (defaultHttpMethod is not null
+                    && !string.IsNullOrWhiteSpace(customHttpMethod)
+                    && customHttpMethod != defaultHttpMethod.Method),
+
+            Message = "HttpMethod required is invalid"
+        };
+
+        private static dynamic IsInvalidHttpVersion(string customHttpVersion, Version defaultHttpVersion) => new
+        {
+            Condition =
+                (customHttpVersion is not null
+                    && customHttpVersion != HttpVersion.Version10.ToString()
+                    && customHttpVersion != HttpVersion.Version11.ToString()
+                    && customHttpVersion != HttpVersion.Version20.ToString()
+                    && customHttpVersion != HttpVersion.Version30.ToString()),
+
+            Message = "HttpVersion required is invalid"
         };
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
@@ -78,7 +107,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         value: rule.Message);
                 }
             }
-            
+
             invalidHttpExchangeRequestException.ThrowIfContainsErrors();
         }
     }

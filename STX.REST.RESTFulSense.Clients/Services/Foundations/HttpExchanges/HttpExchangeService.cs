@@ -27,13 +27,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             CancellationToken cancellationToken = default) =>
         TryCatch(async () =>
         {
-            ValidateHttpExchange(httpExchange);
+            HttpMethod defaultHttpMethod = HttpMethod.Get;
+            Version defaultHttpVersion = HttpVersion.Version11;
+
+            ValidateHttpExchange(httpExchange, defaultHttpMethod, defaultHttpVersion);
             
             HttpRequestMessage httpRequestMessage =
                 MapToHttpRequest(
                     httpExchangeRequest: httpExchange.Request,
-                    defaultHttpMethod: HttpMethod.Get,
-                    defaultHttpVersion: HttpVersion.Version11);
+                    defaultHttpMethod: defaultHttpMethod,
+                    defaultHttpVersion: defaultHttpVersion);
 
             HttpResponseMessage httpResponseMessage =
                 await httpBroker.SendRequestAsync(
