@@ -10,6 +10,6 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
     internal class HttpExchangeContent
     {
         public HttpExchangeContentHeaders Headers { get; init; }
-        public ValueTask<Stream> StreamContent { get; set; }
+        public ValueTask<Stream> StreamContent { get; init; }
     }
 }
