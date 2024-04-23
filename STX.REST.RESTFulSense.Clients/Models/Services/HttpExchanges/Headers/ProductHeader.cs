@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class ProductHeader
+    public class ProductHeader
     {
         public string Name { get; init; }
         public string Version { get; init; }

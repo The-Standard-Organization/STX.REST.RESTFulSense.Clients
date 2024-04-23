@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
-    internal class HttpExchangeResponse
+    public class HttpExchangeResponse
     {
         public HttpExchangeContent Content { get; init; }
         public HttpExchangeResponseHeaders Headers { get; init; }

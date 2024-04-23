@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class StringWithQualityHeader
+    public class StringWithQualityHeader
     {
         public string Value { get; init; }
         public double? Quality { get; init; }
