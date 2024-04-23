@@ -25,7 +25,10 @@ namespace STX.REST.RESTFulSense.Clients.Clients
         /// Used for custom and advance scenarios where headers and other things must be specified,
         /// </summary>
         /// <typeparam name="TResponseContent"></typeparam>
-        /// <param name="httpExchange">Only create HttpExchangeRequest, if HttpExchangeContent (under the request) or HttpExchangeResponse exists then an exception will thrown</param>
+        /// <param name="httpExchange">
+        /// Only create HttpExchangeRequest, if HttpExchangeContent 
+        /// (under the request) or HttpExchangeResponse exists then an exception will thrown
+        /// </param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         ValueTask<(TResponseContent, HttpExchange)> GetContentAsync<TResponseContent>(
