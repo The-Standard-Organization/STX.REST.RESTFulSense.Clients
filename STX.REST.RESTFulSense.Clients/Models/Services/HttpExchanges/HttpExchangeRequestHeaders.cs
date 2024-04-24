@@ -7,7 +7,7 @@ using System;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
-    internal class HttpExchangeRequestHeaders
+    public class HttpExchangeRequestHeaders
     {
         public MediaTypeHeader[] Accept { get; init; }
         public StringWithQualityHeader[] AcceptCharset { get; init; }

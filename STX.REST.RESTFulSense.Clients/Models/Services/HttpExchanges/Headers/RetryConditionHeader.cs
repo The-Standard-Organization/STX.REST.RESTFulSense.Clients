@@ -6,7 +6,7 @@ using System;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class RetryConditionHeader
+    public class RetryConditionHeader
     {
         public DateTimeOffset? Date { get; init; }
         public TimeSpan? Delta { get; init; }

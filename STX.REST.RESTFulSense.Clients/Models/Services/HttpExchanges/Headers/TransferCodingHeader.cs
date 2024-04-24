@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class TransferCodingHeader
+    public class TransferCodingHeader
     {
         public double? Quality { get; init; }
         public string Value { get; init; }

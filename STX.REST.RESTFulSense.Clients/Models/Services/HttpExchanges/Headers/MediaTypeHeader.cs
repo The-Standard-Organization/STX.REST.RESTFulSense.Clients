@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class MediaTypeHeader
+    public class MediaTypeHeader
     {
         public string CharSet { get; init; }
         public string MediaType { get; init; }

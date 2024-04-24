@@ -4,7 +4,7 @@
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class ContentRangeHeader
+    public class ContentRangeHeader
     {
         public string Unit { get; init; }
         public long? From { get; init; }

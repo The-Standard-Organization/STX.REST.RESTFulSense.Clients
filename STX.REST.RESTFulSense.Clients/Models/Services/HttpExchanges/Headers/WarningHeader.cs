@@ -6,7 +6,7 @@ using System;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class WarningHeader
+    public class WarningHeader
     {
         public int Code { get; init; }
         public string Agent { get; init; }

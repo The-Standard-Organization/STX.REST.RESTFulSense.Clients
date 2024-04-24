@@ -6,7 +6,7 @@ using System;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
-    internal class ContentDispositionHeader
+    public class ContentDispositionHeader
     {
         public string DispositionType { get; init; }
         public string Name { get; init; }
