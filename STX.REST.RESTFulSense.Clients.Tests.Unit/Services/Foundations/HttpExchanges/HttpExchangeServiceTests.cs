@@ -7,6 +7,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Force.DeepCloner;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Brokers.Https;
@@ -32,7 +33,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static string GetRandomString() =>
             new MnemonicString().GetValue();
 
-        private static string GetRandomHttpVersion()
+        private static Version GetRandomHttpVersion()
         {
             Random random = new Random();
             int randomNumber = random.Next(0, 2);
@@ -40,9 +41,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             switch (randomNumber)
             {
                 case 0:
-                    return "1.1";
+                    return HttpVersion.Version11;
                 default:
-                    return "2.0";
+                    return HttpVersion.Version11;;
             }
         }
 
@@ -67,7 +68,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             string baseAddress = GetRandomBaseAddressUri();
             string randomRelativeURL = GetRandomString();
             string randomContent = GetRandomString();
-            string randomVersion = GetRandomHttpVersion();
+            Version randomVersion = GetRandomHttpVersion();
 
             return new
             {
@@ -84,7 +85,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static HttpRequestMessage CreateExchangeRequestMessage(dynamic randomProperties)
+        private static HttpRequestMessage CreateHttpRequestMessage(dynamic randomProperties)
         {
             return new HttpRequestMessage()
             {
@@ -93,7 +94,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static HttpResponseMessage CreateExchangeResponseMessage(dynamic randomProperties)
+        private static HttpResponseMessage CreateHttpResponseMessage(dynamic randomProperties)
         {
             HttpResponseMessage httpResponseMessage =
                 new HttpResponseMessage(randomProperties.ResponseHttpStatus)
@@ -114,7 +115,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     BaseAddress = randomProperties.BaseAddress,
                     RelativeUrl = randomProperties.RelativeUrl,
                     HttpMethod = HttpMethod.Get.Method,
-                    Version = randomProperties.Version
+                    Version = randomProperties.Version.ToString()
                 }
             };
         }
@@ -124,7 +125,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
            dynamic randomProperties)
         {
             HttpExchange mappedHttpExchange = httpExchange.DeepClone();
-            Stream responseStream = randomProperties.ResponseStream;
+            var responseStream = new ValueTask<Stream>(randomProperties.ResponseStream);
 
             mappedHttpExchange.Response = new HttpExchangeResponse
             {
@@ -137,10 +138,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return mappedHttpExchange;
         }
 
-        private static byte[] ConvertStreamToByteArray(Stream stream)
+        private static async ValueTask<byte[]> ConvertStreamToByteArray(ValueTask<Stream> streamContentTask)
         {
+            Stream streamContent = await streamContentTask;
             using MemoryStream memoryStream = new MemoryStream();
-            stream.CopyTo(memoryStream);
+            streamContent.CopyTo(memoryStream);
 
             return memoryStream.ToArray();
         }

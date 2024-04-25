@@ -28,10 +28,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                      randomProperties: randomProperties);
 
             HttpRequestMessage inputHttpRequestMessage =
-                CreateExchangeRequestMessage(randomProperties);
+                CreateHttpRequestMessage(randomProperties);
 
             HttpResponseMessage expectedHttpResponseMessage =
-                CreateExchangeResponseMessage(randomProperties);
+                CreateHttpResponseMessage(randomProperties);
 
             this.httpBroker.Setup(broker =>
                 broker.SendRequestAsync(
@@ -51,11 +51,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     httpExchange.Response.Content.StreamContent));
 
             byte[] actualStreamContent =
-                ConvertStreamToByteArray(
+                await ConvertStreamToByteArray(
                     actualHttpExchange.Response.Content.StreamContent);
 
             byte[] expectedStreamContent =
-                ConvertStreamToByteArray(
+                await ConvertStreamToByteArray(
                     expectedHttpExchange.Response.Content.StreamContent);
 
             actualStreamContent.Should().BeEquivalentTo(

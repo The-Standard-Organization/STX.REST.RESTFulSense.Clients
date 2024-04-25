@@ -106,7 +106,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 Content = new HttpExchangeContent
                 {
-                     StreamContent = externalStreamContent
+                     StreamContent = new ValueTask<Stream>(externalStreamContent)
                 }
             };
 
