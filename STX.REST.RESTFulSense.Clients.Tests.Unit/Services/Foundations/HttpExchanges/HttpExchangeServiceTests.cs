@@ -55,6 +55,22 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             return stream;
         }
+        
+        private static HttpStatusCode GetRandomHttpStatusCode()
+        {
+            int min = (int)HttpStatusCode.Continue;
+            int max = (int)HttpStatusCode.HttpVersionNotSupported;
+            Random random = new Random();
+
+            HttpStatusCode randomHttpStatusCode =
+                (HttpStatusCode)random.Next(min, max + 1);
+
+            return randomHttpStatusCode;
+        }
+
+        private static bool IsSucessStatusCode(HttpStatusCode httpStatusCode) => 
+            (int)httpStatusCode >= 200 && (int)httpStatusCode <= 299;
+
 
         private static string GetRandomBaseAddressUri()
         {
@@ -69,7 +85,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             string randomRelativeURL = GetRandomString();
             string randomContent = GetRandomString();
             Version randomVersion = GetRandomHttpVersion();
-
+            HttpStatusCode randomStatusCode = GetRandomHttpStatusCode();
+            string randomReasonPhrase = GetRandomString();
+            HttpExchangeResponseHeaders randomResponseHeaders = CreateHttpExchangeResponseHeaders();
+            
             return new
             {
                 BaseAddress = baseAddress,
@@ -81,7 +100,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 HttpMethod = HttpMethod.Get,
                 ResponseStream = CreateStream(randomContent),
                 ResponseHttpStatus = HttpStatusCode.OK,
-                Version = randomVersion
+                Version = randomVersion,
+                StatusCode = randomStatusCode,
+                IsSuccessStatusCode = IsSucessStatusCode(randomStatusCode),
+                ReasonPhrase = randomReasonPhrase,
+                ResponseHeaders = randomResponseHeaders
             };
         }
 
@@ -119,7 +142,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }
             };
         }
+        
+        private static HttpExchangeResponseHeaders CreateHttpExchangeResponseHeaders() =>
+            CreateHttpExchangeResponseHeadersFiller().Create();
 
+        private static Filler<HttpExchangeResponseHeaders> CreateHttpExchangeResponseHeadersFiller()
+        {
+            var filler = new Filler<HttpExchangeResponseHeaders>();
+            filler.Setup();
+
+            return filler;
+        }
+        
         private static HttpExchange CreateHttpExchangeResponse(
            HttpExchange httpExchange,
            dynamic randomProperties)
@@ -133,7 +167,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 {
                     StreamContent = new ValueTask<Stream>(
                         responseStream.DeepClone())
-                }
+                },
+                Version = randomProperties.Version.ToString(),
+                StatusCode = randomProperties.StatusCode,
+                IsSuccessStatusCode = randomProperties.IsSuccessStatusCode,
+                ReasonPhrase = randomProperties.ReasonPhrase,
+                Headers = randomProperties.ResponseHeaders
             };
 
             return mappedHttpExchange;
