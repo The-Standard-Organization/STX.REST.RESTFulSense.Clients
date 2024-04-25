@@ -125,13 +125,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
            dynamic randomProperties)
         {
             HttpExchange mappedHttpExchange = httpExchange.DeepClone();
-            var responseStream = new ValueTask<Stream>(randomProperties.ResponseStream);
+            Stream responseStream = randomProperties.ResponseStream;
 
             mappedHttpExchange.Response = new HttpExchangeResponse
             {
                 Content = new HttpExchangeContent
                 {
-                    StreamContent = responseStream.DeepClone()
+                    StreamContent = new ValueTask<Stream>(
+                        responseStream.DeepClone())
                 }
             };
 

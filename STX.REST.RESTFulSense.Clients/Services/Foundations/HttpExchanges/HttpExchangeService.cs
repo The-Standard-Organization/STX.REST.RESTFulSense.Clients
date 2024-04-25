@@ -43,7 +43,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     httpRequestMessage: httpRequestMessage,
                     cancellationToken: cancellationToken);
 
-            return await MapToHttpExchange(
+            return MapToHttpExchange(
                 httpExchange,
                 httpResponseMessage);
         });
@@ -95,18 +95,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return Version.Parse(customHttpVersion);
         }
 
-        private static async ValueTask<HttpExchange> MapToHttpExchange(
+        private static HttpExchange MapToHttpExchange(
             HttpExchange httpExchange,
             HttpResponseMessage httpResponseMessage)
         {
-            Stream externalStreamContent =
-                await httpResponseMessage.Content.ReadAsStreamAsync();
-
             httpExchange.Response = new HttpExchangeResponse
             {
                 Content = new HttpExchangeContent
                 {
-                     StreamContent = new ValueTask<Stream>(externalStreamContent)
+                     StreamContent = new ValueTask<Stream>(
+                         httpResponseMessage.Content.ReadAsStreamAsync())
                 }
             };
 
