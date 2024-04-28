@@ -23,6 +23,6 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
         public string[] PrivateHeaders { get; init; }
         public bool MustRevalidate { get; init; }
         public bool ProxyRevalidate { get; init; }
-        public NameValueHeader Extensions { get; init; }
+        public NameValueHeader[] Extensions { get; init; }
     }
 }
