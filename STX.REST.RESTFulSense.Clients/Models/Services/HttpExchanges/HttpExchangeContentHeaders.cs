@@ -17,6 +17,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public Uri ContentLocation { get; init; }
         public byte[] ContentMD5 { get; init; }
         public ContentRangeHeader ContentRange { get; init; }
+        public MediaTypeHeader ContentType { get; init; }
         public DateTimeOffset? Expires { get; init; }
         public DateTimeOffset? LastModified { get; init; }
     }
