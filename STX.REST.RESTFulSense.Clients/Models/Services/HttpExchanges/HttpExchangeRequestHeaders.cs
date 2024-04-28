@@ -30,6 +30,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public DateTimeOffset? IfUnmodifiedSince { get; init; }
         public int? MaxForwards { get; init; }
         public NameValueHeader[] Pragma { get; init; }
+        public string Protocol { get; init; }
         public AuthenticationHeader ProxyAuthorization { get; init; }
         public RangeHeader Range { get; init; }
         public Uri Referrer { get; init; }

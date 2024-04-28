@@ -18,16 +18,16 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public string ETag { get; init; }
         public Uri Location { get; init; }
         public NameValueHeader[] Pragma { get; init; }
-        public AuthenticationHeader ProxyAuthenticate { get; init; }
+        public AuthenticationHeader[] ProxyAuthenticate { get; init; }
         public RetryConditionHeader RetryAfter { get; init; }
-        public ProductInfoHeader Server { get; init; }
+        public ProductInfoHeader[] Server { get; init; }
         public string[] Trailer { get; init; }
         public TransferCodingHeader[] TransferEncoding { get; init; }
         public bool? TransferEncodingChunked { get; init; }
         public ProductHeader[] Upgrade { get; init; }
         public string[] Vary { get; init; }
-        public ViaHeader Via { get; init; }
-        public WarningHeader Warning { get; init; }
-        public AuthenticationHeader WwwAuthenticate { get; init; }
+        public ViaHeader[] Via { get; init; }
+        public WarningHeader[] Warning { get; init; }
+        public AuthenticationHeader[] WwwAuthenticate { get; init; }
     }
 }
