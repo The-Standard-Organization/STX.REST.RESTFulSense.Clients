@@ -2,11 +2,11 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.Net.Http;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
+using System.Net.Http;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
@@ -17,7 +17,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private async Task ShouldSendHttpRequestWhenGetAsyncIsCalledAsync()
         {
             // given
-            dynamic randomProperties = CreateRandomExchangeProperties();
+            dynamic randomProperties = CreateRandomHttpProperties();
 
             HttpExchange inputHttpExchange =
                 CreateHttpExchangeRequest(randomProperties);
@@ -47,7 +47,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             actualHttpExchange.Should().BeEquivalentTo(
                 expectedHttpExchange,
                 options => options.Excluding(
-                    httpExchange => 
+                    httpExchange =>
                     httpExchange.Response.Content.StreamContent));
 
             byte[] actualStreamContent =

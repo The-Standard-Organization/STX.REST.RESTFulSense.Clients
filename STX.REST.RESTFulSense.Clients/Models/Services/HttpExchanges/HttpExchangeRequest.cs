@@ -13,6 +13,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public IDictionary<string, object> UrlParameters { get; init; }
         public string HttpMethod { get; init; }
         public string Version { get; init; }
+        public int VersionPolicy { get; init; }
         public HttpExchangeRequestHeaders Headers { get; init; }
         public HttpExchangeContent Content { get; init; }
     }
