@@ -87,7 +87,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     && customHttpVersion != HttpVersion.Version10.ToString()
                     && customHttpVersion != HttpVersion.Version11.ToString()
                     && customHttpVersion != HttpVersion.Version20.ToString()
-                    && customHttpVersion != HttpVersion.Version30.ToString()),
+                    && customHttpVersion != HttpVersion.Version30.ToString())
+                || (customHttpVersion is null
+                    && defaultHttpVersion != HttpVersion.Version10
+                    && defaultHttpVersion != HttpVersion.Version11
+                    && defaultHttpVersion != HttpVersion.Version20
+                    && defaultHttpVersion != HttpVersion.Version30),
 
             Message = "HttpVersion required is invalid"
         };
