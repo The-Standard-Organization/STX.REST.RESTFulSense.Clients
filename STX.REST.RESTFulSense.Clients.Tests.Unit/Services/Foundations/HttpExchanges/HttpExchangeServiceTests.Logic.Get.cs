@@ -46,9 +46,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             // then
             actualHttpExchange.Should().BeEquivalentTo(
                 expectedHttpExchange,
-                options => options.Excluding(
-                    httpExchange =>
-                    httpExchange.Response.Content.StreamContent));
+                options =>
+                    options.Excluding(httpExchange =>
+                        httpExchange.Response.Content.StreamContent));
 
             byte[] actualStreamContent =
                 await ConvertStreamToByteArray(

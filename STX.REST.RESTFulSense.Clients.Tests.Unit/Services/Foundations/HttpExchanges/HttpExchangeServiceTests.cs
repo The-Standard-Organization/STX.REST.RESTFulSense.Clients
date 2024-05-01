@@ -51,11 +51,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static bool GetRandomBoolean() =>
             Randomizer<bool>.Create();
 
-        private static object[] CreateRandomStringArray()
+        private static string[] CreateRandomStringArray()
         {
             return Enumerable.Range(0, GetRandomNumber())
                 .Select(i => GetRandomString())
                     .ToArray();
+        }
+
+        private static byte[] CreateRandomByteArray()
+        {
+            string randomString = GetRandomString();
+
+            return Encoding.UTF8.GetBytes(randomString);
         }
 
         private static string CreateRandomBaseAddress()
@@ -134,9 +141,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         private static bool IsSuccessStatusCode(HttpStatusCode httpStatusCode) =>
-            (int)httpStatusCode >= 200 && (int)httpStatusCode <= 299;
+            httpStatusCode >= HttpStatusCode.OK && httpStatusCode < HttpStatusCode.MultipleChoices;
 
-        private static dynamic[] CreateRandomNameValueProperties()
+        private static dynamic[] CreateRandomNameValueArray()
         {
             return Enumerable.Range(0, GetRandomNumber()).Select(item =>
             {
@@ -148,19 +155,19 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             }).ToArray();
         }
 
-        private static dynamic[] CreateRandomNameValueWithParametersProperties()
+        private static dynamic[] CreateRandomNameValueWithParametersArray()
         {
             return Enumerable.Range(0, GetRandomNumber()).Select(item =>
             {
                 return new
                 {
                     Name = GetRandomString(),
-                    Parameters = CreateRandomNameValueProperties()
+                    Parameters = CreateRandomNameValueArray()
                 };
             }).ToArray();
         }
 
-        private static dynamic[] CreateRandomAuthenticationHeaderProperties()
+        private static dynamic[] CreateRandomAuthenticationHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber()).Select(item =>
             {
@@ -172,7 +179,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             }).ToArray();
         }
 
-        private static dynamic CreateRandomCacheControlHeaderProperties()
+        private static dynamic CreateRandomCacheControlHeader()
         {
             return new
             {
@@ -191,11 +198,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 PrivateHeaders = CreateRandomStringArray(),
                 MustRevalidate = GetRandomBoolean(),
                 ProxyRevalidate = GetRandomBoolean(),
-                Extensions = CreateRandomNameValueProperties()
+                Extensions = CreateRandomNameValueArray()
             };
         }
 
-        private static dynamic CreateRandomProductHeaderProperties()
+        private static dynamic CreateRandomProductHeader()
         {
             return new
             {
@@ -204,14 +211,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic[] CreateArrayProductHeaderProperties()
+        private static dynamic[] CreateRandomProductHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber()).Select(item =>
-                CreateRandomProductHeaderProperties())
+                CreateRandomProductHeader())
                 .ToArray();
         }
 
-        private static dynamic CreateRandomRetryConditionHeaderProperties()
+        private static dynamic CreateRandomRetryConditionHeader()
         {
             return new
             {
@@ -220,23 +227,23 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateProductInfoHeaderProperties()
+        private static dynamic CreateRandomProductInfoHeader()
         {
             return new
             {
                 Comment = GetRandomString(),
-                ProductHeader = CreateRandomProductHeaderProperties()
+                ProductHeader = CreateRandomProductHeader()
             };
         }
 
-        private static dynamic[] CreateArrayProductInfoHeaderProperties()
+        private static dynamic[] CreateRandomProductInfoHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber()).Select(item =>
-                CreateProductInfoHeaderProperties())
+                CreateRandomProductInfoHeader())
                 .ToArray();
         }
 
-        private static dynamic[] CreateArrayTransferCodingHeaderProperties()
+        private static dynamic[] CreateTransferCodingHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber()).Select(item =>
             {
@@ -244,12 +251,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 {
                     Quantity = GetRandomDouble(),
                     Value = GetRandomString(),
-                    Parameters = CreateRandomNameValueProperties()
+                    Parameters = CreateRandomNameValueArray()
                 };
             }).ToArray();
         }
 
-        private static dynamic[] CreateArrayViaHeaderProperties()
+        private static dynamic[] CreateViaHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber()).Select(item =>
             {
@@ -263,7 +270,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             }).ToArray();
         }
 
-        private static dynamic[] CreateArrayWarningHeaderProperties()
+        private static dynamic[] CreateWarningHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber()).Select(item =>
             {
@@ -277,20 +284,24 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             }).ToArray();
         }
 
-        private static dynamic[] CreateRandomMediaTypeHeaderArrayPropeties()
+        private static dynamic CreateRandomMediaTypeHeader()
         {
-            return Enumerable.Range(0, GetRandomNumber()).Select(item =>
+            return new
             {
-                return new
-                {
-                    Charset = GetRandomString(),
-                    MediaType = GetRandomString(),
-                    Quality = GetRandomDouble()
-                };
-            }).ToArray();
+                Charset = GetRandomString(),
+                MediaType = GetRandomString(),
+                Quality = GetRandomDouble()
+            };
         }
 
-        private static dynamic CreateRandomRangeConditionHeaderProperties()
+        private static dynamic[] CreateRandomMediaTypeHeaderArray()
+        {
+            return Enumerable.Range(0, GetRandomNumber()).Select(item =>
+                CreateRandomMediaTypeHeader())
+                .ToArray();
+        }
+
+        private static dynamic CreateRandomRangeConditionHeader()
         {
             return new
             {
@@ -299,7 +310,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateRandomRangeItemHeaderProperties()
+        private static dynamic CreateRandomRangeItemHeader()
         {
             return new
             {
@@ -308,16 +319,16 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateRandomRangeHeaderProperties()
+        private static dynamic CreateRandomRangeHeader()
         {
             return new
             {
                 Unit = GetRandomString(),
-                Ranges = CreateRandomRangeItemHeaderProperties()
+                Ranges = CreateRandomRangeItemHeader()
             };
         }
 
-        private static dynamic[] CreateRandomStringQualityHeaderArrayProperties()
+        private static dynamic[] CreateRandomStringQualityHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber()).Select(item =>
             {
@@ -329,90 +340,140 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             }).ToArray();
         }
 
-        private static dynamic CreateRandomHttpRequestHeaderProperties()
+        private static dynamic CreateRandomContentDispositionHeader()
         {
             return new
             {
-                Accept = CreateRandomMediaTypeHeaderArrayPropeties(),
-                AcceptCharset = CreateRandomStringQualityHeaderArrayProperties(),
-                AcceptEncoding = CreateRandomStringQualityHeaderArrayProperties(),
-                AcceptLanguage = CreateRandomStringQualityHeaderArrayProperties(),
-                AuthenticationHeader = CreateRandomAuthenticationHeaderProperties(),
-                CacheControl = CreateRandomCacheControlHeaderProperties(),
+                DispositionType = GetRandomString(),
+                Name = GetRandomString(),
+                FileName = GetRandomString(),
+                FileNameStar = GetRandomString(),
+                CreationDate = GetRandomDate(),
+                ModificationDate = GetRandomDate(),
+                ReadDate = GetRandomDate(),
+                Size = GetRandomNumber(),
+            };
+        }
+
+        private static dynamic CreateRandomContentRangeHeader()
+        {
+            return new
+            {
+                Unit = GetRandomString(),
+                From = GetRandomNumber(),
+                To = GetRandomNumber(),
+                Length = GetRandomNumber()
+            };
+        }
+
+        private static dynamic CreateRandomHttpRequestHeader()
+        {
+            return new
+            {
+                Accept = CreateRandomMediaTypeHeaderArray(),
+                AcceptCharset = CreateRandomStringQualityHeaderArray(),
+                AcceptEncoding = CreateRandomStringQualityHeaderArray(),
+                AcceptLanguage = CreateRandomStringQualityHeaderArray(),
+                AuthenticationHeader = CreateRandomAuthenticationHeaderArray(),
+                CacheControl = CreateRandomCacheControlHeader(),
                 Connection = GetRandomString(),
                 ConnectionClose = GetRandomBoolean(),
                 Date = GetRandomDate(),
-                Expect = CreateRandomNameValueProperties(),
+                Expect = CreateRandomNameValueArray(),
                 ExpectContinue = GetRandomBoolean(),
-                ExpectCore = CreateRandomNameValueWithParametersProperties(),
+                ExpectCore = CreateRandomNameValueWithParametersArray(),
                 From = GetRandomString(),
                 Host = GetRandomString(),
                 IfMatch = GetRandomString(),
                 IfModifiedSince = GetRandomDate(),
                 IfNoneMatch = GetRandomString(),
-                IfRange = CreateRandomRangeConditionHeaderProperties(),
+                IfRange = CreateRandomRangeConditionHeader(),
                 IfUnmodifiedSince = GetRandomDate(),
                 MaxForwards = GetRandomNumber(),
-                Pragma = CreateRandomNameValueProperties(),
+                Pragma = CreateRandomNameValueArray(),
                 Protocol = GetRandomString(),
-                ProxyAuthorization = CreateRandomAuthenticationHeaderProperties(),
-                Range = CreateRandomRangeHeaderProperties(),
+                ProxyAuthorization = CreateRandomAuthenticationHeaderArray(),
+                Range = CreateRandomRangeHeader(),
                 Referrer = CreateRandomUri(),
-                TE = CreateArrayTransferCodingHeaderProperties(),
+                TE = CreateTransferCodingHeaderArray(),
                 Trailer = CreateRandomStringArray(),
-                TransferEncoding = CreateArrayTransferCodingHeaderProperties(),
+                TransferEncoding = CreateTransferCodingHeaderArray(),
                 TransferEncodingChunked = GetRandomBoolean(),
-                Upgrade = CreateRandomProductHeaderProperties(),
-                UserAgent = CreateArrayProductInfoHeaderProperties(),
-                Via = CreateArrayViaHeaderProperties(),
-                Warning = CreateArrayWarningHeaderProperties()
+                Upgrade = CreateRandomProductHeader(),
+                UserAgent = CreateRandomProductInfoHeaderArray(),
+                Via = CreateViaHeaderArray(),
+                Warning = CreateWarningHeaderArray()
             };
         }
 
-        private static dynamic CreateRandomHttpResponseHeaderProperties()
+        private static dynamic CreateRandomHttpResponseHeader()
         {
             return new
             {
                 AcceptRanges = CreateRandomStringArray(),
                 Age = GetRandomTimeSpan(),
-                CacheControl = CreateRandomCacheControlHeaderProperties(),
+                CacheControl = CreateRandomCacheControlHeader(),
                 Connection = CreateRandomStringArray(),
                 ConnectionClose = GetRandomBoolean(),
                 Date = GetRandomDate(),
                 ETag = GetRandomString(),
                 Location = new Uri(CreateRandomBaseAddress()),
-                Pragma = CreateRandomNameValueProperties(),
-                ProxyAuthenticate = CreateRandomAuthenticationHeaderProperties(),
-                RetryAfter = CreateRandomRetryConditionHeaderProperties(),
-                Server = CreateArrayProductInfoHeaderProperties(),
+                Pragma = CreateRandomNameValueArray(),
+                ProxyAuthenticate = CreateRandomAuthenticationHeaderArray(),
+                RetryAfter = CreateRandomRetryConditionHeader(),
+                Server = CreateRandomProductInfoHeaderArray(),
                 Trailer = CreateRandomStringArray(),
-                TransferEncoding = CreateArrayTransferCodingHeaderProperties(),
+                TransferEncoding = CreateTransferCodingHeaderArray(),
                 TransferEncodingChunked = GetRandomBoolean(),
-                Upgrade = CreateArrayProductHeaderProperties(),
+                Upgrade = CreateRandomProductHeaderArray(),
                 Vary = CreateRandomStringArray(),
-                Via = CreateArrayViaHeaderProperties(),
-                Warning = CreateArrayWarningHeaderProperties(),
-                WwwAuthenticate = CreateRandomAuthenticationHeaderProperties()
+                Via = CreateViaHeaderArray(),
+                Warning = CreateWarningHeaderArray(),
+                WwwAuthenticate = CreateRandomAuthenticationHeaderArray()
             };
         }
 
-        private static Stream CreateStream(string content)
+        private static dynamic CreateRandomHttpContentHeader()
         {
-            byte[] contentBytes = Encoding.ASCII.GetBytes(content);
+            return new
+            {
+                Alow = CreateRandomStringArray(),
+                ContentDisposition = CreateRandomContentDispositionHeader(),
+                ContentEncoding = CreateRandomStringArray(),
+                ContentLanguage = CreateRandomStringArray(),
+                ContentLength = GetRandomNumber(),
+                ContentLocation = CreateRandomUri(),
+                ContentMD5 = CreateRandomByteArray(),
+                ContentRange = CreateRandomContentRangeHeader(),
+                ContentType = CreateRandomMediaTypeHeader(),
+                Expires = GetRandomDate(),
+                LastModified = GetRandomDate()
+            };
+        }
+
+        private static Stream CreateRandomStream()
+        {
+            string randomContent = GetRandomString();
+            byte[] contentBytes = Encoding.ASCII.GetBytes(randomContent);
             var stream = new ReadOnlyMemoryContent(contentBytes)
                 .ReadAsStream();
 
             return stream;
         }
 
+        private static dynamic CreateRandomHttpContent()
+        {
+            return new
+            {
+                Headers = CreateRandomHttpContentHeader(),
+                StreamContent = CreateRandomStream()
+            };
+        }
+
         private static dynamic CreateRandomHttpProperties()
         {
             Uri randomUri = CreateRandomUri();
-            Version randomVersion = GetRandomHttpVersion();
-            HttpVersionPolicy randomVersionPolicy = GetRandomHttpVersionPolicy();
             HttpStatusCode randomStatusCode = GetRandomHttpStatusCode();
-            string randomReasonPhrase = GetRandomString();
-            string randomContent = GetRandomString();
 
             return new
             {
@@ -421,15 +482,17 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 Url = randomUri,
                 UrlParameters = CreateRandomUrlParameters(),
                 HttpMethod = HttpMethod.Get,
-                ResponseStream = CreateStream(randomContent),
-                ResponseHttpStatus = randomStatusCode,
-                Version = randomVersion,
-                VersionPolicy = randomVersionPolicy,
+                Version = GetRandomHttpVersion(),
+                VersionPolicy = GetRandomHttpVersionPolicy(),
                 StatusCode = randomStatusCode,
                 IsSuccessStatusCode = IsSuccessStatusCode(randomStatusCode),
-                ReasonPhrase = randomReasonPhrase,
-                RequestHeaders = CreateRandomHttpRequestHeaderProperties(),
-                ResponseHeaders = CreateRandomHttpResponseHeaderProperties()
+                ReasonPhrase = GetRandomString(),
+                ResponseStream = CreateRandomStream(),
+                ResponseHttpStatus = randomStatusCode,
+                RequestHeaders = CreateRandomHttpRequestHeader(),
+                ResponseHeaders = CreateRandomHttpResponseHeader(),
+                RequestContent = CreateRandomHttpContent(),
+                ResponseContent = CreateRandomHttpContent()
             };
         }
 
@@ -490,7 +553,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     UrlParameters = randomProperties.UrlParameters,
                     Headers = CreateHttpExchangeRequestHeaders(randomProperties.RequestHeaders),
                     VersionPolicy = (int)randomProperties.VersionPolicy,
-                    //Content = randomProperties.Content
+                    Content = CreateHttpExchangeContent(randomProperties.RequestContent)
                 }
             };
         }
@@ -526,26 +589,60 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return filler;
         }
 
+        private static HttpExchangeContent CreateHttpExchangeContent(dynamic randomContentProperties) =>
+            CreateHttpExchangeContentFiller(randomContentProperties).Create();
+
+        private static Filler<HttpExchangeContent> CreateHttpExchangeContentFiller(dynamic randomContentProperties)
+        {
+            var filler = new Filler<HttpExchangeContent>();
+            filler.Setup()
+                .OnProperty(httpExchangeContent => httpExchangeContent.Headers)
+                    .Use((HttpExchangeContentHeaders)CreateHttpExchangeContentHeaders(randomContentProperties.Headers))
+
+                .OnProperty(httpExchangeContent => httpExchangeContent.StreamContent)
+                    .Use(new ValueTask<Stream>(randomContentProperties.StreamContent.DeepClone()));
+
+            return filler;
+        }
+
+        private static HttpExchangeContentHeaders CreateHttpExchangeContentHeaders(dynamic randomHeaderProperties) =>
+           CreateHttpExchangeContentHeadersFiller(randomHeaderProperties).Create();
+
+        private static Filler<HttpExchangeContentHeaders> CreateHttpExchangeContentHeadersFiller(dynamic randomHeaderProperties)
+        {
+            var filler = new Filler<HttpExchangeContentHeaders>();
+            filler.Setup()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.Allow).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentDisposition).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentEncoding).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentLanguage).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentLength).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentLocation).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentMD5).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentRange).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentType).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.Expires).IgnoreIt()
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.LastModified).IgnoreIt();
+
+            return filler;
+        }
+
         private static HttpExchange CreateHttpExchangeResponse(
            HttpExchange httpExchange,
            dynamic randomProperties)
         {
             HttpExchange mappedHttpExchange = httpExchange.DeepClone();
-            Stream responseStream = randomProperties.ResponseStream;
 
-            mappedHttpExchange.Response = new HttpExchangeResponse
-            {
-                Content = new HttpExchangeContent
+            mappedHttpExchange.Response =
+                new HttpExchangeResponse
                 {
-                    StreamContent = new ValueTask<Stream>(
-                        responseStream.DeepClone())
-                },
-                Version = randomProperties.Version.ToString(),
-                StatusCode = (int)randomProperties.StatusCode,
-                IsSuccessStatusCode = randomProperties.IsSuccessStatusCode,
-                ReasonPhrase = randomProperties.ReasonPhrase,
-                Headers = CreateHttpExchangeResponseHeaders(randomProperties.ResponseHeaders)
-            };
+                    Content = CreateHttpExchangeContent(randomProperties.ResponseContent),
+                    Headers = CreateHttpExchangeResponseHeaders(randomProperties.ResponseHeaders),
+                    Version = randomProperties.Version.ToString(),
+                    StatusCode = (int)randomProperties.StatusCode,
+                    IsSuccessStatusCode = randomProperties.IsSuccessStatusCode,
+                    ReasonPhrase = randomProperties.ReasonPhrase
+                };
 
             return mappedHttpExchange;
         }
@@ -581,11 +678,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
                     .RuleFor(
                         httpResponseMessage => httpResponseMessage.Version,
-                        (Version)randomProperties.Version)
-
-                    .RuleFor(
-                        httpResponseMessage => httpResponseMessage.Content,
-                        new StreamContent(randomProperties.ResponseStream));
+                        (Version)randomProperties.Version);
 
             HttpResponseMessage httpResponseMessage =
                 bogusHttpResponse.Generate();
