@@ -600,7 +600,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     .Use((HttpExchangeContentHeaders)CreateHttpExchangeContentHeaders(randomContentProperties.Headers))
 
                 .OnProperty(httpExchangeContent => httpExchangeContent.StreamContent)
-                    .Use(new ValueTask<Stream>(randomContentProperties.StreamContent.DeepClone()));
+                    .Use(new ValueTask<Stream>(((Stream)randomContentProperties.StreamContent).DeepClone()));
 
             return filler;
         }
