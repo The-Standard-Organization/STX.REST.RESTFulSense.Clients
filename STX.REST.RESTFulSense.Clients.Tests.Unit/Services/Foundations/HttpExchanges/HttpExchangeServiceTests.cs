@@ -487,13 +487,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 StatusCode = randomStatusCode,
                 IsSuccessStatusCode = IsSuccessStatusCode(randomStatusCode),
                 ReasonPhrase = GetRandomString(),
-                ResponseStream = CreateRandomStream(),
                 ResponseHttpStatus = randomStatusCode,
                 RequestHeaders = CreateRandomHttpRequestHeader(),
                 ResponseHeaders = CreateRandomHttpResponseHeader(),
                 RequestContent = CreateRandomHttpContent(),
                 ResponseContent = CreateRandomHttpContent()
-            };
+        };
         }
 
         private static HttpExchangeRequestHeaders CreateHttpExchangeRequestHeaders(dynamic randomHeaderProperties) =>
@@ -662,7 +661,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 new Faker<HttpResponseMessage>()
                     .RuleFor(
                         httpResponseMessage => httpResponseMessage.Content,
-                        new StreamContent(randomProperties.ResponseStream))
+                        new StreamContent(randomProperties.ResponseContent.StreamContent))
 
                     .RuleFor(
                         httpResponseMessage => httpResponseMessage.IsSuccessStatusCode,
