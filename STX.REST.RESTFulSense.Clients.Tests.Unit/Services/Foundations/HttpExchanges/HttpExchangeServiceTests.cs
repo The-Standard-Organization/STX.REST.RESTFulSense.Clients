@@ -418,7 +418,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 Connection = CreateRandomStringArray(),
                 ConnectionClose = GetRandomBoolean(),
                 Date = GetRandomDate(),
-                ETag = GetRandomString(),
+                ETag = $"\"{GetRandomString()}\"",
                 Location = new Uri(CreateRandomBaseAddress()),
                 Pragma = CreateRandomNameValueArray(),
                 ProxyAuthenticate = CreateRandomAuthenticationHeaderArray(),
