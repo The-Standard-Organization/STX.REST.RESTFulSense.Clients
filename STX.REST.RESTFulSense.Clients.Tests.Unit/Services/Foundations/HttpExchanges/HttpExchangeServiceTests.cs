@@ -2,13 +2,6 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using Bogus;
-using Force.DeepCloner;
-using Moq;
-using STX.REST.RESTFulSense.Clients.Brokers.Https;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
-using STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,6 +11,13 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Bogus;
+using Force.DeepCloner;
+using Moq;
+using STX.REST.RESTFulSense.Clients.Brokers.Https;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
+using STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges;
 using Tynamix.ObjectFiller;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
@@ -251,7 +251,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             {
                 return new
                 {
-                    Quantity = GetRandomDouble(),
+                    Quality = GetRandomDouble(),
                     Value = GetRandomString(),
                     Parameters = CreateRandomNameValueArray()
                 };
@@ -577,6 +577,60 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
+        private static ProductInfoHeader CreateHttpExchangeProductInfoHeader(dynamic randomProductInfoHeaderProperties)
+        {
+            return new ProductInfoHeader
+            {
+                Comment = randomProductInfoHeaderProperties.Comment,
+                ProductHeader =
+                    (ProductHeader)CreateHttpExchangeProductHeader(randomProductInfoHeaderProperties.ProductHeader)
+            };
+        }
+
+        private static TransferCodingHeader CreateHttpExchangeTransferCodingHeader(
+            dynamic randomTransferCodingHeaderProperties)
+        {
+            return new TransferCodingHeader
+            {
+                Quality = randomTransferCodingHeaderProperties.Quality,
+                Value = randomTransferCodingHeaderProperties.Value,
+                Parameters = (randomTransferCodingHeaderProperties.Parameters as dynamic[])
+                    .Select(parametersHeader => (NameValueHeader)CreateHttpExchangeNameValueHeader(parametersHeader))
+                    .ToArray()
+            };
+        }
+
+        private static ProductHeader CreateHttpExchangeProductHeader(dynamic randomProductHeaderProperties)
+        {
+            return new ProductHeader
+            {
+                Name = randomProductHeaderProperties.Name,
+                Version = randomProductHeaderProperties.Version
+            };
+        }
+
+        private static ViaHeader CreateHttpExchangeViaHeader(dynamic randomViaHeaderProperties)
+        {
+            return new ViaHeader
+            {
+                ProtocolName = randomViaHeaderProperties.ProtocolName,
+                ProtocolVersion = randomViaHeaderProperties.ProtocolVersion,
+                ReceivedBy = randomViaHeaderProperties.ReceivedBy,
+                Comment = randomViaHeaderProperties.Comment
+            };
+        }
+
+        private static WarningHeader CreateHttpExchangeWarningHeader(dynamic randomWarningHeaderProperties)
+        {
+            return new WarningHeader
+            {
+                Code = randomWarningHeaderProperties.Code,
+                Agent = randomWarningHeaderProperties.Agent,
+                Text = randomWarningHeaderProperties.Text,
+                Date = (DateTimeOffset?)randomWarningHeaderProperties.Date
+            };
+        }
+        
         private static CacheControlHeader CreateHttpExchangeCacheControlHeader(dynamic randomCacheControlHeaderProperties)
         {
             var cacheControl = new CacheControlHeader
@@ -646,45 +700,59 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.ProxyAuthenticate)
                 .Use(() =>
                     (randomHeadersProperties.ProxyAuthenticate as dynamic[])
-                    .Select(proxyAuthenticateHeader => (AuthenticationHeader)CreateHttpExchangeAuthenticateHeader(proxyAuthenticateHeader))
+                    .Select(proxyAuthenticateHeader =>
+                        (AuthenticationHeader)CreateHttpExchangeAuthenticateHeader(proxyAuthenticateHeader))
                     .ToArray())
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.RetryAfter)
                 .Use(() =>
                     new RetryConditionHeader
                     {
-                        Date = randomHeadersProperties.RetryAfter.Date,
-                        Delta = randomHeadersProperties.RetryAfter.Delta
+                        Date = (DateTimeOffset?)randomHeadersProperties.RetryAfter.Date,
+                        Delta = (TimeSpan?)randomHeadersProperties.RetryAfter.Delta
                     })
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.Server)
-                .IgnoreIt()
+                .Use(() => (randomHeadersProperties.Server as dynamic[])
+                    .Select(serverHeader => (ProductInfoHeader)CreateHttpExchangeProductInfoHeader(serverHeader))
+                    .ToArray())
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.Trailer)
                 .Use((string[])randomHeadersProperties.Trailer)
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.TransferEncoding)
-                .IgnoreIt()
+                .Use(() => (randomHeadersProperties.TransferEncoding as dynamic[])
+                    .Select(transferEncodingHeader =>
+                        (TransferCodingHeader)CreateHttpExchangeTransferCodingHeader(transferEncodingHeader))
+                    .ToArray())
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.TransferEncodingChunked)
                 .Use((bool?)randomHeadersProperties.TransferEncodingChunked)
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.Upgrade)
-                .IgnoreIt()
+                .Use(() => (randomHeadersProperties.Upgrade as dynamic[])
+                    .Select(upgradeHeader =>
+                        (ProductHeader)CreateHttpExchangeProductHeader(upgradeHeader))
+                    .ToArray())
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.Vary)
                 .Use((string[])randomHeadersProperties.Vary)
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.Via)
-                .IgnoreIt()
+                .Use(() => (randomHeadersProperties.Via as dynamic[])
+                    .Select(viaHeader => (ViaHeader)CreateHttpExchangeViaHeader(viaHeader))
+                    .ToArray())
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.Warning)
-                .IgnoreIt()
+                .Use(() => (randomHeadersProperties.Warning as dynamic[])
+                    .Select(warningHeader => (WarningHeader)CreateHttpExchangeWarningHeader(warningHeader))
+                    .ToArray())
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.WwwAuthenticate)
                 .Use(() =>
                     (randomHeadersProperties.WwwAuthenticate as dynamic[])
-                    .Select(wwwAuthenticateHeader => (AuthenticationHeader)CreateHttpExchangeAuthenticateHeader(wwwAuthenticateHeader))
+                    .Select(wwwAuthenticateHeader =>
+                        (AuthenticationHeader)CreateHttpExchangeAuthenticateHeader(wwwAuthenticateHeader))
                     .ToArray());
 
             return filler;
@@ -813,6 +881,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return cacheControlHeaderValue;
         }
 
+        private static RetryConditionHeaderValue CreateHttpResponseRetryConditionHeaderValue(
+            dynamic randomRetryConditionHeaderProperties)
+        {
+            return new RetryConditionHeaderValue(randomRetryConditionHeaderProperties.Date){};
+        }
+        
         private static HttpResponseMessage CreateHttpResponseMessage(dynamic randomProperties)
         {
             var bogusHttpResponse =
@@ -848,6 +922,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             }).ToArray();
 
             httpResponseMessage.Headers.Age = (TimeSpan?)randomProperties.ResponseHeaders.Age;
+            
             httpResponseMessage.Headers.CacheControl =
                 CreateHttpResponseCacheControlHeader(randomProperties.ResponseHeaders.CacheControl);
 
@@ -871,28 +946,43 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             httpResponseMessage.Headers.Location =
                 (Uri)randomProperties.ResponseHeaders.Location;
 
-            (randomProperties.ResponseHeaders.Pragma as NameValueHeaderValue[]).Select(header =>
+            (randomProperties.ResponseHeaders.Pragma as dynamic[]).Select(header =>
             {
-                httpResponseMessage.Headers.Pragma.Add(header);
+                var pragmaHeader = new NameValueHeaderValue(header.Name)
+                {
+                    Value = header.Value
+                };
+                httpResponseMessage.Headers.Pragma.Add(pragmaHeader);
 
                 return header;
             }).ToArray();
 
-            (randomProperties.ResponseHeaders.ProxyAuthenticate as AuthenticationHeaderValue[])
+            (randomProperties.ResponseHeaders.ProxyAuthenticate as dynamic[])
                 .Select(header =>
-            {
-                httpResponseMessage.Headers.ProxyAuthenticate.Add(header);
+                {
+                    var proxyAuthenticateHeader = new AuthenticationHeaderValue(
+                        header.Schema, header.Value);
+                    
+                httpResponseMessage.Headers.ProxyAuthenticate.Add(proxyAuthenticateHeader);
 
                 return header;
             }).ToArray();
 
             httpResponseMessage.Headers.RetryAfter =
-                (RetryConditionHeaderValue)randomProperties.ResponseHeaders.RetryAfter;
+                (RetryConditionHeaderValue?)CreateHttpResponseRetryConditionHeaderValue(
+                    randomProperties.ResponseHeaders.RetryAfter);
 
-            (randomProperties.ResponseHeaders.Server as ProductInfoHeaderValue[])
+            (randomProperties.ResponseHeaders.Server as dynamic[])
                 .Select(header =>
-            {
-                httpResponseMessage.Headers.Server.Add(header);
+                {
+                    var productInfoHeaderValueNameVersion =
+                        new ProductInfoHeaderValue(header.Name, header.Version);
+
+                    var productInfoHeaderValueComment =
+                        new ProductInfoHeaderValue(header.Comment);
+                    
+                httpResponseMessage.Headers.Server.Add(productInfoHeaderValueNameVersion);
+                httpResponseMessage.Headers.Server.Add(productInfoHeaderValueComment);
 
                 return header;
             }).ToArray();
