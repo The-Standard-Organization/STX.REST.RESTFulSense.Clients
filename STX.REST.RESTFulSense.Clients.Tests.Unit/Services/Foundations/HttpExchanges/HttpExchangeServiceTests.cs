@@ -233,7 +233,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             return new
             {
-                Comment = GetRandomString(),
+                Comment = $"({GetRandomString()})",
                 ProductHeader = CreateRandomProductHeader()
             };
         }
@@ -267,7 +267,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     ProtocolName = GetRandomString(),
                     ProtocolVersion = GetRandomString(),
                     ReceivedBy = GetRandomString(),
-                    Comment = GetRandomString(),
+                    Comment = $"({GetRandomString()})",
                 };
             }).ToArray();
         }
@@ -280,7 +280,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 {
                     Code = GetRandomNumber(),
                     Agent = GetRandomString(),
-                    Text = GetRandomString(),
+                    Text = $"\"GetRandomString()\"",
                     Date = GetRandomDate(),
                 };
             }).ToArray();
@@ -586,7 +586,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     (ProductHeader)CreateHttpExchangeProductHeader(randomProductInfoHeaderProperties.ProductHeader)
             };
         }
-
+        
         private static TransferCodingHeader CreateHttpExchangeTransferCodingHeader(
             dynamic randomTransferCodingHeaderProperties)
         {
@@ -599,7 +599,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     .ToArray()
             };
         }
-
+        
         private static ProductHeader CreateHttpExchangeProductHeader(dynamic randomProductHeaderProperties)
         {
             return new ProductHeader
@@ -976,13 +976,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .Select(header =>
                 {
                     var productInfoHeaderValueNameVersion =
-                        new ProductInfoHeaderValue(header.Name, header.Version);
-
-                    var productInfoHeaderValueComment =
-                        new ProductInfoHeaderValue(header.Comment);
+                        new ProductInfoHeaderValue(header.ProductHeader.Name, header.ProductHeader.Version);
                     
-                httpResponseMessage.Headers.Server.Add(productInfoHeaderValueNameVersion);
-                httpResponseMessage.Headers.Server.Add(productInfoHeaderValueComment);
+                    httpResponseMessage.Headers.Server.Add(productInfoHeaderValueNameVersion);
+                    
+                    var productInfoHeaderValueComment =
+                        new ProductInfoHeaderValue(header.Comment); 
+                    
+                    httpResponseMessage.Headers.Server.Add(productInfoHeaderValueComment);
 
                 return header;
             }).ToArray();
@@ -990,25 +991,35 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             (randomProperties.ResponseHeaders.Trailer as string[]).Select(header =>
             {
                 httpResponseMessage.Headers.Trailer.Add(header);
-
+                
                 return header;
             }).ToArray();
 
-            (randomProperties.ResponseHeaders.TransferEncoding as TransferCodingHeaderValue[])
+            (randomProperties.ResponseHeaders.TransferEncoding as dynamic[])
                 .Select(header =>
-            {
-                httpResponseMessage.Headers.TransferEncoding.Add(header);
-
+                {
+                    var transferEncodingHeader = new TransferCodingHeaderValue(header.Value);
+                    var parameters = header.Parameters as dynamic[];
+                    foreach (var param in parameters)
+                    {
+                        transferEncodingHeader.Parameters.Add(
+                            new NameValueHeaderValue(param.Name, param.Value));
+                    };
+                    
+                    httpResponseMessage.Headers.TransferEncoding.Add(transferEncodingHeader);
+                    
                 return header;
             }).ToArray();
 
             httpResponseMessage.Headers.TransferEncodingChunked =
                 (bool?)randomProperties.ResponseHeaders.TransferEncodingChunked;
 
-            (randomProperties.ResponseHeaders.Upgrade as ProductHeaderValue[])
+            (randomProperties.ResponseHeaders.Upgrade as dynamic[])
                 .Select(header =>
-            {
-                httpResponseMessage.Headers.Upgrade.Add(header);
+                {
+                    var productHeaderValue = new ProductHeaderValue(header.Name, header.Version);
+                    
+                httpResponseMessage.Headers.Upgrade.Add(productHeaderValue);
 
                 return header;
             }).ToArray();
@@ -1020,26 +1031,38 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 return header;
             }).ToArray();
 
-            (randomProperties.ResponseHeaders.Via as ViaHeaderValue[])
-                .Select(header =>
-            {
-                httpResponseMessage.Headers.Via.Add(header);
+            (randomProperties.ResponseHeaders.Via as dynamic[]).Select(header =>
+                {
+                    var viaHeader = new ViaHeaderValue(
+                        header.ProtocolVersion,
+                        header.ReceivedBy,
+                        header.ProtocolName,
+                        header.Comment);
+                    
+                httpResponseMessage.Headers.Via.Add(viaHeader);
 
                 return header;
             }).ToArray();
 
-            (randomProperties.ResponseHeaders.Warning as WarningHeaderValue[])
-                .Select(header =>
+            (randomProperties.ResponseHeaders.Warning as dynamic[]).Select(header =>
             {
-                httpResponseMessage.Headers.Warning.Add(header);
+                var warningHeader = new WarningHeaderValue(
+                    header.Code,
+                    header.Agent,
+                    header.Text,
+                    header.Date);
+                
+                httpResponseMessage.Headers.Warning.Add(warningHeader);
 
                 return header;
             }).ToArray();
 
-            (randomProperties.ResponseHeaders.WwwAuthenticate as AuthenticationHeaderValue[])
-                .Select(header =>
+            (randomProperties.ResponseHeaders.WwwAuthenticate as dynamic[]).Select(header =>
             {
-                httpResponseMessage.Headers.WwwAuthenticate.Add(header);
+                var authenticateHeader = new AuthenticationHeaderValue(
+                    header.Schema, header.Value);
+                
+                httpResponseMessage.Headers.WwwAuthenticate.Add(authenticateHeader);
 
                 return header;
             }).ToArray();
