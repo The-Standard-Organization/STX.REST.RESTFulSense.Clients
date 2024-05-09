@@ -67,7 +67,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Condition = string.IsNullOrWhiteSpace(text),
             Message = "Value is required"
         };
-
+        
         private static dynamic IsInvalidHttpMethod(string customHttpMethod, HttpMethod defaultHttpMethod) => new
         {
             Condition =
@@ -79,7 +79,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             Message = "HttpMethod required is invalid"
         };
-
+        
         private static dynamic IsInvalidHttpVersion(string customHttpVersion, Version defaultHttpVersion) => new
         {
             Condition =
@@ -96,7 +96,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             Message = "HttpVersion required is invalid"
         };
-
+        
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeRequestException =

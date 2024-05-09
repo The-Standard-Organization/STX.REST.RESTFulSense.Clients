@@ -371,7 +371,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic CreateRandomHttpRequestHeader()
         {
             return new
-            {
+            { 
                 Accept = CreateRandomMediaTypeHeaderArray(),
                 AcceptCharset = CreateRandomStringQualityHeaderArray(),
                 AcceptEncoding = CreateRandomStringQualityHeaderArray(),
@@ -439,7 +439,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             return new
             {
-                Alow = CreateRandomStringArray(),
+                Allow = CreateRandomStringArray(),
                 ContentDisposition = CreateRandomContentDispositionHeader(),
                 ContentEncoding = CreateRandomStringArray(),
                 ContentLanguage = CreateRandomStringArray(),
@@ -504,7 +504,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             var filler = new Filler<HttpExchangeRequestHeaders>();
             filler.Setup()
-                .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.Accept).IgnoreIt()
+                .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.Accept)
+                .Use(() => (randomHeaderProperties.Accept as dynamic[])
+                    .Select(header =>
+                   (MediaTypeHeader)CreateHttpExchangeMediaTypeHeader(header)).ToArray())
+                
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.AcceptCharset).IgnoreIt()
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.AcceptEncoding).IgnoreIt()
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.AcceptLanguage).IgnoreIt()
@@ -633,7 +637,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         
         private static CacheControlHeader CreateHttpExchangeCacheControlHeader(dynamic randomCacheControlHeaderProperties)
         {
-            var cacheControl = new CacheControlHeader
+            var cacheControlHeader = new CacheControlHeader
             {
                 NoCache = randomCacheControlHeaderProperties.NoCache,
                 NoCacheHeaders = randomCacheControlHeaderProperties.NoCacheHeaders,
@@ -655,7 +659,52 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     .ToArray()
             };
 
-            return cacheControl;
+            return cacheControlHeader;
+        }
+
+        private static ContentDispositionHeader CreateHttpExchangeContentDispositionHeader(
+            dynamic randomContentDispositionHeaderProperties)
+        {
+            var contentDispositionHeader = new ContentDispositionHeader
+            {
+                DispositionType = randomContentDispositionHeaderProperties.DispositionType,
+                Name = randomContentDispositionHeaderProperties.Name,
+                FileName = randomContentDispositionHeaderProperties.FileName,
+                FileNameStar = randomContentDispositionHeaderProperties.FileNameStar,
+                CreationDate = randomContentDispositionHeaderProperties.CreationDate,
+                ModificationDate = randomContentDispositionHeaderProperties.ModificationDate,
+                ReadDate = randomContentDispositionHeaderProperties.ReadDate,
+                Size = randomContentDispositionHeaderProperties.Size
+            };
+
+            return contentDispositionHeader;
+        }
+
+        private static ContentRangeHeader CreateHttpExchangeContentRangeHeader(
+            dynamic randomContentRangeHeaderProperties)
+        {
+            var contentRangeHeader = new ContentRangeHeader
+            {
+                Unit = randomContentRangeHeaderProperties.Unit,
+                From = randomContentRangeHeaderProperties.From,
+                To = randomContentRangeHeaderProperties.To,
+                Length = randomContentRangeHeaderProperties.Length
+            };
+
+            return contentRangeHeader;
+        }
+
+        private static MediaTypeHeader CreateHttpExchangeMediaTypeHeader(
+            dynamic randomMediaTypeHeaderProperties)
+        {
+            var mediaTypeHeader = new MediaTypeHeader
+            {
+                CharSet = randomMediaTypeHeaderProperties.Charset,
+                MediaType = randomMediaTypeHeaderProperties.MediaType,
+                Quality = randomMediaTypeHeaderProperties.Quality
+            };
+
+            return mediaTypeHeader;
         }
 
         private static HttpExchangeResponseHeaders CreateHttpExchangeResponseHeaders(dynamic randomHeadersProperties) =>
@@ -781,17 +830,38 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             var filler = new Filler<HttpExchangeContentHeaders>();
             filler.Setup()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.Allow).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentDisposition).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentEncoding).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentLanguage).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentLength).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentLocation).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentMD5).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentRange).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentType).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.Expires).IgnoreIt()
-                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.LastModified).IgnoreIt();
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.Allow)
+                .Use((string[])randomHeaderProperties.Allow)
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentDisposition)
+                .Use(() => (ContentDispositionHeader)CreateHttpExchangeContentDispositionHeader(randomHeaderProperties.ContentDisposition))
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentEncoding)
+                .Use((string[])randomHeaderProperties.ContentEncoding)
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentLanguage)
+                .Use((string[])randomHeaderProperties.ContentLanguage)
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentLength)
+                .Use((int)randomHeaderProperties.ContentLength)
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentLocation)
+                .Use((Uri)randomHeaderProperties.ContentLocation)
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentMD5)
+                .Use((byte[])randomHeaderProperties.ContentMD5)
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentRange)
+                .Use(() => (ContentRangeHeader)CreateHttpExchangeContentRangeHeader(randomHeaderProperties.ContentRange))
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentType)
+                .Use(() => (MediaTypeHeader)CreateHttpExchangeMediaTypeHeader(randomHeaderProperties.ContentType))
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.Expires)
+                .Use((DateTimeOffset)randomHeaderProperties.Expires)
+                
+                .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.LastModified)
+                .Use((DateTimeOffset)randomHeaderProperties.LastModified);
 
             return filler;
         }
