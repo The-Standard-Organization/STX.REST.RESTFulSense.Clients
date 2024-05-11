@@ -83,6 +83,27 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
+        private static dynamic CreateRandomHttpContentHeader()
+        {
+            return new
+            {
+                Allow = CreateRandomStringArray(),
+
+                ContentDisposition =
+                    CreateRandomContentDispositionHeader(),
+
+                ContentEncoding = CreateRandomStringArray(),
+                ContentLanguage = CreateRandomStringArray(),
+                ContentLength = GetRandomNumber(),
+                ContentLocation = CreateRandomUri(),
+                ContentMD5 = CreateRandomByteArray(),
+                ContentRange = CreateRandomContentRangeHeader(),
+                ContentType = CreateRandomMediaTypeHeader(),
+                Expires = GetRandomDateTime(),
+                LastModified = GetRandomDateTime()
+            };
+        }
+
         private static dynamic[] CreateRandomMediaTypeHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber())
@@ -277,27 +298,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .ToArray();
         }
 
-        private static dynamic CreateRandomHttpContentHeader()
-        {
-            return new
-            {
-                Allow = CreateRandomStringArray(),
-
-                ContentDisposition =
-                    CreateRandomContentDispositionHeader(),
-                
-                ContentEncoding = CreateRandomStringArray(),
-                ContentLanguage = CreateRandomStringArray(),
-                ContentLength = GetRandomNumber(),
-                ContentLocation = CreateRandomUri(),
-                ContentMD5 = CreateRandomByteArray(),
-                ContentRange = CreateRandomContentRangeHeader(),
-                ContentType = CreateRandomMediaTypeHeader(),
-                Expires = GetRandomDateTime(),
-                LastModified = GetRandomDateTime()
-            };
-        }
-
         private static dynamic CreateRandomContentDispositionHeader()
         {
             return new
@@ -426,7 +426,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             {
                 Comment = randomProductInfoHeaderProperties.Comment,
                 ProductHeader =
-                    (ProductHeader)MapHttpExchangeProductHeader(
+                    MapHttpExchangeProductHeader(
                         randomProductInfoHeaderProperties.ProductHeader)
             };
         }
@@ -582,7 +582,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             dynamic randomHeaderProperties)
         {
             var filler = new Filler<HttpExchangeRequestHeaders>();
-            
+
             filler.Setup()
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.Accept)
                     .Use(() => (randomHeaderProperties.Accept as dynamic[])
@@ -685,7 +685,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     {
                         Unit = randomHeaderProperties.Range.Unit,
                         Ranges = (randomHeaderProperties.Range.Ranges as dynamic[])
-                        
+
                         .Select(header =>
                             new RangeItemHeader
                             {
@@ -747,7 +747,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             dynamic randomContentProperties)
         {
             var filler = new Filler<HttpExchangeContent>();
-            
+
             filler.Setup()
                 .OnProperty(httpExchangeContent => httpExchangeContent.Headers)
                     .Use((HttpExchangeContentHeaders)CreateHttpExchangeContentHeaders(
@@ -768,7 +768,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             dynamic randomHeaderProperties)
         {
             var filler = new Filler<HttpExchangeContentHeaders>();
-            
+
             filler.Setup()
                 .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.Allow)
                     .Use((string[])randomHeaderProperties.Allow)
@@ -846,7 +846,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.Pragma)
                     .Use(() =>
                         (randomHeadersProperties.Pragma as dynamic[])
-                        .Select(pragmaHeader => 
+                        .Select(pragmaHeader =>
                             (NameValueHeader)MapHttpExchangeNameValueHeader(pragmaHeader))
                         .ToArray())
 
