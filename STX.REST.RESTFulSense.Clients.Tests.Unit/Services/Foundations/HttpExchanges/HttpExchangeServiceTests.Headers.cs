@@ -115,14 +115,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomAuthenticationHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber()).Select(item =>
-            {
-                return new
-                {
-                    Schema = GetRandomString(),
-                    Value = GetRandomString()
-                };
-            }).ToArray();
+            return Enumerable.Range(0, GetRandomNumber())
+                .Select(item =>
+                    CreateRandomAuthenticationHeader())
+                .ToArray();
         }
 
         private static dynamic CreateRandomAuthenticationHeader()
@@ -224,24 +220,16 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomProductInfoHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber()).Select(item =>
-                CreateRandomProductInfoHeader())
+            return Enumerable.Range(0, GetRandomNumber())
+                .Select(item => CreateRandomProductInfoHeader())
                 .ToArray();
         }
 
         private static dynamic[] CreateViaHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber())
-                .Select(item =>
-            {
-                return new
-                {
-                    ProtocolName = GetRandomString(),
-                    ProtocolVersion = GetRandomString(),
-                    ReceivedBy = GetRandomString(),
-                    Comment = $"({GetRandomString()})",
-                };
-            }).ToArray();
+                .Select(item => CreateViaHeader())
+                .ToArray();
         }
 
         private static dynamic CreateViaHeader()
@@ -257,8 +245,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateWarningHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber()).Select(item =>
-                CreateWarningHeader())
+            return Enumerable.Range(0, GetRandomNumber())
+                .Select(item => CreateWarningHeader())
                 .ToArray();
         }
 
