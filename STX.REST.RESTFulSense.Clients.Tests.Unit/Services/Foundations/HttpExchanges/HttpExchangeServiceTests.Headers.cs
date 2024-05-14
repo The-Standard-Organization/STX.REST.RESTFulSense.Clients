@@ -118,7 +118,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             {
                 Charset = GetRandomString(),
                 MediaType = GetRandomString(),
-                Quality = GetRandomDouble()
+                Quality = GetRandomDouble(),
+                Parameters = CreateRandomNameValueArray(),
             };
         }
 

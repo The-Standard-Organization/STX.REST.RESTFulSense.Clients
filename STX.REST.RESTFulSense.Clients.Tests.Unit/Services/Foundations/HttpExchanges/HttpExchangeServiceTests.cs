@@ -157,7 +157,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 (ContentRangeHeaderValue?)CreateContentRangeHeaderValue(
                     randomProperties.ResponseContent.Headers.ContentRange);
 
-           
+            httpResponseMessage.Content.Headers.ContentType =
+                (MediaTypeHeaderValue)CreateMediaTypeHeaderValue(
+                    randomProperties.ResponseContent.Headers.ContentType,
+                    httpResponseMessage);
 
             httpResponseMessage.Content.Headers.Expires =
                 (DateTimeOffset?)randomProperties.ResponseContent.Headers.Expires;
@@ -167,13 +170,37 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             return httpResponseMessage;
         }
+
+        
+
+        private static MediaTypeHeaderValue CreateMediaTypeHeaderValue(
+            dynamic randomMediaTypeHeaderValueProperties,
+            HttpResponseMessage httpResponseMessage)
+        {
+            var mediaTypeHeaderValue = new MediaTypeHeaderValue(
+                randomMediaTypeHeaderValueProperties.MediaType,
+                randomMediaTypeHeaderValueProperties.Charset);
+            
+            foreach (dynamic parameter in randomMediaTypeHeaderValueProperties.Parameters)
+            {
+                var nameValueHeaderValue = new NameValueHeaderValue(
+                    parameter.Name,
+                    parameter.Value);
+
+                mediaTypeHeaderValue.Parameters.Add(nameValueHeaderValue);
+            }
+            
+            httpResponseMessage.Content.Headers.ContentType = mediaTypeHeaderValue;
+
+            return mediaTypeHeaderValue;
+        }
         
         private static ContentRangeHeaderValue CreateContentRangeHeaderValue(
             dynamic randomContentRangeHeaderProperties)
         {
             return new ContentRangeHeaderValue(
                 randomContentRangeHeaderProperties.From,
-                randomContentRangeHeaderProperties.To,
+                randomContentRangeHeaderProperties.From,
                 randomContentRangeHeaderProperties.Length)
             {
                 Unit = randomContentRangeHeaderProperties.Unit,
