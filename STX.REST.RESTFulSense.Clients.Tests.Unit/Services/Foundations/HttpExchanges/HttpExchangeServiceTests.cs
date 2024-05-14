@@ -16,6 +16,7 @@ using Force.DeepCloner;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Brokers.Https;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 using STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges;
 using Tynamix.ObjectFiller;
 
@@ -99,7 +100,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 new Faker<HttpResponseMessage>()
                     .RuleFor(
                         httpResponseMessage => httpResponseMessage.Content,
-                        new StreamContent(randomProperties.ResponseContent.StreamContent))
+                        new StreamContent(randomProperties.ResponseContent.StreamContent)
+                        {
+                            Headers = {  },
+                        })
 
                     .RuleFor(
                         httpResponseMessage => httpResponseMessage.IsSuccessStatusCode,
@@ -119,8 +123,82 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             HttpResponseMessage httpResponseMessage =
                 bogusHttpResponse.Generate();
+            
+            CreateHttpResponseHeader(randomProperties, httpResponseMessage);
+            (randomProperties.ResponseContent.Headers.Allow as string[])
+                .Select(header => 
+                    {
+                        httpResponseMessage.Content.Headers.Allow.Add(header);
+                        return header;
+                    }).ToArray();
 
-            (randomProperties.ResponseHeaders.AcceptRanges as string[]).Select(header =>
+            httpResponseMessage.Content.Headers.ContentDisposition =
+                (ContentDispositionHeaderValue?)CreateContentDispositionHeaderValue(
+                    randomProperties.ResponseContent.Headers.ContentDisposition);
+            
+            (randomProperties.ResponseContent.Headers.ContentEncoding as string[])
+                .Select(header => 
+                {
+                    httpResponseMessage.Content.Headers.ContentEncoding.Add(header);
+                    return header;
+                }).ToArray();
+
+            httpResponseMessage.Content.Headers.ContentLength =
+                (long?)randomProperties.ResponseContent.Headers.ContentLength;
+            
+            httpResponseMessage.Content.Headers.ContentLocation =
+                (Uri?)randomProperties.ResponseContent.Headers.ContentLocation;
+
+            
+            httpResponseMessage.Content.Headers.ContentMD5 =
+                        (byte[])randomProperties.ResponseContent.Headers.ContentMD5;
+
+            httpResponseMessage.Content.Headers.ContentRange =
+                (ContentRangeHeaderValue?)CreateContentRangeHeaderValue(
+                    randomProperties.ResponseContent.Headers.ContentRange);
+
+           
+
+            httpResponseMessage.Content.Headers.Expires =
+                (DateTimeOffset?)randomProperties.ResponseContent.Headers.Expires;
+            
+            httpResponseMessage.Content.Headers.LastModified =
+                (DateTimeOffset?)randomProperties.ResponseContent.Headers.LastModified;
+
+            return httpResponseMessage;
+        }
+        
+        private static ContentRangeHeaderValue CreateContentRangeHeaderValue(
+            dynamic randomContentRangeHeaderProperties)
+        {
+            return new ContentRangeHeaderValue(
+                randomContentRangeHeaderProperties.From,
+                randomContentRangeHeaderProperties.To,
+                randomContentRangeHeaderProperties.Length)
+            {
+                Unit = randomContentRangeHeaderProperties.Unit,
+            };
+        }
+
+        private static ContentDispositionHeaderValue CreateContentDispositionHeaderValue(
+            dynamic randomContentDispositionHeaderProperties)
+        {
+            return new ContentDispositionHeaderValue(
+                randomContentDispositionHeaderProperties.DispositionType)
+            {
+                Name = randomContentDispositionHeaderProperties.Name,
+                FileName = randomContentDispositionHeaderProperties.FileName,
+                FileNameStar = randomContentDispositionHeaderProperties.FileNameStar,
+                CreationDate = randomContentDispositionHeaderProperties.CreationDate,
+                ModificationDate = randomContentDispositionHeaderProperties.ModificationDate,
+                ReadDate = randomContentDispositionHeaderProperties.ReadDate,
+                Size = randomContentDispositionHeaderProperties.Size
+            };
+        }
+
+        private static void CreateHttpResponseHeader(dynamic randomProperties, HttpResponseMessage httpResponseMessage)
+        {
+              (randomProperties.ResponseHeaders.AcceptRanges as string[]).Select(header =>
             {
                 httpResponseMessage.Headers.AcceptRanges.Add(header);
 
@@ -271,8 +349,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
                 return header;
             }).ToArray();
-
-            return httpResponseMessage;
         }
 
         private static dynamic CreateRandomHttpContent()

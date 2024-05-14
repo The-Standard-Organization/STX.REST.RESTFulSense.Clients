@@ -22,7 +22,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 new NullHttpExchangeException(
                     message: "Null HttpExchange error occurred, fix errors and try again.");
 
-            var expectedHttpExchangeValidationException =
+            var expectedHttpExchangeValidationException = 
                 new HttpExchangeValidationException(
                     message: "HttpExchange validation errors occurred, fix errors and try again.",
                     innerException: nullHttpExchangeException);

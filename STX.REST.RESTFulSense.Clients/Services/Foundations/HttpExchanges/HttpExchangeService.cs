@@ -105,7 +105,11 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 {
                      StreamContent = new ValueTask<Stream>(
                          httpResponseMessage.Content.ReadAsStreamAsync())
-                }
+                },
+                ReasonPhrase = httpResponseMessage.ReasonPhrase,
+                Version = httpResponseMessage.Version.ToString(),
+                StatusCode = (int)httpResponseMessage.StatusCode,
+                IsSuccessStatusCode = httpResponseMessage.IsSuccessStatusCode
             };
 
             return httpExchange;
