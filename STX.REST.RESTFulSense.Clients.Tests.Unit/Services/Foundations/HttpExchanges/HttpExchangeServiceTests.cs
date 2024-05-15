@@ -125,113 +125,21 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 bogusHttpResponse.Generate();
             
             CreateHttpResponseHeader(randomProperties, httpResponseMessage);
-            (randomProperties.ResponseContent.Headers.Allow as string[])
-                .Select(header => 
-                    {
-                        httpResponseMessage.Content.Headers.Allow.Add(header);
-                        return header;
-                    }).ToArray();
-
-            httpResponseMessage.Content.Headers.ContentDisposition =
-                (ContentDispositionHeaderValue?)CreateContentDispositionHeaderValue(
-                    randomProperties.ResponseContent.Headers.ContentDisposition);
-            
-            (randomProperties.ResponseContent.Headers.ContentEncoding as string[])
-                .Select(header => 
-                {
-                    httpResponseMessage.Content.Headers.ContentEncoding.Add(header);
-                    return header;
-                }).ToArray();
-
-            httpResponseMessage.Content.Headers.ContentLength =
-                (long?)randomProperties.ResponseContent.Headers.ContentLength;
-            
-            httpResponseMessage.Content.Headers.ContentLocation =
-                (Uri?)randomProperties.ResponseContent.Headers.ContentLocation;
-
-            
-            httpResponseMessage.Content.Headers.ContentMD5 =
-                        (byte[])randomProperties.ResponseContent.Headers.ContentMD5;
-
-            httpResponseMessage.Content.Headers.ContentRange =
-                (ContentRangeHeaderValue?)CreateContentRangeHeaderValue(
-                    randomProperties.ResponseContent.Headers.ContentRange);
-
-            httpResponseMessage.Content.Headers.ContentType =
-                (MediaTypeHeaderValue)CreateMediaTypeHeaderValue(
-                    randomProperties.ResponseContent.Headers.ContentType,
-                    httpResponseMessage);
-
-            httpResponseMessage.Content.Headers.Expires =
-                (DateTimeOffset?)randomProperties.ResponseContent.Headers.Expires;
-            
-            httpResponseMessage.Content.Headers.LastModified =
-                (DateTimeOffset?)randomProperties.ResponseContent.Headers.LastModified;
+            CreateHttpResponseContentHeader(randomProperties, httpResponseMessage);
 
             return httpResponseMessage;
         }
-
         
-
-        private static MediaTypeHeaderValue CreateMediaTypeHeaderValue(
-            dynamic randomMediaTypeHeaderValueProperties,
-            HttpResponseMessage httpResponseMessage)
-        {
-            var mediaTypeHeaderValue = new MediaTypeHeaderValue(
-                randomMediaTypeHeaderValueProperties.MediaType,
-                randomMediaTypeHeaderValueProperties.Charset);
-            
-            foreach (dynamic parameter in randomMediaTypeHeaderValueProperties.Parameters)
-            {
-                var nameValueHeaderValue = new NameValueHeaderValue(
-                    parameter.Name,
-                    parameter.Value);
-
-                mediaTypeHeaderValue.Parameters.Add(nameValueHeaderValue);
-            }
-            
-            httpResponseMessage.Content.Headers.ContentType = mediaTypeHeaderValue;
-
-            return mediaTypeHeaderValue;
-        }
-        
-        private static ContentRangeHeaderValue CreateContentRangeHeaderValue(
-            dynamic randomContentRangeHeaderProperties)
-        {
-            return new ContentRangeHeaderValue(
-                randomContentRangeHeaderProperties.From,
-                randomContentRangeHeaderProperties.From,
-                randomContentRangeHeaderProperties.Length)
-            {
-                Unit = randomContentRangeHeaderProperties.Unit,
-            };
-        }
-
-        private static ContentDispositionHeaderValue CreateContentDispositionHeaderValue(
-            dynamic randomContentDispositionHeaderProperties)
-        {
-            return new ContentDispositionHeaderValue(
-                randomContentDispositionHeaderProperties.DispositionType)
-            {
-                Name = randomContentDispositionHeaderProperties.Name,
-                FileName = randomContentDispositionHeaderProperties.FileName,
-                FileNameStar = randomContentDispositionHeaderProperties.FileNameStar,
-                CreationDate = randomContentDispositionHeaderProperties.CreationDate,
-                ModificationDate = randomContentDispositionHeaderProperties.ModificationDate,
-                ReadDate = randomContentDispositionHeaderProperties.ReadDate,
-                Size = randomContentDispositionHeaderProperties.Size
-            };
-        }
-
         private static void CreateHttpResponseHeader(dynamic randomProperties, HttpResponseMessage httpResponseMessage)
         {
-              (randomProperties.ResponseHeaders.AcceptRanges as string[]).Select(header =>
-            {
-                httpResponseMessage.Headers.AcceptRanges.Add(header);
-
-                return header;
-            }).ToArray();
-
+            (randomProperties.ResponseHeaders.AcceptRanges as string[])
+                .Select(header =>
+                {
+                    httpResponseMessage.Headers.AcceptRanges.Add(header);
+                    
+                    return header;
+                }).ToArray();
+            
             httpResponseMessage.Headers.Age = (TimeSpan?)randomProperties.ResponseHeaders.Age;
 
             httpResponseMessage.Headers.CacheControl =
@@ -376,6 +284,88 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
                 return header;
             }).ToArray();
+        }
+
+        private static void CreateHttpResponseContentHeader(dynamic randomProperties, HttpResponseMessage httpResponseMessage)
+        {
+            (randomProperties.ResponseContent.Headers.Allow as string[])
+                .Select(header => 
+                {
+                    httpResponseMessage.Content.Headers.Allow.Add(header);
+                    return header;
+                }).ToArray();
+
+            httpResponseMessage.Content.Headers.ContentDisposition =
+                (ContentDispositionHeaderValue)CreateContentDispositionHeaderValue(
+                    randomProperties.ResponseContent.Headers.ContentDisposition);
+            
+            (randomProperties.ResponseContent.Headers.ContentEncoding as string[])
+                .Select(header => 
+                {
+                    httpResponseMessage.Content.Headers.ContentEncoding.Add(header);
+                    return header;
+                }).ToArray();
+
+            httpResponseMessage.Content.Headers.ContentLength =
+                (long?)randomProperties.ResponseContent.Headers.ContentLength;
+            
+            httpResponseMessage.Content.Headers.ContentLocation =
+                (Uri)randomProperties.ResponseContent.Headers.ContentLocation;
+
+            
+            httpResponseMessage.Content.Headers.ContentMD5 =
+                (byte[])randomProperties.ResponseContent.Headers.ContentMD5;
+
+            httpResponseMessage.Content.Headers.ContentRange =
+                (ContentRangeHeaderValue)CreateContentRangeHeaderValue(
+                    randomProperties.ResponseContent.Headers.ContentRange);
+
+            httpResponseMessage.Content.Headers.ContentType =
+                (MediaTypeHeaderValue)CreateMediaTypeHeaderValue(
+                    randomProperties.ResponseContent.Headers.ContentType);
+
+            httpResponseMessage.Content.Headers.Expires =
+                (DateTimeOffset?)randomProperties.ResponseContent.Headers.Expires;
+            
+            httpResponseMessage.Content.Headers.LastModified =
+                (DateTimeOffset?)randomProperties.ResponseContent.Headers.LastModified;
+        }
+
+
+        private static MediaTypeHeaderValue CreateMediaTypeHeaderValue(
+            dynamic randomMediaTypeHeaderValueProperties)
+        {
+            return new MediaTypeHeaderValue(
+                randomMediaTypeHeaderValueProperties.MediaType,
+                randomMediaTypeHeaderValueProperties.Charset);
+        }
+        
+        private static ContentRangeHeaderValue CreateContentRangeHeaderValue(
+            dynamic randomContentRangeHeaderProperties)
+        {
+            return new ContentRangeHeaderValue(
+                randomContentRangeHeaderProperties.From,
+                randomContentRangeHeaderProperties.To,
+                randomContentRangeHeaderProperties.Length)
+            {
+                Unit = randomContentRangeHeaderProperties.Unit,
+            };
+        }
+
+        private static ContentDispositionHeaderValue CreateContentDispositionHeaderValue(
+            dynamic randomContentDispositionHeaderProperties)
+        {
+            return new ContentDispositionHeaderValue(
+                randomContentDispositionHeaderProperties.DispositionType)
+            {
+                Name = randomContentDispositionHeaderProperties.Name,
+                FileName = randomContentDispositionHeaderProperties.FileName,
+                FileNameStar = randomContentDispositionHeaderProperties.FileNameStar,
+                CreationDate = (DateTimeOffset?)randomContentDispositionHeaderProperties.CreationDate,
+                ModificationDate = randomContentDispositionHeaderProperties.ModificationDate,
+                ReadDate = randomContentDispositionHeaderProperties.ReadDate,
+                Size = randomContentDispositionHeaderProperties.Size
+            };
         }
 
         private static dynamic CreateRandomHttpContent()
@@ -582,5 +572,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             return randomHttpStatusCode;
         }
+        
+        private static long CreateRandomLongToValue(long from) =>
+            new LongRange(min: from, max: 10).GetValue();
     }
 }

@@ -114,12 +114,13 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateRandomMediaTypeHeader()
         {
+            string type = GetRandomString();
+            string subtype = GetRandomString();
             return new
             {
                 Charset = GetRandomString(),
-                MediaType = GetRandomString(),
+                MediaType = $"{type}/{subtype}",
                 Quality = GetRandomDouble(),
-                Parameters = CreateRandomNameValueArray(),
             };
         }
 
@@ -313,15 +314,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 Size = GetRandomLong(),
             };
         }
-
+        
         private static dynamic CreateRandomContentRangeHeader()
         {
+            long from = GetRandomLong();
+            long to = CreateRandomLongToValue(from);
+            long length = to;
             return new
             {
                 Unit = GetRandomString(),
-                From = GetRandomLong(),
-                To = GetRandomLong(),
-                Length = GetRandomLong()
+                From = from,
+                To = to,
+                Length = length
             };
         }
 
