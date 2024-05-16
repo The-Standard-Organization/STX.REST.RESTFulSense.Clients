@@ -7,6 +7,6 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
     public class ProductInfoHeader
     {
         public string Comment { get; init; }
-        public ProductHeader ProductHeader { get; init; }
+        public ProductHeader Product { get; init; }
     }
 }

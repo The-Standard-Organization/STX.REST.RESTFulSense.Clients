@@ -15,7 +15,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public StringWithQualityHeader[] AcceptLanguage { get; init; }
         public AuthenticationHeader Authorization { get; init; }
         public CacheControlHeader CacheControl { get; init; }
-        public string Connection { get; init; }
+        public string[] Connection { get; init; }
         public bool? ConnectionClose { get; init; }
         public DateTimeOffset? Date { get; init; }
         public NameValueHeader[] Expect { get; init; }
@@ -23,9 +23,9 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public NameValueWithParameters[] ExpectCore { get; init; }
         public string From { get; init; }
         public string Host { get; init; }
-        public string IfMatch { get; init; }
+        public string[] IfMatch { get; init; }
         public DateTimeOffset? IfModifiedSince { get; init; }
-        public string IfNoneMatch { get; init; }
+        public string[] IfNoneMatch { get; init; }
         public RangeConditionHeader IfRange { get; init; }
         public DateTimeOffset? IfUnmodifiedSince { get; init; }
         public int? MaxForwards { get; init; }
