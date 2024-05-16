@@ -8,7 +8,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Bogus;
@@ -16,7 +15,6 @@ using Force.DeepCloner;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Brokers.Https;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 using STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges;
 using Tynamix.ObjectFiller;
 
@@ -59,16 +57,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static HttpRequestMessage CreateHttpRequestMessage(
-            dynamic randomProperties)
-        {
-            return new HttpRequestMessage()
-            {
-                RequestUri = randomProperties.Url,
-                Method = randomProperties.HttpMethod,
-            };
-        }
-
         private static HttpExchange CreateHttpExchangeResponse(
             HttpExchange httpExchange,
             dynamic randomProperties)
@@ -93,6 +81,16 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return mappedHttpExchange;
         }
 
+        private static HttpRequestMessage CreateHttpRequestMessage(
+           dynamic randomProperties)
+        {
+            return new HttpRequestMessage()
+            {
+                RequestUri = randomProperties.Url,
+                Method = randomProperties.HttpMethod,
+            };
+        }
+
         private static HttpResponseMessage CreateHttpResponseMessage(
             dynamic randomProperties)
         {
@@ -100,10 +98,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 new Faker<HttpResponseMessage>()
                     .RuleFor(
                         httpResponseMessage => httpResponseMessage.Content,
-                        new StreamContent(randomProperties.ResponseContent.StreamContent)
-                        {
-                            Headers = {  },
-                        })
+                        new StreamContent(randomProperties.ResponseContent.StreamContent))
 
                     .RuleFor(
                         httpResponseMessage => httpResponseMessage.IsSuccessStatusCode,
@@ -123,249 +118,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             HttpResponseMessage httpResponseMessage =
                 bogusHttpResponse.Generate();
-            
-            CreateHttpResponseHeader(randomProperties, httpResponseMessage);
-            CreateHttpResponseContentHeader(randomProperties, httpResponseMessage);
+
+            CreateHttpResponseHeaders(randomProperties, httpResponseMessage);
+            CreateHttpResponseContentHeaders(randomProperties, httpResponseMessage);
 
             return httpResponseMessage;
-        }
-        
-        private static void CreateHttpResponseHeader(dynamic randomProperties, HttpResponseMessage httpResponseMessage)
-        {
-            (randomProperties.ResponseHeaders.AcceptRanges as string[])
-                .Select(header =>
-                {
-                    httpResponseMessage.Headers.AcceptRanges.Add(header);
-                    
-                    return header;
-                }).ToArray();
-            
-            httpResponseMessage.Headers.Age = (TimeSpan?)randomProperties.ResponseHeaders.Age;
-
-            httpResponseMessage.Headers.CacheControl =
-                MapHttpResponseCacheControlHeader(randomProperties.ResponseHeaders.CacheControl);
-
-            (randomProperties.ResponseHeaders.Connection as string[]).Select(header =>
-            {
-                httpResponseMessage.Headers.Connection.Add(header);
-
-                return header;
-            }).ToArray();
-
-            httpResponseMessage.Headers.ConnectionClose =
-                (bool?)randomProperties.ResponseHeaders.ConnectionClose;
-
-            httpResponseMessage.Headers.Date =
-                (DateTimeOffset?)randomProperties.ResponseHeaders.Date;
-
-            httpResponseMessage.Headers.ETag =
-                new EntityTagHeaderValue((string)randomProperties.ResponseHeaders.ETag);
-
-            httpResponseMessage.Headers.Location =
-                (Uri)randomProperties.ResponseHeaders.Location;
-
-            (randomProperties.ResponseHeaders.Pragma as dynamic[]).Select(header =>
-            {
-                var pragmaHeader = new NameValueHeaderValue(header.Name)
-                {
-                    Value = header.Value
-                };
-                httpResponseMessage.Headers.Pragma.Add(pragmaHeader);
-
-                return header;
-            }).ToArray();
-
-            (randomProperties.ResponseHeaders.ProxyAuthenticate as dynamic[])
-                .Select(header =>
-                {
-                    var proxyAuthenticateHeader = new AuthenticationHeaderValue(
-                        header.Schema, header.Value);
-
-                    httpResponseMessage.Headers.ProxyAuthenticate.Add(proxyAuthenticateHeader);
-
-                    return header;
-                }).ToArray();
-
-            httpResponseMessage.Headers.RetryAfter =
-                (RetryConditionHeaderValue?)MapHttpResponseRetryConditionHeaderValue(
-                    randomProperties.ResponseHeaders.RetryAfter);
-
-            (randomProperties.ResponseHeaders.Server as dynamic[])
-                .Select(header =>
-                {
-                    var productInfoHeaderValueNameVersion =
-                        new ProductInfoHeaderValue(header.ProductHeader.Name, header.ProductHeader.Version);
-
-                    httpResponseMessage.Headers.Server.Add(productInfoHeaderValueNameVersion);
-
-                    var productInfoHeaderValueComment =
-                        new ProductInfoHeaderValue(header.Comment);
-
-                    httpResponseMessage.Headers.Server.Add(productInfoHeaderValueComment);
-
-                    return header;
-                }).ToArray();
-
-            (randomProperties.ResponseHeaders.Trailer as string[]).Select(header =>
-            {
-                httpResponseMessage.Headers.Trailer.Add(header);
-
-                return header;
-            }).ToArray();
-
-            (randomProperties.ResponseHeaders.TransferEncoding as dynamic[])
-                .Select(header =>
-                {
-                    var transferEncodingHeader = new TransferCodingHeaderValue(header.Value);
-                    var parameters = header.Parameters as dynamic[];
-                    foreach (var param in parameters)
-                    {
-                        transferEncodingHeader.Parameters.Add(
-                            new NameValueHeaderValue(param.Name, param.Value));
-                    };
-
-                    httpResponseMessage.Headers.TransferEncoding.Add(transferEncodingHeader);
-
-                    return header;
-                }).ToArray();
-
-            httpResponseMessage.Headers.TransferEncodingChunked =
-                (bool?)randomProperties.ResponseHeaders.TransferEncodingChunked;
-
-            (randomProperties.ResponseHeaders.Upgrade as dynamic[])
-                .Select(header =>
-                {
-                    var productHeaderValue = new ProductHeaderValue(header.Name, header.Version);
-
-                    httpResponseMessage.Headers.Upgrade.Add(productHeaderValue);
-
-                    return header;
-                }).ToArray();
-
-            (randomProperties.ResponseHeaders.Vary as string[]).Select(header =>
-            {
-                httpResponseMessage.Headers.Vary.Add(header);
-
-                return header;
-            }).ToArray();
-
-            (randomProperties.ResponseHeaders.Via as dynamic[]).Select(header =>
-            {
-                var viaHeader = new ViaHeaderValue(
-                    header.ProtocolVersion,
-                    header.ReceivedBy,
-                    header.ProtocolName,
-                    header.Comment);
-
-                httpResponseMessage.Headers.Via.Add(viaHeader);
-
-                return header;
-            }).ToArray();
-
-            (randomProperties.ResponseHeaders.Warning as dynamic[]).Select(header =>
-            {
-                var warningHeader = new WarningHeaderValue(
-                    header.Code,
-                    header.Agent,
-                    header.Text,
-                    header.Date);
-
-                httpResponseMessage.Headers.Warning.Add(warningHeader);
-
-                return header;
-            }).ToArray();
-
-            (randomProperties.ResponseHeaders.WwwAuthenticate as dynamic[]).Select(header =>
-            {
-                var authenticateHeader = new AuthenticationHeaderValue(
-                    header.Schema, header.Value);
-
-                httpResponseMessage.Headers.WwwAuthenticate.Add(authenticateHeader);
-
-                return header;
-            }).ToArray();
-        }
-
-        private static void CreateHttpResponseContentHeader(dynamic randomProperties, HttpResponseMessage httpResponseMessage)
-        {
-            (randomProperties.ResponseContent.Headers.Allow as string[])
-                .Select(header => 
-                {
-                    httpResponseMessage.Content.Headers.Allow.Add(header);
-                    return header;
-                }).ToArray();
-
-            httpResponseMessage.Content.Headers.ContentDisposition =
-                (ContentDispositionHeaderValue)CreateContentDispositionHeaderValue(
-                    randomProperties.ResponseContent.Headers.ContentDisposition);
-            
-            (randomProperties.ResponseContent.Headers.ContentEncoding as string[])
-                .Select(header => 
-                {
-                    httpResponseMessage.Content.Headers.ContentEncoding.Add(header);
-                    return header;
-                }).ToArray();
-
-            httpResponseMessage.Content.Headers.ContentLength =
-                (long?)randomProperties.ResponseContent.Headers.ContentLength;
-            
-            httpResponseMessage.Content.Headers.ContentLocation =
-                (Uri)randomProperties.ResponseContent.Headers.ContentLocation;
-
-            
-            httpResponseMessage.Content.Headers.ContentMD5 =
-                (byte[])randomProperties.ResponseContent.Headers.ContentMD5;
-
-            httpResponseMessage.Content.Headers.ContentRange =
-                (ContentRangeHeaderValue)CreateContentRangeHeaderValue(
-                    randomProperties.ResponseContent.Headers.ContentRange);
-
-            httpResponseMessage.Content.Headers.ContentType =
-                (MediaTypeHeaderValue)CreateMediaTypeHeaderValue(
-                    randomProperties.ResponseContent.Headers.ContentType);
-
-            httpResponseMessage.Content.Headers.Expires =
-                (DateTimeOffset?)randomProperties.ResponseContent.Headers.Expires;
-            
-            httpResponseMessage.Content.Headers.LastModified =
-                (DateTimeOffset?)randomProperties.ResponseContent.Headers.LastModified;
-        }
-
-
-        private static MediaTypeHeaderValue CreateMediaTypeHeaderValue(
-            dynamic randomMediaTypeHeaderValueProperties)
-        {
-            return new MediaTypeHeaderValue(
-                randomMediaTypeHeaderValueProperties.MediaType,
-                randomMediaTypeHeaderValueProperties.Charset);
-        }
-        
-        private static ContentRangeHeaderValue CreateContentRangeHeaderValue(
-            dynamic randomContentRangeHeaderProperties)
-        {
-            return new ContentRangeHeaderValue(
-                randomContentRangeHeaderProperties.From,
-                randomContentRangeHeaderProperties.To,
-                randomContentRangeHeaderProperties.Length)
-            {
-                Unit = randomContentRangeHeaderProperties.Unit,
-            };
-        }
-
-        private static ContentDispositionHeaderValue CreateContentDispositionHeaderValue(
-            dynamic randomContentDispositionHeaderProperties)
-        {
-            return new ContentDispositionHeaderValue(
-                randomContentDispositionHeaderProperties.DispositionType)
-            {
-                Name = randomContentDispositionHeaderProperties.Name,
-                FileName = randomContentDispositionHeaderProperties.FileName,
-                FileNameStar = randomContentDispositionHeaderProperties.FileNameStar,
-                CreationDate = (DateTimeOffset?)randomContentDispositionHeaderProperties.CreationDate,
-                ModificationDate = randomContentDispositionHeaderProperties.ModificationDate,
-                ReadDate = randomContentDispositionHeaderProperties.ReadDate,
-                Size = randomContentDispositionHeaderProperties.Size
-            };
         }
 
         private static dynamic CreateRandomHttpContent()
@@ -413,7 +170,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             return Enumerable.Range(0, GetRandomNumber())
                 .Select(i => GetRandomString())
-                    .ToArray();
+                .ToArray();
         }
 
         private static byte[] CreateRandomByteArray()
@@ -466,26 +223,28 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomNameValueArray()
         {
-            return Enumerable.Range(0, GetRandomNumber()).Select(item =>
-            {
-                return new
+            return Enumerable.Range(0, GetRandomNumber())
+                .Select(item =>
                 {
-                    Name = GetRandomString(),
-                    Value = GetRandomString()
-                };
-            }).ToArray();
+                    return new
+                    {
+                        Name = GetRandomString(),
+                        Value = GetRandomString()
+                    };
+                }).ToArray();
         }
 
         private static dynamic[] CreateRandomNameValueWithParametersArray()
         {
-            return Enumerable.Range(0, GetRandomNumber()).Select(item =>
-            {
-                return new
+            return Enumerable.Range(0, GetRandomNumber())
+                .Select(item =>
                 {
-                    Name = GetRandomString(),
-                    Parameters = CreateRandomNameValueArray()
-                };
-            }).ToArray();
+                    return new
+                    {
+                        Name = GetRandomString(),
+                        Parameters = CreateRandomNameValueArray()
+                    };
+                }).ToArray();
         }
 
         private static Stream CreateRandomStream()
@@ -520,15 +279,24 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static long GetRandomLong() =>
             new LongRange(min: 2, max: 10).GetValue();
 
-        private static TimeSpan GetRandomTimeSpan()
-        {
-            return new DateTimeRange(
-                earliestDate: new DateTime())
-                .GetValue().TimeOfDay;
-        }
-
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: new DateTime()).GetValue();
+
+        private static TimeSpan GetRandomTimeSpan() =>
+            GetRandomDateTime().TimeOfDay;
+
+        private static DateTimeOffset GetRandomDateTimeWithOutFractions()
+        {
+            DateTimeOffset randomDateTime = GetRandomDateTime();
+            long ticksWithOutFractions = (randomDateTime.Ticks / TimeSpan.TicksPerSecond) * TimeSpan.TicksPerSecond;
+
+            randomDateTime =
+                new DateTimeOffset(
+                    ticks: ticksWithOutFractions,
+                    offset: randomDateTime.Offset);
+
+            return randomDateTime;
+        }
 
         private static bool GetRandomBoolean() =>
             Randomizer<bool>.Create();
@@ -536,15 +304,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static Version GetRandomHttpVersion()
         {
             Random random = new Random();
-            int randomNumber = random.Next(0, 5);
+            int randomNumber = random.Next(0, 4);
 
             return randomNumber switch
             {
                 0 => HttpVersion.Version10,
                 1 => HttpVersion.Version11,
                 2 => HttpVersion.Version20,
-                3 => HttpVersion.Version30,
-                _ => HttpVersion.Unknown,
+                _ => HttpVersion.Version30,
             };
         }
 
@@ -572,7 +339,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             return randomHttpStatusCode;
         }
-        
+
         private static long CreateRandomLongToValue(long from) =>
             new LongRange(min: from, max: 10).GetValue();
     }
