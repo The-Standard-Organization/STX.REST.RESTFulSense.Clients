@@ -238,13 +238,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     Version = randomProperties.Version.ToString(),
                     UrlParameters = randomProperties.UrlParameters,
 
-                    Headers = CreateHttpExchangeRequestHeaders(
-                        randomProperties.RequestHeaders),
+                    Headers =
+                        CreateHttpExchangeRequestHeaders(
+                            randomProperties.RequestHeaders),
 
                     VersionPolicy = (int)randomProperties.VersionPolicy,
 
-                    Content = CreateHttpExchangeContent(
-                        randomProperties.RequestContent)
+                    Content =
+                        CreateHttpExchangeContent(
+                            randomProperties.RequestContent)
                 }
             };
         }
@@ -258,12 +260,27 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateRandomHttpProperties()
+        private static dynamic CreateRandomHttpProperties(
+            bool sendUrlParameters,
+            bool sendRequestHeaders,
+            bool sendRequestContent)
         {
             Uri randomUri = CreateRandomUri();
 
             HttpStatusCode randomStatusCode =
                 GetRandomHttpStatusCode();
+
+            IDictionary<string, object> randomUrlParameters = null;
+            if (sendUrlParameters)
+                randomUrlParameters = CreateRandomUrlParameters();
+
+            dynamic requestHeaders = default;
+            if (sendRequestHeaders)
+                requestHeaders = CreateRandomHttpRequestHeader();
+
+            dynamic requestContent = default;
+            if (sendRequestContent)
+                requestContent = CreateRandomHttpContent();
 
             return new
             {
@@ -272,7 +289,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
                 RelativeUrl = randomUri.LocalPath,
                 Url = randomUri,
-                UrlParameters = CreateRandomUrlParameters(),
+                UrlParameters = randomUrlParameters,
                 HttpMethod = HttpMethod.Get,
                 Version = GetRandomHttpVersion(),
                 VersionPolicy = GetRandomHttpVersionPolicy(),
@@ -283,9 +300,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
                 ReasonPhrase = GetRandomString(),
                 ResponseHttpStatus = randomStatusCode,
-                RequestHeaders = CreateRandomHttpRequestHeader(),
+                RequestHeaders = requestHeaders,
                 ResponseHeaders = CreateRandomHttpResponseHeader(),
-                RequestContent = CreateRandomHttpContent(),
+                RequestContent = requestContent,
                 ResponseContent = CreateRandomHttpContent()
             };
         }
@@ -315,8 +332,19 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         private static HttpExchangeContent CreateHttpExchangeContent(
-           dynamic randomContentProperties) =>
-               CreateHttpExchangeContentFiller(randomContentProperties).Create();
+           dynamic randomContentProperties)
+        {
+            HttpExchangeContent httpExchangeContent = null;
+            if (randomContentProperties != null)
+            {
+                httpExchangeContent =
+                    CreateHttpExchangeContentFiller(
+                        randomContentProperties)
+                    .Create();
+            }
+
+            return httpExchangeContent;
+        }
 
         private static Filler<HttpExchangeContent> CreateHttpExchangeContentFiller(
             dynamic randomContentProperties)
@@ -346,7 +374,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     Method = randomProperties.HttpMethod
                 };
 
-            CreateHttpRequestHeaders(randomProperties.RequestHeaders, httpRequestMessage.Headers);
+            if (randomProperties.RequestHeaders != null)
+                CreateHttpRequestHeaders(randomProperties.RequestHeaders, httpRequestMessage.Headers);
 
             return httpRequestMessage;
         }

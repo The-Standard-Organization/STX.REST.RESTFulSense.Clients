@@ -2,25 +2,39 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System.Net.Http;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
 {
     public partial class HttpExchangeServiceTests
     {
-        [Fact]
-        private async Task ShouldSendHttpRequestWhenGetAsyncIsCalledAsync()
+        [Theory]
+        [InlineData(false, false, false)]
+        [InlineData(false, true, false)]
+        [InlineData(false, true, true)]
+        [InlineData(true, false, false)]
+        [InlineData(true, true, false)]
+        [InlineData(true, true, true)]
+        private async Task ShouldSendHttpRequestWhenGetAsyncIsCalledAsync(
+            bool sendUrlParameters,
+            bool sendRequestHeaders,
+            bool sendRequestContent)
         {
             // given
-            dynamic randomProperties = CreateRandomHttpProperties();
+            dynamic randomProperties =
+                CreateRandomHttpProperties(
+                    sendUrlParameters,
+                    sendRequestHeaders,
+                    sendRequestContent);
 
             HttpExchange inputHttpExchange =
-                CreateHttpExchangeRequest(randomProperties);
+                CreateHttpExchangeRequest(
+                    randomProperties);
 
             HttpExchange expectedHttpExchange =
                 CreateHttpExchangeResponse(
