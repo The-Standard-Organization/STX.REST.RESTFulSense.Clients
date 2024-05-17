@@ -8,7 +8,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
 {
     public class RangeConditionHeader
     {
-        public DateTimeOffset Date { get; init; }
+        public DateTimeOffset? Date { get; init; }
         public string EntityTag { get; init; }
     }
 }

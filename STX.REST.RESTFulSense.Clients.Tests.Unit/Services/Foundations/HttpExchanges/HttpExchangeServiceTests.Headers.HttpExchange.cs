@@ -167,11 +167,13 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static ProductHeader CreateProductHeader(
             dynamic randomProductHeaderProperties)
         {
-            return new ProductHeader
-            {
-                Name = randomProductHeaderProperties.Name,
-                Version = randomProductHeaderProperties.Version
-            };
+            return randomProductHeaderProperties != null
+                ? new ProductHeader
+                {
+                    Name = randomProductHeaderProperties.Name,
+                    Version = randomProductHeaderProperties.Version
+                }
+                : null;
         }
 
         private static ProductInfoHeader CreateProductInfoHeader(

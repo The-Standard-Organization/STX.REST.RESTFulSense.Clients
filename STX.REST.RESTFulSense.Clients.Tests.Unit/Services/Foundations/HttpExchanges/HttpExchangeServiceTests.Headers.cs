@@ -13,7 +13,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             return new
             {
-                Accept = CreateRandomMediaTypeHeaderArray(),
+                Accept = CreateRandomMediaTypeWithQualityHeaderArray(),
                 AcceptCharset = CreateRandomStringQualityHeaderArray(),
                 AcceptEncoding = CreateRandomStringQualityHeaderArray(),
                 AcceptLanguage = CreateRandomStringQualityHeaderArray(),
@@ -114,6 +114,27 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             {
                 Charset = GetRandomString(),
                 MediaType = $"{type}/{subtype}",
+                Quality = default(double?)
+            };
+        }
+
+        private static dynamic[] CreateRandomMediaTypeWithQualityHeaderArray()
+        {
+            return Enumerable.Range(0, GetRandomNumber())
+                .Select(item =>
+                    CreateRandomMediaTypeWithQualityHeader())
+                .ToArray();
+        }
+
+        private static dynamic CreateRandomMediaTypeWithQualityHeader()
+        {
+            string type = GetRandomString();
+            string subtype = GetRandomString();
+
+            return new
+            {
+                Charset = GetRandomString(),
+                MediaType = $"{type}/{subtype}",
                 Quality = GetRandomDoubleBetweenZeroAndOne(),
             };
         }
@@ -172,10 +193,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateRandomRangeConditionHeader()
         {
+            bool isEvenNumber = GetRandomNumber() % 2 == 0;
+            
             return new
             {
-                Date = GetRandomDateTime(),
-                EntityTag = CreateRandomQuotedString()
+                Date = isEvenNumber ? GetRandomDateTime() : (DateTimeOffset?)null,
+                EntityTag = isEvenNumber ? null : CreateRandomQuotedString()
             };
         }
 
@@ -221,12 +244,21 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }).ToArray();
         }
 
-        private static dynamic CreateRandomProductInfoHeader()
+        private static dynamic CreateRandomProductInfoWithProductHeader()
         {
             return new
             {
-                Comment = $"({GetRandomString()})",
+                Comment = default(string),
                 Product = CreateRandomProductHeader()
+            };
+        }
+
+        private static dynamic CreateRandomProductInfoWithCommentHeader()
+        {
+            return new
+            {
+                Product = default(dynamic),
+                Comment = $"({GetRandomString()})",
             };
         }
 
@@ -242,7 +274,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic[] CreateRandomProductInfoHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber())
-                .Select(item => CreateRandomProductInfoHeader())
+                .Select(item => CreateRandomProductInfoWithCommentHeader())
+                .Concat(
+                    Enumerable.Range(0, GetRandomNumber())
+                        .Select(item => CreateRandomProductInfoWithProductHeader()))
                 .ToArray();
         }
 
@@ -277,7 +312,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             {
                 Code = GetRandomNumber(),
                 Agent = GetRandomString(),
-                Text = $"\"{GetRandomString()}\"",
+                Text = CreateRandomQuotedString(),
                 Date = GetRandomDateTime(),
             };
         }

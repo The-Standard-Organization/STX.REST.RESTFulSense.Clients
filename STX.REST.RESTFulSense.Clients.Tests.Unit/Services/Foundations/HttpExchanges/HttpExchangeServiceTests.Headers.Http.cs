@@ -112,10 +112,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             dynamic randomRangeConditionHeaderProperities)
         {
             RangeConditionHeaderValue rangeConditionHeaderValue =
-                new RangeConditionHeaderValue(randomRangeConditionHeaderProperities.Date);
-
-            rangeConditionHeaderValue =
-                new RangeConditionHeaderValue(randomRangeConditionHeaderProperities.EntityTag);
+                randomRangeConditionHeaderProperities.Date != null
+                    ? new RangeConditionHeaderValue(randomRangeConditionHeaderProperities.Date)
+                    : new RangeConditionHeaderValue(randomRangeConditionHeaderProperities.EntityTag);
 
             return rangeConditionHeaderValue;
         }
@@ -172,17 +171,26 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 version: randomProductHeaderProperities.Version);
         }
 
+        private static ProductInfoHeaderValue CreateProductInforHeaderValue(string comment)
+        {
+            return new ProductInfoHeaderValue(
+                comment: comment);
+        }
+
+        private static ProductInfoHeaderValue CreateProductInforHeaderValue(dynamic product)
+        {
+            return new ProductInfoHeaderValue(
+                productName: product.Name,
+                productVersion: product.Version);
+        }
+
         private static ProductInfoHeaderValue CreateProductInfoHeaderValue(
             dynamic randomProductInfoHeaderProperities)
         {
             ProductInfoHeaderValue productInfoHeaderValue =
-                new ProductInfoHeaderValue(
-                    productName: randomProductInfoHeaderProperities.Product.Name,
-                    productVersion: randomProductInfoHeaderProperities.Product.Version);
-
-            productInfoHeaderValue =
-                new ProductInfoHeaderValue(
-                    comment: randomProductInfoHeaderProperities.Comment);
+                string.IsNullOrEmpty(randomProductInfoHeaderProperities.Comment)
+                    ? CreateProductInforHeaderValue(randomProductInfoHeaderProperities.Product)
+                    : CreateProductInforHeaderValue(randomProductInfoHeaderProperities.Comment);
 
             return productInfoHeaderValue;
         }
