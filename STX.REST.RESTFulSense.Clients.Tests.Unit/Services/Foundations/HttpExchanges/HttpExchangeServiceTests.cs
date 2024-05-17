@@ -57,7 +57,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static DateTimeOffset GetRandomDateTimeWithOutFractions()
         {
             DateTimeOffset randomDateTime = GetRandomDateTime();
-            long ticksWithOutFractions = (randomDateTime.Ticks / TimeSpan.TicksPerSecond) * TimeSpan.TicksPerSecond;
+            
+            long ticksWithOutFractions =
+                (randomDateTime.Ticks / TimeSpan.TicksPerSecond) * TimeSpan.TicksPerSecond;
 
             randomDateTime =
                 new DateTimeOffset(

@@ -108,7 +108,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return rangeHeaderValue;
         }
 
-        private static RangeConditionHeaderValue CreateRangeConditionHeaderValue(dynamic randomRangeConditionHeaderProperities)
+        private static RangeConditionHeaderValue CreateRangeConditionHeaderValue(
+            dynamic randomRangeConditionHeaderProperities)
         {
             RangeConditionHeaderValue rangeConditionHeaderValue =
                 new RangeConditionHeaderValue(randomRangeConditionHeaderProperities.Date);
@@ -272,7 +273,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static void CreateHttpRequestHeaders(dynamic randomRequestHeadersProperties, HttpRequestHeaders httpRequestHeaders)
+        private static void CreateHttpRequestHeaders(
+            dynamic randomRequestHeadersProperties,
+            HttpRequestHeaders httpRequestHeaders)
         {
             (randomRequestHeadersProperties.Accept as dynamic[])
                 .Select(header =>
@@ -475,7 +478,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                }).ToArray();
         }
 
-        private static void CreateHttpResponseHeaders(dynamic randomResponseHeadersProperties, HttpResponseHeaders httpResponseHeaders)
+        private static void CreateHttpResponseHeaders(
+            dynamic randomResponseHeadersProperties,
+            HttpResponseHeaders httpResponseHeaders)
         {
             (randomResponseHeadersProperties.AcceptRanges as string[])
                 .Select(header =>
@@ -623,7 +628,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }).ToArray();
         }
 
-        private static void CreateHttpContentHeaders(dynamic randomResponseContentHeadersProperties, HttpContentHeaders httpContentHeaders)
+        private static void CreateHttpContentHeaders(
+            dynamic randomResponseContentHeadersProperties,
+            HttpContentHeaders httpContentHeaders)
         {
             (randomResponseContentHeadersProperties.Allow as string[])
                 .Select(header =>
@@ -641,6 +648,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .Select(header =>
                 {
                     httpContentHeaders.ContentEncoding.Add(header);
+
+                    return header;
+                }).ToArray();
+
+            (randomResponseContentHeadersProperties.ContentLanguage as string[])
+                .Select(header =>
+                {
+                    httpContentHeaders.ContentLanguage.Add(header);
 
                     return header;
                 }).ToArray();
