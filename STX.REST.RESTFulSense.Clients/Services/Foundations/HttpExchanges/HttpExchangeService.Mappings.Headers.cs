@@ -55,11 +55,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     .Select(header =>
                         (AuthenticationHeader)MapToAuthenticationHeader(header)).ToArray(),
                 
-                RetryAfter = new RetryConditionHeader
-                {
-                    Date = httpResponseHeaders.RetryAfter.Date,
-                    Delta = httpResponseHeaders.RetryAfter.Delta
-                },
+                RetryAfter = MapToRetryConditionHeader(httpResponseHeaders),
                 
                 Server = (httpResponseHeaders.Server).Select(header =>
                     string.IsNullOrEmpty(header.Comment) ?
@@ -102,6 +98,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 WwwAuthenticate = (httpResponseHeaders.WwwAuthenticate)
                     .Select(header =>
                         (AuthenticationHeader)MapToAuthenticationHeader(header)).ToArray()
+            };
+        }
+
+        private static RetryConditionHeader MapToRetryConditionHeader(
+            HttpResponseHeaders httpResponseHeaders)
+        {
+            return new RetryConditionHeader
+            {
+                Date = httpResponseHeaders.RetryAfter.Date,
+                Delta = httpResponseHeaders.RetryAfter.Delta
             };
         }
 
