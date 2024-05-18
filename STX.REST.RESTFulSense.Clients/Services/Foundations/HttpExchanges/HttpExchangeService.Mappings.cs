@@ -19,8 +19,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Func<TInput, TOutput> functionMapping)
         {
             TOutput[] outputElements = null;
-            if (elements != null
-                    && elements.Any())
+            if (elements != null)
             {
                 outputElements =
                     elements

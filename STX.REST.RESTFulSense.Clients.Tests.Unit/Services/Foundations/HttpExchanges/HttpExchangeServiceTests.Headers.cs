@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
@@ -11,6 +12,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
     {
         private static dynamic CreateRandomHttpRequestHeader()
         {
+            bool isTransferEncodingChunked = GetRandomBoolean();
+
             return new
             {
                 Accept = CreateRandomMediaTypeWithQualityHeaderArray(),
@@ -38,10 +41,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 ProxyAuthorization = CreateRandomAuthorizationHeader(),
                 Range = CreateRandomRangeHeader(),
                 Referrer = CreateRandomUri(),
-                TE = CreateTransferEncodingWithQualityHeaderArray(),
+                TE = CreateRandomTransferEncodingWithQualityHeaderArray(isTransferEncodingChunked),
                 Trailer = CreateRandomStringArray(),
-                TransferEncoding = CreateTransferEncodingHeaderArray(),
-                TransferEncodingChunked = GetRandomBoolean(),
+                TransferEncoding = CreateRandomTransferEncodingHeaderArray(isTransferEncodingChunked),
+                TransferEncodingChunked = isTransferEncodingChunked,
                 Upgrade = CreateRandomProductHeaderArray(),
                 UserAgent = CreateRandomProductInfoHeaderArray(),
                 Via = CreateRandomViaHeaderArray(),
@@ -51,13 +54,25 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateRandomHttpResponseHeader()
         {
+            bool isConnectionClose = GetRandomBoolean();
+            string[] connectionArray = CreateRandomStringArray();
+            if (isConnectionClose)
+            {
+                connectionArray =
+                    connectionArray
+                        .Append("close")
+                        .ToArray();
+            }
+
+            bool isTransferEncodingChunked = GetRandomBoolean();
+
             return new
             {
                 AcceptRanges = CreateRandomStringArray(),
                 Age = GetRandomTimeSpan(),
                 CacheControl = CreateRandomCacheControlHeader(),
-                Connection = CreateRandomStringArray(),
-                ConnectionClose = GetRandomBoolean(),
+                Connection = connectionArray,
+                ConnectionClose = isConnectionClose,
                 Date = GetRandomDateTime(),
                 ETag = CreateRandomQuotedString(),
                 Location = new Uri(CreateRandomBaseAddress()),
@@ -66,8 +81,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 RetryAfter = CreateRandomRetryConditionHeader(),
                 Server = CreateRandomProductInfoHeaderArray(),
                 Trailer = CreateRandomStringArray(),
-                TransferEncoding = CreateTransferEncodingHeaderArray(),
-                TransferEncodingChunked = GetRandomBoolean(),
+                TransferEncoding = CreateRandomTransferEncodingHeaderArray(isTransferEncodingChunked),
+                TransferEncodingChunked = isTransferEncodingChunked,
                 Upgrade = CreateRandomProductHeaderArray(),
                 Vary = CreateRandomStringArray(),
                 Via = CreateRandomViaHeaderArray(),
@@ -230,32 +245,63 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .ToArray();
         }
 
-        private static dynamic[] CreateTransferEncodingHeaderArray()
+        private static dynamic[] CreateRandomTransferEncodingHeaderArray(bool isChunked)
         {
-            return Enumerable.Range(0, GetRandomNumber())
-                .Select(item =>
-                {
-                    return new
+            IEnumerable<dynamic> transferEncondingHeaderEnumeration =
+                Enumerable.Range(0, GetRandomNumber())
+                    .Select(item =>
                     {
-                        Quality = default(double?),
-                        Value = GetRandomString(),
-                        Parameters = CreateRandomNameValueArray()
-                    };
-                }).ToArray();
+                        return new
+                        {
+                            Quality = default(double?),
+                            Value = GetRandomString(),
+                            Parameters = CreateRandomNameValueArray()
+                        };
+                    });
+
+            if (isChunked)
+            {
+                transferEncondingHeaderEnumeration =
+                    transferEncondingHeaderEnumeration.Append(
+                        new
+                        {
+                            Quality = default(double?),
+                            Value = "chunked",
+                            Parameters = new dynamic[] { },
+                        });
+            }
+
+            return transferEncondingHeaderEnumeration.ToArray();
+
         }
 
-        private static dynamic[] CreateTransferEncodingWithQualityHeaderArray()
+        private static dynamic[] CreateRandomTransferEncodingWithQualityHeaderArray(bool isChunked)
         {
-            return Enumerable.Range(0, GetRandomNumber())
-                .Select(item =>
-                {
-                    return new
+            IEnumerable<dynamic> transferEncondingHeaderEnumeration =
+                Enumerable.Range(0, GetRandomNumber())
+                    .Select(item =>
                     {
-                        Quality = GetRandomDoubleBetweenZeroAndOne(),
-                        Value = GetRandomString(),
-                        Parameters = CreateRandomNameValueArray()
-                    };
-                }).ToArray();
+                        return new
+                        {
+                            Quality = GetRandomDoubleBetweenZeroAndOne(),
+                            Value = GetRandomString(),
+                            Parameters = CreateRandomNameValueArray()
+                        };
+                    });
+
+            if (isChunked)
+            {
+                transferEncondingHeaderEnumeration =
+                    transferEncondingHeaderEnumeration.Append(
+                        new
+                        {
+                            Quality = GetRandomDoubleBetweenZeroAndOne(),
+                            Value = "chunked",
+                            Parameters = new dynamic[] { },
+                        });
+            }
+
+            return transferEncondingHeaderEnumeration.ToArray();
         }
 
         private static dynamic CreateRandomProductInfoWithProductHeader()
@@ -333,10 +379,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateRandomRetryConditionHeader()
         {
+            bool isEven = GetRandomNumber() % 2 == 0;
+
             return new
             {
-                Date = GetRandomDateTime(),
-                Delta = GetRandomTimeSpan()
+                Date = isEven ? GetRandomDateTime() : default(DateTimeOffset?),
+                Delta = isEven ? default(TimeSpan?) : GetRandomTimeSpan()
             };
         }
 

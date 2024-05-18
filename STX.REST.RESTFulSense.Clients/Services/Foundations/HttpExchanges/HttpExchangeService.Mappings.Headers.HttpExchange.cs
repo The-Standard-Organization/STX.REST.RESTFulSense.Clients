@@ -26,10 +26,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return new TransferCodingHeader
             {
                 Value = transferCodingHeaderValue.Value,
-                Parameters = transferCodingHeaderValue.Parameters
-                    .Select(header =>
-                        MapToNameValueHeader(header))
-                    .ToArray()
+                Parameters =
+                    MapArray(
+                        transferCodingHeaderValue.Parameters,
+                        MapToNameValueHeader)
             };
         }
 

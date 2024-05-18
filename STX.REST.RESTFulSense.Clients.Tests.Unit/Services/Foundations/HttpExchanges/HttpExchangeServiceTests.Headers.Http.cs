@@ -218,7 +218,21 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static RetryConditionHeaderValue CreateRetryConditionHeaderValue(
             dynamic randomRetryConditionHeaderProperties)
         {
-            return new RetryConditionHeaderValue(randomRetryConditionHeaderProperties.Date);
+            RetryConditionHeaderValue retryConditionHeaderValue = null;
+            if (randomRetryConditionHeaderProperties.Date != null)
+            {
+                retryConditionHeaderValue =
+                    new RetryConditionHeaderValue(
+                        randomRetryConditionHeaderProperties.Date);
+            }
+            else
+            {
+                retryConditionHeaderValue =
+                    new RetryConditionHeaderValue(
+                        randomRetryConditionHeaderProperties.Delta);
+            }
+
+            return retryConditionHeaderValue;
         }
 
         private static MediaTypeHeaderValue CreateMediaTypeHeaderValue(
