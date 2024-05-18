@@ -2,10 +2,10 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.Net.Http.Headers;
 using System.Linq;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
+using System.Net.Http.Headers;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
@@ -17,8 +17,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return new HttpExchangeContentHeaders
             {
                 Allow = httpContentHeaders.Allow.ToArray(),
+                
                 ContentDisposition =
-                    MapToContentDispositionHeader(httpContentHeaders),
+                    MapToContentDispositionHeader(
+                        httpContentHeaders.ContentDisposition),
 
                 ContentEncoding =
                     httpContentHeaders.ContentEncoding.ToArray(),
@@ -27,8 +29,11 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 ContentLength = httpContentHeaders.ContentLength,
                 ContentLocation = httpContentHeaders.ContentLocation,
                 ContentMD5 = httpContentHeaders.ContentMD5,
-                ContentRange = MapToContentRangeHeader(httpContentHeaders),
-                ContentType = MapToContentType(httpContentHeaders),
+                
+                ContentRange = MapToContentRangeHeader(
+                    httpContentHeaders.ContentRange),
+                
+                ContentType = MapToContentType(httpContentHeaders.ContentType),
                 Expires = httpContentHeaders.Expires,
                 LastModified = httpContentHeaders.LastModified
             };
@@ -41,63 +46,62 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 AcceptRanges = httpResponseHeaders.AcceptRanges.ToArray(),
                 Age = httpResponseHeaders.Age,
-                CacheControl = MapToCacheControlHeader(httpResponseHeaders),
+                
+                CacheControl = MapToCacheControlHeader(
+                    httpResponseHeaders.CacheControl),
+                
                 Connection = httpResponseHeaders.Connection.ToArray(),
                 ConnectionClose = httpResponseHeaders.ConnectionClose,
                 Date = httpResponseHeaders.Date,
                 ETag = httpResponseHeaders.ETag.ToString(),
                 Location = httpResponseHeaders.Location,
                 
-                Pragma = (httpResponseHeaders.Pragma).Select(header =>
-                   (NameValueHeader)MapToNameValueHeader(header)).ToArray(),
+                Pragma = httpResponseHeaders.Pragma.Select(header =>
+                    MapToNameValueHeader(header)).ToArray(),
                 
-                ProxyAuthenticate = (httpResponseHeaders.ProxyAuthenticate)
+                ProxyAuthenticate = httpResponseHeaders.ProxyAuthenticate
                     .Select(header =>
-                        (AuthenticationHeader)MapToAuthenticationHeader(header)).ToArray(),
+                        MapToAuthenticationHeader(header)).ToArray(),
                 
                 RetryAfter = MapToRetryConditionHeader(httpResponseHeaders),
                 
                 Server = (httpResponseHeaders.Server).Select(header =>
                     string.IsNullOrEmpty(header.Comment) ?
-                        (ProductInfoHeader)MapToProductInfoHeader(header.Product)
-                        : (ProductInfoHeader)MapToProductInfoHeader(header.Comment)).ToArray(),
+                        MapToProductInfoHeader(header.Product) :
+                        MapToProductInfoHeader(header.Comment)).ToArray(),
                 
                 Trailer = httpResponseHeaders.Trailer.ToArray(),
                 
-                TransferEncoding = (httpResponseHeaders.TransferEncoding)
-                    .Select(header => new TransferCodingHeader
-                    {
-                        Value = header.Value,
-                        // Quality = h
-                        Parameters = (header.Parameters).Select(header =>
-                            new NameValueHeader
-                            {
-                              Name  = header.Name,
-                              Value = header.Value
-                            }).ToArray()
-                        
-                    }).ToArray(),
+                TransferEncoding = httpResponseHeaders.TransferEncoding
+                    .Select(header => MapToTransferCodingHeader(header)).ToArray(),
                 
                 TransferEncodingChunked = httpResponseHeaders.TransferEncodingChunked,
                 
-                Upgrade = (httpResponseHeaders.Upgrade.Select(header =>
-                    new ProductHeader
-                    {
-                        Name = header.Name,
-                        Version = header.Version
-                    })).ToArray(),
+                Upgrade = httpResponseHeaders.Upgrade.Select(header =>
+                    MapToProductHeader(header)).ToArray(),
                 
                 Vary = httpResponseHeaders.Vary.ToArray(),
                 
                 Via = (httpResponseHeaders.Via).Select(header =>
-                    (ViaHeader)MapToViaHeader(header)).ToArray(),
+                    MapToViaHeader(header)).ToArray(),
                 
                 Warning = (httpResponseHeaders.Warning).Select(header =>
-                    (WarningHeader)MapToWarningHeader(header)).ToArray(),
+                    MapToWarningHeader(header)).ToArray(),
                 
                 WwwAuthenticate = (httpResponseHeaders.WwwAuthenticate)
                     .Select(header =>
-                        (AuthenticationHeader)MapToAuthenticationHeader(header)).ToArray()
+                        MapToAuthenticationHeader(header)).ToArray()
+            };
+        }
+
+        private static TransferCodingHeader MapToTransferCodingHeader(
+            TransferCodingHeaderValue transferCodingHeaderValue)
+        {
+            return new TransferCodingHeader
+            {
+                Value = transferCodingHeaderValue.Value,
+                Parameters = transferCodingHeaderValue.Parameters.Select(header =>
+                    MapToNameValueHeader(header)).ToArray()
             };
         }
 
@@ -111,42 +115,43 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             };
         }
 
-        private static WarningHeader MapToWarningHeader(WarningHeaderValue header)
+        private static WarningHeader MapToWarningHeader(WarningHeaderValue warningHeaderValue)
         {
             return new WarningHeader
             {
-                Code = header.Code,
-                Agent = header.Agent,
-                Text = header.Text,
-                Date = header.Date
+                Code = warningHeaderValue.Code,
+                Agent = warningHeaderValue.Agent,
+                Text = warningHeaderValue.Text,
+                Date = warningHeaderValue.Date
             };
         }
 
-        private static ViaHeader MapToViaHeader(ViaHeaderValue header)
+        private static ViaHeader MapToViaHeader(ViaHeaderValue viaHeaderValue)
         {
             return new ViaHeader
             {
-                ProtocolName = header.ProtocolName,
-                ProtocolVersion = header.ProtocolVersion,
-                ReceivedBy = header.ReceivedBy,
-                Comment = header.Comment
+                ProtocolName = viaHeaderValue.ProtocolName,
+                ProtocolVersion = viaHeaderValue.ProtocolVersion,
+                ReceivedBy = viaHeaderValue.ReceivedBy,
+                Comment = viaHeaderValue.Comment
             };
         }
 
-        private static AuthenticationHeader MapToAuthenticationHeader(AuthenticationHeaderValue header)
+        private static AuthenticationHeader MapToAuthenticationHeader(
+            AuthenticationHeaderValue authenticationHeaderValue)
         {
             return new AuthenticationHeader
             {
-                Schema = header.Scheme,
-                Value = header.Parameter
+                Schema = authenticationHeaderValue.Scheme,
+                Value = authenticationHeaderValue.Parameter
             };
         }
 
-        private static ProductInfoHeader MapToProductInfoHeader(ProductHeaderValue header)
+        private static ProductInfoHeader MapToProductInfoHeader(ProductHeaderValue productHeaderValue)
         {
             return new ProductInfoHeader
             {
-                Product = MapToProductHeader(header)
+                Product = MapToProductHeader(productHeaderValue)
             };
         }
         
@@ -158,85 +163,82 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             };
         }
 
-        private static ProductHeader MapToProductHeader(ProductHeaderValue header)
+        private static ProductHeader MapToProductHeader(ProductHeaderValue productHeaderValue)
         {
             return new ProductHeader
             {
-                Name = header.Name,
-                Version = header.Version
+                Name = productHeaderValue.Name,
+                Version = productHeaderValue.Version
             };
         }
 
-        private static NameValueHeader MapToNameValueHeader(NameValueHeaderValue header)
+        private static NameValueHeader MapToNameValueHeader(NameValueHeaderValue nameValueHeaderValue)
         {
             return new NameValueHeader
             {
-                Name = header.Name,
-                Value = header.Value
+                Name = nameValueHeaderValue.Name,
+                Value = nameValueHeaderValue.Value
             };
         }
 
-        private static CacheControlHeader MapToCacheControlHeader(HttpResponseHeaders httpResponseHeaders)
+        private static CacheControlHeader MapToCacheControlHeader(CacheControlHeaderValue cacheControlHeaderValue)
         {
             return new CacheControlHeader
             {
-                NoCache = httpResponseHeaders.CacheControl.NoCache,
-                NoCacheHeaders = httpResponseHeaders.CacheControl.NoCacheHeaders.ToArray(),
-                NoStore = httpResponseHeaders.CacheControl.NoStore,
-                MaxAge = httpResponseHeaders.CacheControl.MaxAge,
-                SharedMaxAge = httpResponseHeaders.CacheControl.SharedMaxAge,
-                MaxStale = httpResponseHeaders.CacheControl.MaxStale,
-                MaxStaleLimit = httpResponseHeaders.CacheControl.MaxStaleLimit,
-                MinFresh = httpResponseHeaders.CacheControl.MinFresh,
-                NoTransform = httpResponseHeaders.CacheControl.NoTransform,
-                OnlyIfCached = httpResponseHeaders.CacheControl.OnlyIfCached,
-                Public = httpResponseHeaders.CacheControl.Public,
-                Private = httpResponseHeaders.CacheControl.Private,
-                PrivateHeaders = httpResponseHeaders.CacheControl.PrivateHeaders.ToArray(),
-                MustRevalidate = httpResponseHeaders.CacheControl.MustRevalidate,
-                ProxyRevalidate = httpResponseHeaders.CacheControl.ProxyRevalidate,
-                Extensions = (httpResponseHeaders.CacheControl.Extensions)
-                    .Select(header => new NameValueHeader
-                    {
-                        Name = header.Name,
-                        Value = header.Value
-                    }).ToArray()
+                NoCache = cacheControlHeaderValue.NoCache,
+                NoCacheHeaders = cacheControlHeaderValue.NoCacheHeaders.ToArray(),
+                NoStore = cacheControlHeaderValue.NoStore,
+                MaxAge = cacheControlHeaderValue.MaxAge,
+                SharedMaxAge = cacheControlHeaderValue.SharedMaxAge,
+                MaxStale = cacheControlHeaderValue.MaxStale,
+                MaxStaleLimit = cacheControlHeaderValue.MaxStaleLimit,
+                MinFresh = cacheControlHeaderValue.MinFresh,
+                NoTransform = cacheControlHeaderValue.NoTransform,
+                OnlyIfCached = cacheControlHeaderValue.OnlyIfCached,
+                Public = cacheControlHeaderValue.Public,
+                Private = cacheControlHeaderValue.Private,
+                PrivateHeaders = cacheControlHeaderValue.PrivateHeaders.ToArray(),
+                MustRevalidate = cacheControlHeaderValue.MustRevalidate,
+                ProxyRevalidate = cacheControlHeaderValue.ProxyRevalidate,
+                Extensions = cacheControlHeaderValue.Extensions
+                    .Select(header => MapToNameValueHeader(header)).ToArray()
             };
         }
 
-        private static MediaTypeHeader MapToContentType(HttpContentHeaders httpContentHeaders)
+        private static MediaTypeHeader MapToContentType(MediaTypeHeaderValue mediaTypeHeaderValue)
         {
             return new MediaTypeHeader
             {
-                CharSet = httpContentHeaders.ContentType.CharSet,
-                MediaType = httpContentHeaders.ContentType.MediaType
+                CharSet = mediaTypeHeaderValue.CharSet,
+                MediaType = mediaTypeHeaderValue.MediaType
             };
         }
 
         private static ContentRangeHeader MapToContentRangeHeader(
-            HttpContentHeaders httpContentHeaders)
+            ContentRangeHeaderValue contentRangeHeaderValue)
         {
             return new ContentRangeHeader
             {
-                Unit = httpContentHeaders.ContentRange.Unit,
-                From = httpContentHeaders.ContentRange.From,
-                To = httpContentHeaders.ContentRange.To,
-                Length = httpContentHeaders.ContentRange.Length
+                Unit = contentRangeHeaderValue.Unit,
+                From = contentRangeHeaderValue.From,
+                To = contentRangeHeaderValue.To,
+                Length = contentRangeHeaderValue.Length
             };
         }
 
-        private static ContentDispositionHeader MapToContentDispositionHeader(HttpContentHeaders httpContentHeaders)
+        private static ContentDispositionHeader MapToContentDispositionHeader(
+            ContentDispositionHeaderValue contentDispositionHeaderValue)
         {
             return new ContentDispositionHeader
             {
-                DispositionType = httpContentHeaders.ContentDisposition.DispositionType,
-                Name = httpContentHeaders.ContentDisposition.Name,
-                FileName = httpContentHeaders.ContentDisposition.FileName,
-                FileNameStar = httpContentHeaders.ContentDisposition.FileNameStar,
-                CreationDate = httpContentHeaders.ContentDisposition.CreationDate,
-                ModificationDate = httpContentHeaders.ContentDisposition.ModificationDate,
-                ReadDate = httpContentHeaders.ContentDisposition.ReadDate,
-                Size = httpContentHeaders.ContentDisposition.Size
+                DispositionType = contentDispositionHeaderValue.DispositionType,
+                Name = contentDispositionHeaderValue.Name,
+                FileName = contentDispositionHeaderValue.FileName,
+                FileNameStar = contentDispositionHeaderValue.FileNameStar,
+                CreationDate = contentDispositionHeaderValue.CreationDate,
+                ModificationDate = contentDispositionHeaderValue.ModificationDate,
+                ReadDate = contentDispositionHeaderValue.ReadDate,
+                Size = contentDispositionHeaderValue.Size
             };
         }
     }
