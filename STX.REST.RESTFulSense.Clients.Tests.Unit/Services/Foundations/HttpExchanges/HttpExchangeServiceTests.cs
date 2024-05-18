@@ -127,9 +127,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             string baseAddress = CreateRandomBaseAddress();
             string randomRelativeURL = GetRandomString();
-            IDictionary<string, object> urlParameters = CreateRandomUrlParameters();
+            IDictionary<string, object> urlParameters =
+                CreateRandomUrlParameters();
+
             randomRelativeURL =
                 randomRelativeURL +
+                "?" +
                 string.Join("&",
                     urlParameters.Select(item =>
                         $"{item.Key}={item.Value}"));
@@ -367,15 +370,43 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static HttpRequestMessage CreateHttpRequestMessage(
            dynamic randomProperties)
         {
+            Uri requestUri = randomProperties.Url;
+
+            if (randomProperties.UrlParameters != null)
+            {
+                IEnumerable<string> additionalParameters =
+                    (randomProperties.UrlParameters as IDictionary<string, object>)
+                        .Select(urlParameter =>
+                            $"{urlParameter.Key}={urlParameter.Value}");
+
+                string query =
+                    string.Join("&",
+                        requestUri.Query
+                            .Split("&")
+                            .Concat(additionalParameters));
+
+
+                requestUri =
+                    new Uri(
+                        new Uri(
+                            new Uri(randomProperties.BaseAddress),
+                            requestUri.LocalPath),
+                        query);
+            }
+
             HttpRequestMessage httpRequestMessage =
                 new HttpRequestMessage()
                 {
-                    RequestUri = randomProperties.Url,
+                    RequestUri = requestUri,
                     Method = randomProperties.HttpMethod
                 };
 
             if (randomProperties.RequestHeaders != null)
-                CreateHttpRequestHeaders(randomProperties.RequestHeaders, httpRequestMessage.Headers);
+            {
+                CreateHttpRequestHeaders(
+                    randomProperties.RequestHeaders,
+                    httpRequestMessage.Headers);
+            }
 
             return httpRequestMessage;
         }
