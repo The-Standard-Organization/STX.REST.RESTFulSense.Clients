@@ -6,7 +6,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
     public class HttpExchange
     {
-        public HttpExchangeRequest Request { get; set; }
+        public HttpExchangeRequest Request { get; init; }
         public HttpExchangeResponse Response { get; set; }
     }
 }

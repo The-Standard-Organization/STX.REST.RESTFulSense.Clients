@@ -22,7 +22,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 new NullHttpExchangeException(
                     message: "Null HttpExchange error occurred, fix errors and try again.");
 
-            var expectedHttpExchangeValidationException = 
+            var expectedHttpExchangeValidationException =
                 new HttpExchangeValidationException(
                     message: "HttpExchange validation errors occurred, fix errors and try again.",
                     innerException: nullHttpExchangeException);
@@ -34,11 +34,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             HttpExchangeValidationException actualHttpExchangeValidationException =
                 await Assert.ThrowsAsync<HttpExchangeValidationException>(
                     getAsyncTask.AsTask);
-            
+
             //then
             actualHttpExchangeValidationException.Should().BeEquivalentTo(
                 expectedHttpExchangeValidationException);
-            
+
             this.httpBroker.VerifyNoOtherCalls();
         }
 
@@ -47,7 +47,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             // given
             var httpExchange = new HttpExchange();
-            httpExchange.Request = null;
 
             var invalidHttpExchangeRequestException = new InvalidHttpExchangeRequestException(
                 message: "Invalid HttpExchange request error occurred, fix errors and try again.");
@@ -66,11 +65,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             HttpExchangeValidationException actualHttpExchangeValidationException =
                 await Assert.ThrowsAsync<HttpExchangeValidationException>(
                     getAsyncTask.AsTask);
-            
+
             //then
             actualHttpExchangeValidationException.Should().BeEquivalentTo(
                 expectedHttpExchangeValidationException);
-            
+
             this.httpBroker.VerifyNoOtherCalls();
         }
 
@@ -85,35 +84,36 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             string invalidHttpVersion)
         {
             // given
-            var httpExchange = new HttpExchange();
-
-            httpExchange.Request = new HttpExchangeRequest
+            var httpExchange = new HttpExchange()
             {
-                BaseAddress = invalidBaseAddress,
-                RelativeUrl = invalidRelativeUrl,
-                HttpMethod = invalidHttpMethod,
-                Version = invalidHttpVersion,
+                Request = new HttpExchangeRequest
+                {
+                    BaseAddress = invalidBaseAddress,
+                    RelativeUrl = invalidRelativeUrl,
+                    HttpMethod = invalidHttpMethod,
+                    Version = invalidHttpVersion,
+                }
             };
 
             var invalidHttpExchangeRequestException = new InvalidHttpExchangeRequestException(
                 message: "Invalid HttpExchange request error occurred, fix errors and try again.");
-            
+
             invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.BaseAddress),
                 value: "Value is required");
-            
+
             invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.RelativeUrl),
                 value: "Value is required");
-            
+
             invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.HttpMethod),
                 value: "HttpMethod required is invalid");
-            
+
             invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.Version),
                 value: "HttpVersion required is invalid");
-            
+
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",
                 innerException: invalidHttpExchangeRequestException);
@@ -127,7 +127,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             // then
             actualHttpExchangeValidationException.Should().BeEquivalentTo(
                 expectedHttpExchangeValidationException);
-            
+
             this.httpBroker.VerifyNoOtherCalls();
         }
     }
