@@ -194,7 +194,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic CreateRandomRangeConditionHeader()
         {
             bool isEvenNumber = GetRandomNumber() % 2 == 0;
-            
+
             return new
             {
                 Date = isEvenNumber ? GetRandomDateTime() : (DateTimeOffset?)null,
