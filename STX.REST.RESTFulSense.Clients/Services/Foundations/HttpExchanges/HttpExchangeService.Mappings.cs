@@ -41,6 +41,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             httpExchange.Response = new HttpExchangeResponse
             {
+                Headers = CreateHttpExchangeResponseHeaders(httpResponseMessage.Headers),
                 Content = new HttpExchangeContent
                 {
                     StreamContent = new ValueTask<Stream>(
