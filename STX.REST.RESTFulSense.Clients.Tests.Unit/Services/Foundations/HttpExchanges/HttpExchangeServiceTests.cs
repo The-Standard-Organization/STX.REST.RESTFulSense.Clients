@@ -398,7 +398,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 new HttpRequestMessage()
                 {
                     RequestUri = requestUri,
-                    Method = randomProperties.HttpMethod
+                    Method = randomProperties.HttpMethod,
+                    Version = randomProperties.Version,
+                    VersionPolicy = randomProperties.VersionPolicy,
                 };
 
             if (randomProperties.RequestHeaders != null)
