@@ -38,9 +38,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 ProxyAuthorization = CreateRandomAuthorizationHeader(),
                 Range = CreateRandomRangeHeader(),
                 Referrer = CreateRandomUri(),
-                TE = CreateTransferCodingHeaderArray(),
+                TE = CreateTransferEncodingWithQualityHeaderArray(),
                 Trailer = CreateRandomStringArray(),
-                TransferEncoding = CreateTransferCodingHeaderArray(),
+                TransferEncoding = CreateTransferEncodingHeaderArray(),
                 TransferEncodingChunked = GetRandomBoolean(),
                 Upgrade = CreateRandomProductHeaderArray(),
                 UserAgent = CreateRandomProductInfoHeaderArray(),
@@ -66,7 +66,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 RetryAfter = CreateRandomRetryConditionHeader(),
                 Server = CreateRandomProductInfoHeaderArray(),
                 Trailer = CreateRandomStringArray(),
-                TransferEncoding = CreateTransferCodingHeaderArray(),
+                TransferEncoding = CreateTransferEncodingHeaderArray(),
                 TransferEncodingChunked = GetRandomBoolean(),
                 Upgrade = CreateRandomProductHeaderArray(),
                 Vary = CreateRandomStringArray(),
@@ -230,7 +230,21 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .ToArray();
         }
 
-        private static dynamic[] CreateTransferCodingHeaderArray()
+        private static dynamic[] CreateTransferEncodingHeaderArray()
+        {
+            return Enumerable.Range(0, GetRandomNumber())
+                .Select(item =>
+                {
+                    return new
+                    {
+                        Quality = default(double?),
+                        Value = GetRandomString(),
+                        Parameters = CreateRandomNameValueArray()
+                    };
+                }).ToArray();
+        }
+
+        private static dynamic[] CreateTransferEncodingWithQualityHeaderArray()
         {
             return Enumerable.Range(0, GetRandomNumber())
                 .Select(item =>
