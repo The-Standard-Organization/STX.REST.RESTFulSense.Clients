@@ -6,12 +6,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Bogus;
 using Force.DeepCloner;
+using KellermanSoftware.CompareNetObjects;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Brokers.Https;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
@@ -24,10 +26,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
     {
         private readonly Mock<IHttpBroker> httpBroker;
         private readonly IHttpExchangeService httpExchangeService;
+        private readonly ICompareLogic compareLogic;
 
         public HttpExchangeServiceTests()
         {
             this.httpBroker = new Mock<IHttpBroker>();
+            this.compareLogic = new CompareLogic();
 
             this.httpExchangeService =
                 new HttpExchangeService(httpBroker.Object);
@@ -445,6 +449,16 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             CreateHttpContentHeaders(randomProperties.ResponseContent.Headers, httpResponseMessage.Content.Headers);
 
             return httpResponseMessage;
+        }
+
+        private Expression<Func<HttpRequestMessage, bool>> SameHttpRequestMessageAs(
+            HttpRequestMessage expectedHttpRequestMesssage)
+        {
+            return actualHttpRequestMessage =>
+                this.compareLogic.Compare(
+                    expectedHttpRequestMesssage,
+                    actualHttpRequestMessage)
+                        .AreEqual;
         }
     }
 }
