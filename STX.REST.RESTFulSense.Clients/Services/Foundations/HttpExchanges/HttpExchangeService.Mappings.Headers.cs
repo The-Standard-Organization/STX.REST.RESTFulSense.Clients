@@ -106,39 +106,45 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static HttpExchangeContentHeaders MapHttpExchangeContentHeaders(
             HttpContentHeaders httpContentHeaders)
         {
-            return new HttpExchangeContentHeaders
+            HttpExchangeContentHeaders httpExchangeContentHeaders = null;
+            if (httpContentHeaders is not null)
             {
-                Allow =
-                    MapArray(
-                        httpContentHeaders.Allow,
-                        @string => @string),
+                httpExchangeContentHeaders = new HttpExchangeContentHeaders
+                {
+                    Allow =
+                        MapArray(
+                            httpContentHeaders.Allow,
+                            @string => @string),
 
-                ContentDisposition =
-                    MapToContentDispositionHeader(
-                        httpContentHeaders.ContentDisposition),
+                    ContentDisposition =
+                        MapToContentDispositionHeader(
+                            httpContentHeaders.ContentDisposition),
 
-                ContentEncoding =
-                    MapArray(
-                        httpContentHeaders.ContentEncoding,
-                        @string => @string),
+                    ContentEncoding =
+                        MapArray(
+                            httpContentHeaders.ContentEncoding,
+                            @string => @string),
 
-                ContentLanguage =
-                     MapArray(
-                        httpContentHeaders.ContentLanguage,
-                        @string => @string),
+                    ContentLanguage =
+                        MapArray(
+                            httpContentHeaders.ContentLanguage,
+                            @string => @string),
                 
-                ContentLength = httpContentHeaders.ContentLength,
-                ContentLocation = httpContentHeaders.ContentLocation,
-                ContentMD5 = httpContentHeaders.ContentMD5,
+                    ContentLength = httpContentHeaders.ContentLength,
+                    ContentLocation = httpContentHeaders.ContentLocation,
+                    ContentMD5 = httpContentHeaders.ContentMD5,
 
-                ContentRange =
-                    MapToContentRangeHeader(
-                        httpContentHeaders.ContentRange),
+                    ContentRange =
+                        MapToContentRangeHeader(
+                            httpContentHeaders.ContentRange),
 
-                ContentType = MapToMediaTypeHeader(httpContentHeaders.ContentType),
-                Expires = httpContentHeaders.Expires,
-                LastModified = httpContentHeaders.LastModified
-            };
+                    ContentType = MapToMediaTypeHeader(httpContentHeaders.ContentType),
+                    Expires = httpContentHeaders.Expires,
+                    LastModified = httpContentHeaders.LastModified
+                };
+            }
+
+            return httpExchangeContentHeaders;
         }
     }
 }
