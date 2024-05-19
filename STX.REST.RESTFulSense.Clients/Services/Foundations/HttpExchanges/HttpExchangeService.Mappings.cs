@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 
@@ -49,12 +50,38 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     customHttpVersion: httpExchangeRequest.Version,
                     defaultHttpVersion: defaultHttpVersion);
 
-            return new HttpRequestMessage
+            var httpRequestMessage = new HttpRequestMessage
             {
                 RequestUri = new Uri(baseAddress, relativeUrl),
                 Version = httpVersion,
-                Method = httpMethod
+                Method = httpMethod,
+                
             };
+
+            if (httpExchangeRequest.Headers is not null)
+            {
+                CreateHttpRequestHeaders(
+                    httpExchangeRequest.Headers,
+                    httpRequestMessage.Headers);
+            }
+
+            return httpRequestMessage;
+        }
+
+        private static void CreateHttpRequestHeaders(
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders,
+            HttpRequestHeaders httpRequestHeaders)
+        {
+            httpRequestHeaders.Authorization = MapToAuthenticationHeaderValue(httpExchangeRequestHeaders);
+
+        }
+
+        private static AuthenticationHeaderValue MapToAuthenticationHeaderValue(HttpExchangeRequestHeaders httpExchangeRequestHeaders)
+        {
+            return new AuthenticationHeaderValue(
+                httpExchangeRequestHeaders.Authorization.Schema,
+                httpExchangeRequestHeaders.Authorization.Value
+            );
         }
 
         private static HttpExchange MapToHttpExchange(
