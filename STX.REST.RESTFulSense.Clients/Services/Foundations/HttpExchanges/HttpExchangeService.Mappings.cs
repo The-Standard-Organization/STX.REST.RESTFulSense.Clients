@@ -58,7 +58,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static HttpRequestMessage MapToHttpRequest(
             HttpExchangeRequest httpExchangeRequest,
             HttpMethod defaultHttpMethod,
-            Version defaultHttpVersion)
+            Version defaultHttpVersion,
+            HttpVersionPolicy defaultHttpVersionPolicy)
         {
             var baseAddress = new Uri(httpExchangeRequest.BaseAddress);
             string relativeUrl =
@@ -81,11 +82,15 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     customHttpVersion: httpExchangeRequest.Version,
                     defaultHttpVersion: defaultHttpVersion);
 
+            HttpVersionPolicy httpVersionPolicy =
+                (HttpVersionPolicy)httpExchangeRequest.VersionPolicy;
+
             var httpRequestMessage = new HttpRequestMessage
             {
                 RequestUri = requestUri,
                 Version = httpVersion,
                 Method = httpMethod,
+                VersionPolicy = httpVersionPolicy
             };
 
             if (httpExchangeRequest.Headers is not null)

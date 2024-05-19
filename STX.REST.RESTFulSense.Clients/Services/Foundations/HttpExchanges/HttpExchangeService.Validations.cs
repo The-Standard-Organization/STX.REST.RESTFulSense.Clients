@@ -2,11 +2,11 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using System;
 using System.Net;
 using System.Net.Http;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
@@ -15,11 +15,15 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static void ValidateHttpExchange(
             HttpExchange httpExchange,
             HttpMethod defaultHttpMethod,
-            Version defaultHttpVersion)
+            Version defaultHttpVersion,
+            HttpVersionPolicy defaultHttpVersionPolicy)
         {
             ValidateHttpExchangeNotNull(httpExchange);
             ValidateHttpExchangeRequestNotNull(httpExchange.Request);
-            ValidateHttpExchangeRequestNotInvalid(httpExchange.Request, defaultHttpMethod, defaultHttpVersion);
+            ValidateHttpExchangeRequestNotInvalid(
+                httpExchange.Request,
+                defaultHttpMethod,
+                defaultHttpVersion);
         }
 
         private static void ValidateHttpExchangeNotNull(HttpExchange httpExchange)
@@ -67,7 +71,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Condition = string.IsNullOrWhiteSpace(text),
             Message = "Value is required"
         };
-        
+
         private static dynamic IsInvalidHttpMethod(string customHttpMethod, HttpMethod defaultHttpMethod) => new
         {
             Condition =
@@ -79,7 +83,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             Message = "HttpMethod required is invalid"
         };
-        
+
         private static dynamic IsInvalidHttpVersion(string customHttpVersion, Version defaultHttpVersion) => new
         {
             Condition =
@@ -96,7 +100,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             Message = "HttpVersion required is invalid"
         };
-        
+
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeRequestException =

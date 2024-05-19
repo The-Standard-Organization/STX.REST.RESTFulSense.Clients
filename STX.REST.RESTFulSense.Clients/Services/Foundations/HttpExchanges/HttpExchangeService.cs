@@ -29,13 +29,21 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             HttpMethod defaultHttpMethod = HttpMethod.Get;
             Version defaultHttpVersion = HttpVersion.Version11;
 
-            ValidateHttpExchange(httpExchange, defaultHttpMethod, defaultHttpVersion);
+            HttpVersionPolicy defaultHttpVersionPolicy =
+                HttpVersionPolicy.RequestVersionOrLower;
+
+            ValidateHttpExchange(
+                httpExchange,
+                defaultHttpMethod,
+                defaultHttpVersion,
+                defaultHttpVersionPolicy);
 
             HttpRequestMessage httpRequestMessage =
                 MapToHttpRequest(
                     httpExchangeRequest: httpExchange.Request,
                     defaultHttpMethod: defaultHttpMethod,
-                    defaultHttpVersion: defaultHttpVersion);
+                    defaultHttpVersion: defaultHttpVersion,
+                    defaultHttpVersionPolicy: defaultHttpVersionPolicy);
 
             HttpResponseMessage httpResponseMessage =
                 await httpBroker.SendRequestAsync(
