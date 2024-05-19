@@ -9,6 +9,29 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
+        private static void MapToHttpRequestHeaders(
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders,
+            HttpRequestHeaders httpRequestHeaders)
+        {
+            if (httpExchangeRequestHeaders is null)
+                return;
+
+            /*httpRequestHeaders.Accept
+
+            httpRequestHeaders.AcceptCharset
+
+            httpRequestHeaders.AcceptEncoding
+
+            httpRequestHeaders.AcceptLanguage
+
+            httpRequestHeaders.Authorization =
+                MapToAuthenticationHeaderValue(
+                    httpExchangeRequestHeaders.Authorization);
+
+            httpRequestHeaders.CacheControl*/
+        }
+
+
         private static HttpExchangeResponseHeaders MapHttpExchangeResponseHeaders(
             HttpResponseHeaders httpResponseHeaders)
         {
