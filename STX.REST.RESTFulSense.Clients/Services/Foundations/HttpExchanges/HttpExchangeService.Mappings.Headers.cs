@@ -2,8 +2,6 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.Linq;
-using System.Net;
 using System.Net.Http.Headers;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 
@@ -14,137 +12,133 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static HttpExchangeResponseHeaders MapHttpExchangeResponseHeaders(
             HttpResponseHeaders httpResponseHeaders)
         {
-            HttpExchangeResponseHeaders httpExchangeResponseHeaders = null;
-            if (httpResponseHeaders != null)
+            if (httpResponseHeaders is null)
+                return null;
+
+            return new HttpExchangeResponseHeaders
             {
-                httpExchangeResponseHeaders =
-                    new HttpExchangeResponseHeaders
-                    {
-                        AcceptRanges =
-                            MapArray(
-                                httpResponseHeaders.AcceptRanges,
-                                @string => @string),
+                AcceptRanges =
+                    MapArray(
+                        httpResponseHeaders.AcceptRanges,
+                        @string => @string),
 
-                        Age = httpResponseHeaders.Age,
+                Age = httpResponseHeaders.Age,
 
-                        CacheControl =
-                            MapToCacheControlHeader(
-                                httpResponseHeaders.CacheControl),
+                CacheControl =
+                    MapToCacheControlHeader(
+                        httpResponseHeaders.CacheControl),
 
-                        Connection =
-                            MapArray(
-                                httpResponseHeaders.Connection,
-                                @string => @string),
+                Connection =
+                    MapArray(
+                        httpResponseHeaders.Connection,
+                        @string => @string),
 
-                        ConnectionClose = httpResponseHeaders.ConnectionClose,
-                        Date = httpResponseHeaders.Date,
-                        ETag = httpResponseHeaders.ETag.ToString(),
-                        Location = httpResponseHeaders.Location,
+                ConnectionClose = httpResponseHeaders.ConnectionClose,
+                Date = httpResponseHeaders.Date,
+                ETag = httpResponseHeaders.ETag.ToString(),
+                Location = httpResponseHeaders.Location,
 
-                        Pragma =
-                            MapArray(
-                                httpResponseHeaders.Pragma,
-                                MapToNameValueHeader),
+                Pragma =
+                    MapArray(
+                        httpResponseHeaders.Pragma,
+                        MapToNameValueHeader),
 
-                        ProxyAuthenticate =
-                            MapArray(
-                                httpResponseHeaders.ProxyAuthenticate,
-                                MapToAuthenticationHeader),
+                ProxyAuthenticate =
+                    MapArray(
+                        httpResponseHeaders.ProxyAuthenticate,
+                        MapToAuthenticationHeader),
 
-                        RetryAfter =
-                            MapToRetryConditionHeader(
-                                httpResponseHeaders.RetryAfter),
+                RetryAfter =
+                    MapToRetryConditionHeader(
+                        httpResponseHeaders.RetryAfter),
 
-                        Server =
-                            MapArray(
-                                httpResponseHeaders.Server,
-                                MapToProductInfoHeader),
+                Server =
+                    MapArray(
+                        httpResponseHeaders.Server,
+                        MapToProductInfoHeader),
 
-                        Trailer =
-                            MapArray(
-                                httpResponseHeaders.Trailer,
-                                @string => @string),
+                Trailer =
+                    MapArray(
+                        httpResponseHeaders.Trailer,
+                        @string => @string),
 
-                        TransferEncoding =
-                            MapArray(
-                                httpResponseHeaders.TransferEncoding,
-                                MapToTransferCodingHeader),
+                TransferEncoding =
+                    MapArray(
+                        httpResponseHeaders.TransferEncoding,
+                        MapToTransferCodingHeader),
 
-                        TransferEncodingChunked =
+                TransferEncodingChunked =
                             httpResponseHeaders.TransferEncodingChunked,
 
-                        Upgrade =
-                            MapArray(
-                                httpResponseHeaders.Upgrade,
-                                MapToProductHeader),
+                Upgrade =
+                    MapArray(
+                        httpResponseHeaders.Upgrade,
+                        MapToProductHeader),
 
-                        Vary =
-                            MapArray(
-                                httpResponseHeaders.Vary,
-                                @string => @string),
+                Vary =
+                    MapArray(
+                        httpResponseHeaders.Vary,
+                        @string => @string),
 
-                        Via =
-                            MapArray(
-                                httpResponseHeaders.Via,
-                                MapToViaHeader),
+                Via =
+                    MapArray(
+                        httpResponseHeaders.Via,
+                        MapToViaHeader),
 
-                        Warning =
-                            MapArray(
-                                httpResponseHeaders.Warning,
-                                MapToWarningHeader),
+                Warning =
+                    MapArray(
+                        httpResponseHeaders.Warning,
+                        MapToWarningHeader),
 
-                        WwwAuthenticate =
-                            MapArray(
-                                httpResponseHeaders.WwwAuthenticate,
-                                MapToAuthenticationHeader)
-                    };
-            }
-
-            return httpExchangeResponseHeaders;
+                WwwAuthenticate =
+                    MapArray(
+                        httpResponseHeaders.WwwAuthenticate,
+                        MapToAuthenticationHeader)
+            };
         }
 
         private static HttpExchangeContentHeaders MapHttpExchangeContentHeaders(
             HttpContentHeaders httpContentHeaders)
         {
-            HttpExchangeContentHeaders httpExchangeContentHeaders = null;
-            if (httpContentHeaders is not null)
+            if (httpContentHeaders is null)
+                return null;
+
+            return new HttpExchangeContentHeaders
             {
-                httpExchangeContentHeaders = new HttpExchangeContentHeaders
-                {
-                    Allow =
-                        MapArray(
-                            httpContentHeaders.Allow,
-                            @string => @string),
+                Allow =
+                    MapArray(
+                        httpContentHeaders.Allow,
+                        @string => @string),
 
-                    ContentDisposition =
-                        MapToContentDispositionHeader(
-                            httpContentHeaders.ContentDisposition),
+                ContentDisposition =
+                    MapToContentDispositionHeader(
+                        httpContentHeaders.ContentDisposition),
 
-                    ContentEncoding =
-                        MapArray(
-                            httpContentHeaders.ContentEncoding,
-                            @string => @string),
+                ContentEncoding =
+                    MapArray(
+                        httpContentHeaders.ContentEncoding,
+                        @string => @string),
 
-                    ContentLanguage =
-                        MapArray(
-                            httpContentHeaders.ContentLanguage,
-                            @string => @string),
-                
-                    ContentLength = httpContentHeaders.ContentLength,
-                    ContentLocation = httpContentHeaders.ContentLocation,
-                    ContentMD5 = httpContentHeaders.ContentMD5,
+                ContentLanguage =
+                    MapArray(
+                        httpContentHeaders.ContentLanguage,
+                        @string => @string),
 
-                    ContentRange =
-                        MapToContentRangeHeader(
-                            httpContentHeaders.ContentRange),
+                ContentLength = httpContentHeaders.ContentLength,
+                ContentLocation = httpContentHeaders.ContentLocation,
+                ContentMD5 = httpContentHeaders.ContentMD5,
 
-                    ContentType = MapToMediaTypeHeader(httpContentHeaders.ContentType),
-                    Expires = httpContentHeaders.Expires,
-                    LastModified = httpContentHeaders.LastModified
-                };
-            }
+                ContentRange =
+                    MapToContentRangeHeader(
+                        httpContentHeaders.ContentRange),
 
-            return httpExchangeContentHeaders;
+                ContentType =
+                    MapToMediaTypeHeader(
+                        httpContentHeaders.ContentType),
+
+                Expires = httpContentHeaders.Expires,
+                LastModified = httpContentHeaders.LastModified
+            };
         }
     }
 }

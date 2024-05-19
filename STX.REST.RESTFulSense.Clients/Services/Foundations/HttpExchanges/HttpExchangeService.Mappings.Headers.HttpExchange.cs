@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System.Linq;
 using System.Net.Http.Headers;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
@@ -13,56 +12,51 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static NameValueHeader MapToNameValueHeader(
             NameValueHeaderValue nameValueHeaderValue)
         {
-            NameValueHeader nameValueHeader = null;
-            if (nameValueHeaderValue != null)
-            {
-                nameValueHeader = new NameValueHeader
-                {
-                    Name = nameValueHeaderValue.Name,
-                    Value = nameValueHeaderValue.Value
-                };
-            }
+            if (nameValueHeaderValue is null)
+                return null;
 
-            return nameValueHeader;
+            return new NameValueHeader
+            {
+                Name = nameValueHeaderValue.Name,
+                Value = nameValueHeaderValue.Value
+            };
         }
 
         private static TransferCodingHeader MapToTransferCodingHeader(
             TransferCodingHeaderValue transferCodingHeaderValue)
         {
-            TransferCodingHeader transferCodingHeader = null;
-            if (transferCodingHeaderValue is not null)
+            if (transferCodingHeaderValue is null)
+                return null;
+
+            return new TransferCodingHeader
             {
-                transferCodingHeader = new TransferCodingHeader
-                {
-                    Value = transferCodingHeaderValue.Value,
-                    Parameters = MapArray(
+                Value = transferCodingHeaderValue.Value,
+                Parameters =
+                    MapArray(
                         transferCodingHeaderValue.Parameters,
                         MapToNameValueHeader)
-                };
-            }
-
-            return transferCodingHeader;
+            };
         }
 
         private static RetryConditionHeader MapToRetryConditionHeader(
             RetryConditionHeaderValue retryConditionHeaderValue)
         {
-            RetryConditionHeader retryConditionHeader = null;
-            if (retryConditionHeaderValue != null)
-            {
-                retryConditionHeader = new RetryConditionHeader
-                {
-                    Date = retryConditionHeaderValue.Date,
-                    Delta = retryConditionHeaderValue.Delta
-                };
-            }
+            if (retryConditionHeaderValue is null)
+                return null;
 
-            return retryConditionHeader;
+            return new RetryConditionHeader
+            {
+                Date = retryConditionHeaderValue.Date,
+                Delta = retryConditionHeaderValue.Delta
+            };
         }
 
         private static WarningHeader MapToWarningHeader(
             WarningHeaderValue warningHeaderValue)
         {
+            if (warningHeaderValue is null)
+                return null;
+
             return new WarningHeader
             {
                 Code = warningHeaderValue.Code,
@@ -75,6 +69,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static ViaHeader MapToViaHeader(
             ViaHeaderValue viaHeaderValue)
         {
+            if (viaHeaderValue is null)
+                return null;
+
             return new ViaHeader
             {
                 ProtocolName = viaHeaderValue.ProtocolName,
@@ -87,22 +84,22 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static AuthenticationHeader MapToAuthenticationHeader(
             AuthenticationHeaderValue authenticationHeaderValue)
         {
-            AuthenticationHeader authenticationHeader = null;
-            if (authenticationHeaderValue != null)
-            {
-                authenticationHeader = new AuthenticationHeader
-                {
-                    Schema = authenticationHeaderValue.Scheme,
-                    Value = authenticationHeaderValue.Parameter
-                };
-            }
+            if (authenticationHeaderValue is null)
+                return null;
 
-            return authenticationHeader;
+            return new AuthenticationHeader
+            {
+                Schema = authenticationHeaderValue.Scheme,
+                Value = authenticationHeaderValue.Parameter
+            };
         }
 
         private static ProductHeader MapToProductHeader(
             ProductHeaderValue productHeaderValue)
         {
+            if (productHeaderValue is null)
+                return null;
+
             return new ProductHeader
             {
                 Name = productHeaderValue.Name,
@@ -113,6 +110,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static ProductInfoHeader MapToProductInfoHeader(
            ProductInfoHeaderValue productInfoHeaderValue)
         {
+            if (productInfoHeaderValue is null)
+                return null;
+
             ProductHeader productHeader = null;
             if (productInfoHeaderValue.Product is not null)
             {
@@ -131,40 +131,48 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static CacheControlHeader MapToCacheControlHeader(
             CacheControlHeaderValue cacheControlHeaderValue)
         {
-            CacheControlHeader cacheControlHeader = null;
-            if (cacheControlHeaderValue != null)
+            if (cacheControlHeaderValue is null)
+                return null;
+
+            return new CacheControlHeader
             {
-                cacheControlHeader = new CacheControlHeader
-                {
-                    NoCache = cacheControlHeaderValue.NoCache,
-                    NoCacheHeaders = cacheControlHeaderValue.NoCacheHeaders.ToArray(),
-                    NoStore = cacheControlHeaderValue.NoStore,
-                    MaxAge = cacheControlHeaderValue.MaxAge,
-                    SharedMaxAge = cacheControlHeaderValue.SharedMaxAge,
-                    MaxStale = cacheControlHeaderValue.MaxStale,
-                    MaxStaleLimit = cacheControlHeaderValue.MaxStaleLimit,
-                    MinFresh = cacheControlHeaderValue.MinFresh,
-                    NoTransform = cacheControlHeaderValue.NoTransform,
-                    OnlyIfCached = cacheControlHeaderValue.OnlyIfCached,
-                    Public = cacheControlHeaderValue.Public,
-                    Private = cacheControlHeaderValue.Private,
-                    PrivateHeaders = cacheControlHeaderValue.PrivateHeaders.ToArray(),
-                    MustRevalidate = cacheControlHeaderValue.MustRevalidate,
-                    ProxyRevalidate = cacheControlHeaderValue.ProxyRevalidate,
+                NoCache = cacheControlHeaderValue.NoCache,
+                NoCacheHeaders =
+                    MapArray(
+                        cacheControlHeaderValue.NoCacheHeaders,
+                        @string => @string),
 
-                    Extensions =
-                        MapArray(cacheControlHeaderValue.Extensions,
-                            MapToNameValueHeader)
-                };
-            }
+                NoStore = cacheControlHeaderValue.NoStore,
+                MaxAge = cacheControlHeaderValue.MaxAge,
+                SharedMaxAge = cacheControlHeaderValue.SharedMaxAge,
+                MaxStale = cacheControlHeaderValue.MaxStale,
+                MaxStaleLimit = cacheControlHeaderValue.MaxStaleLimit,
+                MinFresh = cacheControlHeaderValue.MinFresh,
+                NoTransform = cacheControlHeaderValue.NoTransform,
+                OnlyIfCached = cacheControlHeaderValue.OnlyIfCached,
+                Public = cacheControlHeaderValue.Public,
+                Private = cacheControlHeaderValue.Private,
+                PrivateHeaders =
+                    MapArray(
+                        cacheControlHeaderValue.PrivateHeaders,
+                        @string => @string),
 
-            return cacheControlHeader;
+                MustRevalidate = cacheControlHeaderValue.MustRevalidate,
+                ProxyRevalidate = cacheControlHeaderValue.ProxyRevalidate,
 
+                Extensions =
+                    MapArray(
+                        cacheControlHeaderValue.Extensions,
+                        MapToNameValueHeader)
+            };
         }
 
         private static MediaTypeHeader MapToMediaTypeHeader(
             MediaTypeHeaderValue mediaTypeHeaderValue)
         {
+            if (mediaTypeHeaderValue is null)
+                return null;
+
             return new MediaTypeHeader
             {
                 CharSet = mediaTypeHeaderValue.CharSet,
@@ -175,6 +183,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static ContentRangeHeader MapToContentRangeHeader(
             ContentRangeHeaderValue contentRangeHeaderValue)
         {
+            if (contentRangeHeaderValue is null)
+                return null;
+
             return new ContentRangeHeader
             {
                 Unit = contentRangeHeaderValue.Unit,
@@ -187,23 +198,20 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static ContentDispositionHeader MapToContentDispositionHeader(
             ContentDispositionHeaderValue contentDispositionHeaderValue)
         {
-            ContentDispositionHeader contentDispositionHeader = null;
-            if (contentDispositionHeaderValue is not null)
-            {
-                contentDispositionHeader = new ContentDispositionHeader
-                {
-                    DispositionType = contentDispositionHeaderValue.DispositionType,
-                    Name = contentDispositionHeaderValue.Name,
-                    FileName = contentDispositionHeaderValue.FileName,
-                    FileNameStar = contentDispositionHeaderValue.FileNameStar,
-                    CreationDate = contentDispositionHeaderValue.CreationDate,
-                    ModificationDate = contentDispositionHeaderValue.ModificationDate,
-                    ReadDate = contentDispositionHeaderValue.ReadDate,
-                    Size = contentDispositionHeaderValue.Size
-                };
-            }                                                                                                                                         
+            if (contentDispositionHeaderValue is null)
+                return null;
 
-            return contentDispositionHeader;
+            return new ContentDispositionHeader
+            {
+                DispositionType = contentDispositionHeaderValue.DispositionType,
+                Name = contentDispositionHeaderValue.Name,
+                FileName = contentDispositionHeaderValue.FileName,
+                FileNameStar = contentDispositionHeaderValue.FileNameStar,
+                CreationDate = contentDispositionHeaderValue.CreationDate,
+                ModificationDate = contentDispositionHeaderValue.ModificationDate,
+                ReadDate = contentDispositionHeaderValue.ReadDate,
+                Size = contentDispositionHeaderValue.Size
+            };
         }
     }
 }
