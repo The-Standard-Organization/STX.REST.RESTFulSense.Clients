@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,13 +32,44 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return outputElements;
         }
 
+        private static string MapUrlParameters(
+            IDictionary<string, object> urlParameters,
+            string relativeUrl)
+        {
+            string fullRelativeUrl = relativeUrl;
+
+            if (urlParameters != null)
+            {
+                IEnumerable<string> additionalParameters =
+                    urlParameters
+                        .Select(urlParameter =>
+                            $"{urlParameter.Key}={urlParameter.Value}");
+
+                fullRelativeUrl =
+                    string.Join("&",
+                        relativeUrl
+                            .Split("&")
+                            .Concat(additionalParameters));
+            }
+
+            return fullRelativeUrl;
+        }
+
         private static HttpRequestMessage MapToHttpRequest(
             HttpExchangeRequest httpExchangeRequest,
             HttpMethod defaultHttpMethod,
             Version defaultHttpVersion)
         {
             var baseAddress = new Uri(httpExchangeRequest.BaseAddress);
-            string relativeUrl = httpExchangeRequest.RelativeUrl;
+            string relativeUrl =
+                MapUrlParameters(
+                    httpExchangeRequest.UrlParameters,
+                    httpExchangeRequest.RelativeUrl);
+
+            Uri requestUri =
+                new Uri(
+                    baseAddress,
+                    relativeUrl);
 
             HttpMethod httpMethod =
                 GetHttpMethod(
@@ -51,10 +83,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             var httpRequestMessage = new HttpRequestMessage
             {
-                RequestUri = new Uri(baseAddress, relativeUrl),
+                RequestUri = requestUri,
                 Version = httpVersion,
                 Method = httpMethod,
-
             };
 
             if (httpExchangeRequest.Headers is not null)

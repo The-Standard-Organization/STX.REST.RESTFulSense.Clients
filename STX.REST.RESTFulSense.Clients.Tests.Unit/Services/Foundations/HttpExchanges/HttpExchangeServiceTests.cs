@@ -294,7 +294,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 BaseAddress =
                     randomUri.GetLeftPart(UriPartial.Authority),
 
-                RelativeUrl = randomUri.LocalPath,
+                RelativeUrl = randomUri.PathAndQuery,
                 Url = randomUri,
                 UrlParameters = randomUrlParameters,
                 HttpMethod = HttpMethod.Get,
@@ -394,7 +394,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     new Uri(
                         new Uri(
                             new Uri(randomProperties.BaseAddress),
-                            requestUri.LocalPath),
+                            requestUri.PathAndQuery),
                         query);
             }
 

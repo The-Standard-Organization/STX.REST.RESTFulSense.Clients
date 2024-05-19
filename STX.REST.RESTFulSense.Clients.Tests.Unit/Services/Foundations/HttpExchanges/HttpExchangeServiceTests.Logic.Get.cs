@@ -47,8 +47,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             HttpRequestMessage expectedHttpRequestMessage =
                 inputHttpRequestMessage;
 
-            HttpResponseMessage expectedHttpResponseMessage =
+            HttpResponseMessage randomHttpResponseMessage =
                 CreateHttpResponseMessage(randomProperties);
+
+            HttpResponseMessage returnedHttpResponseMessage =
+                randomHttpResponseMessage;
 
             this.httpBroker
                 .Setup(broker =>
@@ -56,7 +59,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                         It.Is(
                             SameHttpRequestMessageAs(expectedHttpRequestMessage)),
                         default))
-                .ReturnsAsync(expectedHttpResponseMessage);
+                .ReturnsAsync(returnedHttpResponseMessage);
 
             // when
             HttpExchange actualHttpExchange =
