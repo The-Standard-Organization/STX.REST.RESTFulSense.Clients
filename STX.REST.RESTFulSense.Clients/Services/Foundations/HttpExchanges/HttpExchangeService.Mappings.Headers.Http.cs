@@ -179,5 +179,47 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 nameValueHeader.Name,
                 nameValueHeader.Value);
         }
+
+        private static TransferCodingHeaderValue MapToTransferCodingHeaderValue(
+            TransferCodingHeader transferCodingHeader)
+        {
+            if (transferCodingHeader is null)
+                return null;
+
+            var transferCodingHeaderValue =
+                new TransferCodingHeaderValue(transferCodingHeader.Value);
+
+            transferCodingHeader.Parameters.Select(header =>
+            {
+                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
+                transferCodingHeaderValue.Parameters.Add(nameValueHeaderValue);
+                
+                return header;
+            }).ToArray();
+
+            return transferCodingHeaderValue;
+        }
+
+        private static ProductHeaderValue MapToProductHeaderValue(ProductHeader productHeader)
+        {
+            if (productHeader is null)
+                return null;
+
+            return new ProductHeaderValue(
+                productHeader.Name,
+                productHeader.Version);
+        }
+        
+        private static ViaHeaderValue MapToViaHeaderValue(ViaHeader viaHeader)
+        {
+            if (viaHeader is null)
+                return null;
+
+            return new ViaHeaderValue(
+                viaHeader.ProtocolName,
+                viaHeader.ProtocolVersion,
+                viaHeader.ReceivedBy,
+                viaHeader.Comment);
+        }
     }
 }

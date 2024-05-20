@@ -168,6 +168,33 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 
                 return header;
             }).ToArray();
+
+            httpExchangeRequestHeaders.TransferEncoding.Select(header =>
+            {
+                var transferCodingHeaderValue = MapToTransferCodingHeaderValue(header);
+                httpRequestHeaders.TransferEncoding.Add(transferCodingHeaderValue);
+
+                return header;
+            }).ToArray();
+
+            httpRequestHeaders.TransferEncodingChunked =
+                httpExchangeRequestHeaders.TransferEncodingChunked;
+
+            httpExchangeRequestHeaders.Upgrade.Select(header =>
+            {
+                var productHeaderValue = MapToProductHeaderValue(header);
+                httpRequestHeaders.Upgrade.Add(productHeaderValue);
+                
+                return header;
+            }).ToArray();
+            
+            // httpExchangeRequestHeaders.Via.Select(header =>
+            // {
+            //     var viaHeaderValue = MapToViaHeaderValue(header);
+            //     httpRequestHeaders.Via.Add(viaHeaderValue);
+            //     
+            //     return header;
+            // }).ToArray();
             
             
         }
