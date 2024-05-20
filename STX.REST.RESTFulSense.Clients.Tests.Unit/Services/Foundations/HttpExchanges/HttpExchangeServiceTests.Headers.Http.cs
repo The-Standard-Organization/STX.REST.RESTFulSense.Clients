@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Net.Http.Headers;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
 {
@@ -17,6 +18,29 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             {
                 Value = randomNameValueHeaderProperties.Value
             };
+        }
+
+        private static NameValueWithParametersHeaderValue CreateNameValueWithParametersHeadersValue(
+            dynamic randomNameValueWithParametersProperties)
+        {
+            var nameValueWithParametersHeaderValue =
+                new NameValueWithParametersHeaderValue(
+                    name: randomNameValueWithParametersProperties.Name,
+                    value: randomNameValueWithParametersProperties.Value);
+
+            (randomNameValueWithParametersProperties.Parameters as dynamic[])
+                .Select(header =>
+                {
+                    NameValueHeaderValue nameValueHeaderValue =
+                        CreateNameValueHeaderValue(header);
+
+                    nameValueWithParametersHeaderValue.Parameters.Add(nameValueHeaderValue);
+
+                    return header;
+                })
+                .ToArray();
+
+            return nameValueWithParametersHeaderValue;
         }
 
         private static CacheControlHeaderValue CreateCacheControlHeaderValue(
@@ -362,8 +386,17 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             httpRequestHeaders.Date =
                 (DateTimeOffset?)randomRequestHeadersProperties.Date;
-            
-            //TODO httpRequestHeaders.Expect/
+
+            (randomRequestHeadersProperties.Expect as dynamic[])
+                .Select(header =>
+                {
+                    NameValueWithParametersHeaderValue nameValueWithParametersHeaderValue =
+                        CreateNameValueWithParametersHeadersValue(header);
+
+                    httpRequestHeaders.Expect.Add(nameValueWithParametersHeaderValue);
+
+                    return header;
+                }).ToArray();
 
             httpRequestHeaders.ExpectContinue =
                 (bool?)randomRequestHeadersProperties.ExpectContinue;
@@ -381,6 +414,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
                    return header;
                }).ToArray();
+
+            httpRequestHeaders.IfModifiedSince = randomRequestHeadersProperties.IfModifiedSince;
 
             (randomRequestHeadersProperties.IfNoneMatch as string[])
                 .Select(header =>

@@ -18,9 +18,8 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public string[] Connection { get; init; }
         public bool? ConnectionClose { get; init; }
         public DateTimeOffset? Date { get; init; }
-        public NameValueHeader[] Expect { get; init; }
+        public NameValueWithParameters[] Expect { get; init; }
         public bool? ExpectContinue { get; init; }
-        public NameValueWithParameters[] ExpectCore { get; init; }
         public string From { get; init; }
         public string Host { get; init; }
         public string[] IfMatch { get; init; }
@@ -40,8 +39,8 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public bool? TransferEncodingChunked { get; init; }
         public ProductHeader[] Upgrade { get; init; }
         public ProductInfoHeader[] UserAgent { get; init; }
-        public ViaHeader Via { get; init; }
-        public WarningHeader Warning { get; init; }
+        public ViaHeader[] Via { get; init; }
+        public WarningHeader[] Warning { get; init; }
 
     }
 }

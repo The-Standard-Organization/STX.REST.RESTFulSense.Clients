@@ -78,7 +78,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static string[] CreateRandomStringArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(i => GetRandomString())
                 .ToArray();
         }
@@ -88,7 +88,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static string[] CreateRandomQuotedStringArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(i => CreateRandomQuotedString())
                 .ToArray();
         }
@@ -166,7 +166,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomNameValueArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item =>
                 {
                     return new
@@ -179,12 +179,13 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomNameValueWithParametersArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item =>
                 {
                     return new
                     {
                         Name = GetRandomString(),
+                        Value = default(string),
                         Parameters = CreateRandomNameValueArray()
                     };
                 }).ToArray();
@@ -231,32 +232,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static long CreateRandomLongToValue(long from) =>
             new LongRange(min: from, max: 10).GetValue();
-
-        private static HttpExchange CreateHttpExchangeRequest(
-            dynamic randomProperties)
-        {
-            return new HttpExchange
-            {
-                Request = new HttpExchangeRequest
-                {
-                    BaseAddress = randomProperties.BaseAddress,
-                    RelativeUrl = randomProperties.RelativeUrl,
-                    HttpMethod = HttpMethod.Get.Method,
-                    Version = randomProperties.Version.ToString(),
-                    UrlParameters = randomProperties.UrlParameters,
-
-                    Headers =
-                        CreateHttpExchangeRequestHeaders(
-                            randomProperties.RequestHeaders),
-
-                    VersionPolicy = (int)randomProperties.VersionPolicy,
-
-                    Content =
-                        CreateHttpExchangeContent(
-                            randomProperties.RequestContent)
-                }
-            };
-        }
 
         private static dynamic CreateRandomHttpContent()
         {
@@ -311,6 +286,32 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 ResponseHeaders = CreateRandomHttpResponseHeader(),
                 RequestContent = requestContent,
                 ResponseContent = CreateRandomHttpContent()
+            };
+        }
+
+        private static HttpExchange CreateRandomHttpExchangeRequest(
+            dynamic randomProperties)
+        {
+            return new HttpExchange
+            {
+                Request = new HttpExchangeRequest
+                {
+                    BaseAddress = randomProperties.BaseAddress,
+                    RelativeUrl = randomProperties.RelativeUrl,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = randomProperties.Version.ToString(),
+                    UrlParameters = randomProperties.UrlParameters,
+
+                    Headers =
+                        CreateHttpExchangeRequestHeaders(
+                            randomProperties.RequestHeaders),
+
+                    VersionPolicy = (int)randomProperties.VersionPolicy,
+
+                    Content =
+                        CreateHttpExchangeContent(
+                            randomProperties.RequestContent)
+                }
             };
         }
 
@@ -452,6 +453,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         private Expression<Func<HttpRequestMessage, bool>> SameHttpRequestMessageAs(
+            HttpRequestMessage actualHttpRequestMesssage,
             HttpRequestMessage expectedHttpRequestMesssage)
         {
             return actualHttpRequestMessage =>

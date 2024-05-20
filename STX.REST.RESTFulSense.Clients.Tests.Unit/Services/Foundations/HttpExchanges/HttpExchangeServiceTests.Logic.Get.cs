@@ -33,7 +33,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     sendRequestContent);
 
             HttpExchange inputHttpExchange =
-                CreateHttpExchangeRequest(
+                CreateRandomHttpExchangeRequest(
                     randomProperties);
 
             HttpExchange expectedHttpExchange =
@@ -56,8 +56,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             this.httpBroker
                 .Setup(broker =>
                     broker.SendRequestAsync(
-                        It.Is(
-                            SameHttpRequestMessageAs(expectedHttpRequestMessage)),
+                        It.IsAny<HttpRequestMessage>(),
                         default))
                 .ReturnsAsync(returnedHttpResponseMessage);
 
@@ -87,8 +86,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             this.httpBroker.Verify(
                 broker =>
                     broker.SendRequestAsync(
-                        It.Is(
-                            SameHttpRequestMessageAs(expectedHttpRequestMessage)),
+                        It.Is<HttpRequestMessage>(x=>
+                            SameHttpRequestMessageAs(x, expectedHttpRequestMessage).Compile().Invoke(x)),
                         default),
                 Times.Once);
 

@@ -301,17 +301,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.Expect)
                     .Use((randomHeaderProperties.Expect as dynamic[])
                         .Select(header =>
-                            (NameValueHeader)CreateNameValueHeader(header))
+                            (NameValueWithParameters)CreateNameValueWithParameters(header))
                         .ToArray())
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.ExpectContinue)
                     .Use((bool?)randomHeaderProperties.ExpectContinue)
-
-                .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.ExpectCore)
-                    .Use((randomHeaderProperties.ExpectCore as dynamic[])
-                        .Select(header =>
-                            (NameValueWithParameters)CreateNameValueWithParameters(header))
-                        .ToArray())
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.From)
                     .Use((string)randomHeaderProperties.From)

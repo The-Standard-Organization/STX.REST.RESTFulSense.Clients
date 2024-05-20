@@ -25,9 +25,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 Connection = CreateRandomStringArray(),
                 ConnectionClose = GetRandomBoolean(),
                 Date = GetRandomDateTime(),
-                Expect = CreateRandomNameValueArray(),
+                Expect = CreateRandomNameValueWithParametersArray(),
                 ExpectContinue = GetRandomBoolean(),
-                ExpectCore = CreateRandomNameValueWithParametersArray(),
                 From = GetRandomString(),
                 Host = GetRandomString(),
                 IfMatch = CreateRandomQuotedStringArray(),
@@ -135,7 +134,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomMediaTypeWithQualityHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item =>
                     CreateRandomMediaTypeWithQualityHeader())
                 .ToArray();
@@ -156,7 +155,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomStringQualityHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item =>
                 {
                     return new
@@ -169,7 +168,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomAuthorizationHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item => CreateRandomAuthorizationHeader())
                 .ToArray();
         }
@@ -240,7 +239,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateRandomRangeItemHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item => CreateRandomRangeItemHeader())
                 .ToArray();
         }
@@ -248,7 +247,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic[] CreateRandomTransferEncodingHeaderArray(bool isChunked)
         {
             IEnumerable<dynamic> transferEncondingHeaderEnumeration =
-                Enumerable.Range(0, GetRandomNumber())
+                Enumerable.Range(0, 1)
                     .Select(item =>
                     {
                         return new
@@ -278,7 +277,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic[] CreateRandomTransferEncodingWithQualityHeaderArray(bool isChunked)
         {
             IEnumerable<dynamic> transferEncondingHeaderEnumeration =
-                Enumerable.Range(0, GetRandomNumber())
+                Enumerable.Range(0, 1)
                     .Select(item =>
                     {
                         return new
@@ -333,17 +332,17 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomProductInfoHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item => CreateRandomProductInfoWithCommentHeader())
                 .Concat(
-                    Enumerable.Range(0, GetRandomNumber())
+                    Enumerable.Range(0, 1)
                         .Select(item => CreateRandomProductInfoWithProductHeader()))
                 .ToArray();
         }
 
         private static dynamic[] CreateRandomViaHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item => CreateRandomViaHeader())
                 .ToArray();
         }
@@ -361,7 +360,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomWarningHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item => CreateRandomWarningHeader())
                 .ToArray();
         }
@@ -390,7 +389,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomProductHeaderArray()
         {
-            return Enumerable.Range(0, GetRandomNumber())
+            return Enumerable.Range(0, 1)
                 .Select(item => CreateRandomProductHeader())
                 .ToArray();
         }

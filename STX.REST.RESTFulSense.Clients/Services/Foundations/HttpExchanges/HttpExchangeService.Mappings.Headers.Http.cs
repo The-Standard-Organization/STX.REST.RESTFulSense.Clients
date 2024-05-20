@@ -11,6 +11,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
+        private static NameValueHeaderValue MapToNameValueHeaderValue(
+            NameValueHeader nameValueHeader)
+        {
+            if (nameValueHeader is null)
+                return null;
+
+            return new NameValueHeaderValue(
+                nameValueHeader.Name,
+                nameValueHeader.Value);
+        }
+
         private static AuthenticationHeaderValue MapToAuthenticationHeaderValue(
             AuthenticationHeader authenticationHeader)
         {
@@ -27,12 +38,27 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             if (mediaTypeHeader is null)
                 return null;
-            
+
             return new MediaTypeWithQualityHeaderValue(
-                mediaTypeHeader.MediaType,
-                mediaTypeHeader.Quality ?? default);
+                mediaTypeHeader.MediaType)
+            {
+                Quality = mediaTypeHeader.Quality
+            };
         }
-        
+
+        private static MediaTypeHeaderValue MapToMediaTypeHeaderValue(
+            MediaTypeHeader mediaTypeHeader)
+        {
+            if (mediaTypeHeader is null)
+                return null;
+
+            return new MediaTypeWithQualityHeaderValue(
+                mediaTypeHeader.MediaType)
+            {
+                CharSet = mediaTypeHeader.CharSet
+            };
+        }
+
         private static StringWithQualityHeaderValue MapToStringWithQualityHeaderValue(
             StringWithQualityHeader stringWithQualityHeader)
         {
@@ -41,7 +67,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             
             return new StringWithQualityHeaderValue(
                 stringWithQualityHeader.Value,
-                stringWithQualityHeader.Quality ?? default);
+                stringWithQualityHeader.Quality.Value);
+        }
+
+        private static StringWithQualityHeaderValue MapToStringHeaderValue(
+            StringWithQualityHeader stringWithQualityHeader)
+        {
+            if (stringWithQualityHeader is null)
+                return null;
+            
+            return new StringWithQualityHeaderValue(
+                stringWithQualityHeader.Value);
         }
         
         private static RangeConditionHeaderValue MapToRangeConditionHeaderValue(
@@ -52,10 +88,20 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             
             return
                 rangeConditionHeader.Date is not null
-                    ? new RangeConditionHeaderValue((DateTimeOffset)rangeConditionHeader.Date)
+                    ? new RangeConditionHeaderValue(rangeConditionHeader.Date.Value)
                     : new RangeConditionHeaderValue(rangeConditionHeader.EntityTag);
         }
-        
+
+        private static RangeItemHeaderValue MapToRangeItemHeaderValue(
+                    RangeItemHeader rangeItemHeader)
+        {
+            if (rangeItemHeader is null)
+                return null;
+
+            return new RangeItemHeaderValue(
+                rangeItemHeader.From, rangeItemHeader.To);
+        }
+
         private static RangeHeaderValue MapToRangeHeaderValue(
             RangeHeader rangeHeader)
         {
@@ -78,16 +124,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return rangeHeaderValue;
         }
 
-        private static RangeItemHeaderValue MapToRangeItemHeaderValue(
-            RangeItemHeader rangeItemHeader)
-        {
-            if (rangeItemHeader is null)
-                return null;
-            
-            return new RangeItemHeaderValue(
-                rangeItemHeader.From, rangeItemHeader.To);
-        }
-
         private static TransferCodingWithQualityHeaderValue MapToTransferCodingWithQualityHeaderValue(
             TransferCodingHeader transferCodingHeader)
         {
@@ -96,9 +132,40 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             return new TransferCodingWithQualityHeaderValue(
                 transferCodingHeader.Value,
-                transferCodingHeader.Quality ?? default);
+                transferCodingHeader.Quality.Value);
         }
-        
+
+        private static TransferCodingHeaderValue MapToTransferCodingHeaderValue(
+            TransferCodingHeader transferCodingHeader)
+        {
+            if (transferCodingHeader is null)
+                return null;
+
+            var transferCodingHeaderValue =
+                new TransferCodingHeaderValue(transferCodingHeader.Value);
+
+            transferCodingHeader.Parameters.Select(header =>
+            {
+                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
+                transferCodingHeaderValue.Parameters.Add(nameValueHeaderValue);
+
+                return header;
+            }).ToArray();
+
+            return transferCodingHeaderValue;
+        }
+
+        private static ProductHeaderValue MapToProductHeaderValue(
+            ProductHeader productHeader)
+        {
+            if (productHeader is null)
+                return null;
+
+            return new ProductHeaderValue(
+                name: productHeader.Name,
+                version: productHeader.Version);
+        }
+
         private static ProductInfoHeaderValue MapToProductInfoHeaderValue(
             ProductInfoHeader productInfoHeader)
         {
@@ -106,20 +173,29 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 return null;
             
             return  string.IsNullOrEmpty(productInfoHeader.Comment)
-                ? new ProductInfoHeaderValue(productInfoHeader.Product.Name,
-                    productInfoHeader.Product.Version)
+                ? new ProductInfoHeaderValue(MapToProductHeaderValue(productInfoHeader.Product))
                 : new ProductInfoHeaderValue(productInfoHeader.Comment);
         }
         
         private static NameValueWithParametersHeaderValue MapToNameValueWithParametersHeaderValue(
-            NameValueHeader nameValueHeader)
+            NameValueWithParameters nameValueWithParameters)
         {
-            if (nameValueHeader is null)
+            if (nameValueWithParameters is null)
                 return null;
 
-            return new NameValueWithParametersHeaderValue(
-                nameValueHeader.Name,
-                nameValueHeader.Value);
+            NameValueWithParametersHeaderValue nameValueWithParametersHeaderValue =
+                new NameValueWithParametersHeaderValue(
+                    nameValueWithParameters.Name);
+
+            nameValueWithParameters.Parameters.Select(header =>
+            {
+                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
+                nameValueWithParametersHeaderValue.Parameters.Add(nameValueHeaderValue);
+
+                return header;
+            }).ToArray();
+
+            return nameValueWithParametersHeaderValue;
         }
 
         private static CacheControlHeaderValue MapToCacheControlHeaderValue(
@@ -144,6 +220,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 MustRevalidate = cacheControlHeader.MustRevalidate,
                 ProxyRevalidate = cacheControlHeader.ProxyRevalidate,
             };
+
             cacheControlHeader.NoCacheHeaders.Select(header =>
             {
                 cacheControlHeaderValue.NoCacheHeaders.Add(header);
@@ -169,47 +246,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return cacheControlHeaderValue;
         }
 
-        private static NameValueHeaderValue MapToNameValueHeaderValue(
-            NameValueHeader nameValueHeader)
-        {
-            if (nameValueHeader is null)
-                return null;
-
-            return new NameValueHeaderValue(
-                nameValueHeader.Name,
-                nameValueHeader.Value);
-        }
-
-        private static TransferCodingHeaderValue MapToTransferCodingHeaderValue(
-            TransferCodingHeader transferCodingHeader)
-        {
-            if (transferCodingHeader is null)
-                return null;
-
-            var transferCodingHeaderValue =
-                new TransferCodingHeaderValue(transferCodingHeader.Value);
-
-            transferCodingHeader.Parameters.Select(header =>
-            {
-                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
-                transferCodingHeaderValue.Parameters.Add(nameValueHeaderValue);
-                
-                return header;
-            }).ToArray();
-
-            return transferCodingHeaderValue;
-        }
-
-        private static ProductHeaderValue MapToProductHeaderValue(ProductHeader productHeader)
-        {
-            if (productHeader is null)
-                return null;
-
-            return new ProductHeaderValue(
-                productHeader.Name,
-                productHeader.Version);
-        }
-        
         private static ViaHeaderValue MapToViaHeaderValue(ViaHeader viaHeader)
         {
             if (viaHeader is null)
@@ -231,7 +267,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 warningHeader.Code,
                 warningHeader.Agent,
                 warningHeader.Text,
-                warningHeader.Date ?? default);
+                warningHeader.Date.Value);
         }
     }
 }

@@ -5,7 +5,6 @@
 using System.Linq;
 using System.Net.Http.Headers;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
@@ -22,7 +21,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 {
                     var mediaTypeWithQualityHeaderValue =
                         MapToMediaTypeWithQualityHeaderValue(header);
-                    
+
                     httpRequestHeaders.Accept.Add(mediaTypeWithQualityHeaderValue);
 
                     return header;
@@ -33,35 +32,43 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 var stringWithQualityHeaderValue =
                     MapToStringWithQualityHeaderValue(header);
-                
+
                 httpRequestHeaders.AcceptCharset.Add(stringWithQualityHeaderValue);
-                
+
                 return header;
             }).ToArray();
-            
+
             httpExchangeRequestHeaders.AcceptEncoding.Select(header =>
             {
                 var stringWithQualityHeaderValue =
                     MapToStringWithQualityHeaderValue(header);
-                
+
                 httpRequestHeaders.AcceptEncoding.Add(stringWithQualityHeaderValue);
-                
+
                 return header;
             }).ToArray();
-            
+
             httpExchangeRequestHeaders.AcceptLanguage.Select(header =>
             {
                 var stringWithQualityHeaderValue =
                     MapToStringWithQualityHeaderValue(header);
-                
+
                 httpRequestHeaders.AcceptLanguage.Add(stringWithQualityHeaderValue);
-                
+
                 return header;
             }).ToArray();
-            
+
             httpRequestHeaders.Authorization =
                 MapToAuthenticationHeaderValue(
                     httpExchangeRequestHeaders.Authorization);
+
+            httpExchangeRequestHeaders.Expect.Select(header =>
+            {
+                var nameValueWithParametersHeaderValue = MapToNameValueWithParametersHeaderValue(header);
+                httpRequestHeaders.Expect.Add(nameValueWithParametersHeaderValue);
+
+                return header;
+            }).ToArray();
 
             httpRequestHeaders.ExpectContinue =
                 httpExchangeRequestHeaders.ExpectContinue;
@@ -71,15 +78,23 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             httpRequestHeaders.Host =
                 httpExchangeRequestHeaders.Host;
-            
-            // httpExchangeRequestHeaders.IfMatch
-            // httpRequestHeaders.IfMatch.
+
+            httpExchangeRequestHeaders.IfMatch
+                .Select(header =>
+            {
+                httpRequestHeaders.IfMatch.Add(new EntityTagHeaderValue(header));
+                return header;
+            }).ToArray();
 
             httpRequestHeaders.IfModifiedSince =
                 httpExchangeRequestHeaders.IfModifiedSince;
-            
-            // httpExchangeRequestHeaders.IfNoneMatch
-            // httpRequestHeaders.IfNoneMatch
+
+            httpExchangeRequestHeaders.IfNoneMatch
+                .Select(header =>
+                {
+                    httpRequestHeaders.IfNoneMatch.Add(new EntityTagHeaderValue(header));
+                    return header;
+                }).ToArray();
 
             httpRequestHeaders.IfRange =
                 MapToRangeConditionHeaderValue(
@@ -109,18 +124,18 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     var transferCodingWithQualityHeaderValue =
                         MapToTransferCodingWithQualityHeaderValue(
                             header);
-                    
+
                     httpRequestHeaders.TE.Add(transferCodingWithQualityHeaderValue);
 
                     return header;
                 }
             ).ToArray();
-                  
+
             httpExchangeRequestHeaders.UserAgent.Select(header =>
                 {
                     var productInfoHeaderValue =
                         MapToProductInfoHeaderValue(header);
-                    
+
                     httpRequestHeaders.UserAgent.Add(productInfoHeaderValue);
 
                     return header;
@@ -131,9 +146,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 var nameValueWithParametersHeader =
                 MapToNameValueWithParametersHeaderValue(header);
-                
+
                 httpRequestHeaders.Expect.Add(nameValueWithParametersHeader);
-                
+
                 return header;
             }).ToArray();
 
@@ -165,7 +180,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpExchangeRequestHeaders.Trailer.Select(header =>
             {
                 httpRequestHeaders.Trailer.Add(header);
-                
+
                 return header;
             }).ToArray();
 
@@ -184,29 +199,26 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 var productHeaderValue = MapToProductHeaderValue(header);
                 httpRequestHeaders.Upgrade.Add(productHeaderValue);
-                
+
                 return header;
             }).ToArray();
-            
-            // httpExchangeRequestHeaders.Via.Select(header =>
-            // {
-            //     var viaHeaderValue = MapToViaHeaderValue(header);
-            //     httpRequestHeaders.Via.Add(viaHeaderValue);
-            //     
-            //     return header;
-            // }).ToArray();
-            //
-            // httpExchangeRequestHeaders.Warning.Select(header =>
-            // {
-            //     var warningHeaderValue = MapToWarningHeaderValue(header);
-            //     httpRequestHeaders.Warning.Add(warningHeaderValue);
-            //     
-            //     return header;
-            // }).ToArray();
+
+            httpExchangeRequestHeaders.Via.Select(header =>
+            {
+                ViaHeaderValue viaHeaderValue = MapToViaHeaderValue(header);
+                httpRequestHeaders.Via.Add(viaHeaderValue);
+
+                return header;
+            }).ToArray();
+
+            httpExchangeRequestHeaders.Warning.Select(header =>
+            {
+                WarningHeaderValue warningHeaderValue = MapToWarningHeaderValue(header);
+                httpRequestHeaders.Warning.Add(warningHeaderValue);
+
+                return header;
+            }).ToArray();
         }
-
-        
-
 
         private static HttpExchangeResponseHeaders MapHttpExchangeResponseHeaders(
             HttpResponseHeaders httpResponseHeaders)
@@ -267,7 +279,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         MapToTransferCodingHeader),
 
                 TransferEncodingChunked =
-                            httpResponseHeaders.TransferEncodingChunked,
+                        httpResponseHeaders.TransferEncodingChunked,
 
                 Upgrade =
                     MapArray(
