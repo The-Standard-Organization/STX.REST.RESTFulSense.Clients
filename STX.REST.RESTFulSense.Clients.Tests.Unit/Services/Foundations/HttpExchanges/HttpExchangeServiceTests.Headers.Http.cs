@@ -362,6 +362,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             httpRequestHeaders.Date =
                 (DateTimeOffset?)randomRequestHeadersProperties.Date;
+            
+            //TODO httpRequestHeaders.Expect/
 
             httpRequestHeaders.ExpectContinue =
                 (bool?)randomRequestHeadersProperties.ExpectContinue;
