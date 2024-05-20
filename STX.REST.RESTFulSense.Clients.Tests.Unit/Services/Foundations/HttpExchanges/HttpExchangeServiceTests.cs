@@ -78,7 +78,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static string[] CreateRandomStringArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(i => GetRandomString())
                 .ToArray();
         }
@@ -88,7 +88,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static string[] CreateRandomQuotedStringArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(i => CreateRandomQuotedString())
                 .ToArray();
         }
@@ -166,7 +166,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomNameValueArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item =>
                 {
                     return new
@@ -179,7 +179,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomNameValueWithParametersArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item =>
                 {
                     return new

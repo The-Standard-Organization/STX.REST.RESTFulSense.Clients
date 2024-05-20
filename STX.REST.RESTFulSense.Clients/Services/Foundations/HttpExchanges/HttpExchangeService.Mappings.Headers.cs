@@ -62,6 +62,23 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 MapToAuthenticationHeaderValue(
                     httpExchangeRequestHeaders.Authorization);
 
+            httpRequestHeaders.CacheControl =
+               MapToCacheControlHeaderValue(
+                   httpExchangeRequestHeaders.CacheControl);
+
+            httpExchangeRequestHeaders.Connection.Select(header =>
+            {
+                httpRequestHeaders.Connection.Add(header);
+
+                return header;
+            }).ToArray();
+
+            httpRequestHeaders.ConnectionClose =
+                httpExchangeRequestHeaders.ConnectionClose;
+
+            httpRequestHeaders.Date =
+                httpExchangeRequestHeaders.Date;
+
             httpExchangeRequestHeaders.Expect.Select(header =>
             {
                 var nameValueWithParametersHeaderValue = MapToNameValueWithParametersHeaderValue(header);
@@ -106,6 +123,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.MaxForwards =
                 httpExchangeRequestHeaders.MaxForwards;
 
+            httpExchangeRequestHeaders.Pragma.Select(header =>
+            {
+                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
+                httpRequestHeaders.Pragma.Add(nameValueHeaderValue);
+
+                return header;
+            }).ToArray();
+
             httpRequestHeaders.Protocol =
                 httpExchangeRequestHeaders.Protocol;
 
@@ -131,52 +156,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }
             ).ToArray();
 
-            httpExchangeRequestHeaders.UserAgent.Select(header =>
-                {
-                    var productInfoHeaderValue =
-                        MapToProductInfoHeaderValue(header);
-
-                    httpRequestHeaders.UserAgent.Add(productInfoHeaderValue);
-
-                    return header;
-                }
-            ).ToArray();
-
-            httpExchangeRequestHeaders.Expect.Select(header =>
-            {
-                var nameValueWithParametersHeader =
-                MapToNameValueWithParametersHeaderValue(header);
-
-                httpRequestHeaders.Expect.Add(nameValueWithParametersHeader);
-
-                return header;
-            }).ToArray();
-
-            httpRequestHeaders.CacheControl =
-                MapToCacheControlHeaderValue(
-                    httpExchangeRequestHeaders.CacheControl);
-
-            httpExchangeRequestHeaders.Connection.Select(header =>
-            {
-                httpRequestHeaders.Connection.Add(header);
-
-                return header;
-            }).ToArray();
-
-            httpRequestHeaders.ConnectionClose =
-                httpExchangeRequestHeaders.ConnectionClose;
-
-            httpRequestHeaders.Date =
-                httpExchangeRequestHeaders.Date;
-
-            httpExchangeRequestHeaders.Pragma.Select(header =>
-            {
-                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
-                httpRequestHeaders.Pragma.Add(nameValueHeaderValue);
-
-                return header;
-            }).ToArray();
-
             httpExchangeRequestHeaders.Trailer.Select(header =>
             {
                 httpRequestHeaders.Trailer.Add(header);
@@ -199,6 +178,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 var productHeaderValue = MapToProductHeaderValue(header);
                 httpRequestHeaders.Upgrade.Add(productHeaderValue);
+
+                return header;
+            }).ToArray();
+
+            httpExchangeRequestHeaders.UserAgent.Select(header =>
+            {
+                var productInfoHeaderValue =
+                    MapToProductInfoHeaderValue(header);
+
+                httpRequestHeaders.UserAgent.Add(productInfoHeaderValue);
 
                 return header;
             }).ToArray();

@@ -134,7 +134,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomMediaTypeWithQualityHeaderArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item =>
                     CreateRandomMediaTypeWithQualityHeader())
                 .ToArray();
@@ -155,7 +155,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomStringQualityHeaderArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item =>
                 {
                     return new
@@ -168,7 +168,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomAuthorizationHeaderArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item => CreateRandomAuthorizationHeader())
                 .ToArray();
         }
@@ -239,7 +239,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateRandomRangeItemHeaderArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item => CreateRandomRangeItemHeader())
                 .ToArray();
         }
@@ -247,7 +247,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic[] CreateRandomTransferEncodingHeaderArray(bool isChunked)
         {
             IEnumerable<dynamic> transferEncondingHeaderEnumeration =
-                Enumerable.Range(0, 1)
+                Enumerable.Range(0, GetRandomNumber())
                     .Select(item =>
                     {
                         return new
@@ -277,7 +277,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic[] CreateRandomTransferEncodingWithQualityHeaderArray(bool isChunked)
         {
             IEnumerable<dynamic> transferEncondingHeaderEnumeration =
-                Enumerable.Range(0, 1)
+                Enumerable.Range(0, GetRandomNumber())
                     .Select(item =>
                     {
                         return new
@@ -332,17 +332,17 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomProductInfoHeaderArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item => CreateRandomProductInfoWithCommentHeader())
                 .Concat(
-                    Enumerable.Range(0, 1)
+                    Enumerable.Range(0, GetRandomNumber())
                         .Select(item => CreateRandomProductInfoWithProductHeader()))
                 .ToArray();
         }
 
         private static dynamic[] CreateRandomViaHeaderArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item => CreateRandomViaHeader())
                 .ToArray();
         }
@@ -360,7 +360,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomWarningHeaderArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item => CreateRandomWarningHeader())
                 .ToArray();
         }
@@ -389,7 +389,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic[] CreateRandomProductHeaderArray()
         {
-            return Enumerable.Range(0, 1)
+            return Enumerable.Range(0, GetRandomNumber())
                 .Select(item => CreateRandomProductHeader())
                 .ToArray();
         }

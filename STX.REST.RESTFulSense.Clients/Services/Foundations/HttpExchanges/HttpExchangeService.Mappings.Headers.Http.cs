@@ -130,9 +130,20 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             if (transferCodingHeader is null)
                 return null;
 
-            return new TransferCodingWithQualityHeaderValue(
-                transferCodingHeader.Value,
-                transferCodingHeader.Quality.Value);
+            TransferCodingWithQualityHeaderValue transferCodingWithQualityHeaderValue =
+                new TransferCodingWithQualityHeaderValue(
+                    transferCodingHeader.Value,
+                    transferCodingHeader.Quality.Value);
+
+            transferCodingHeader.Parameters.Select(header =>
+            {
+                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
+                transferCodingWithQualityHeaderValue.Parameters.Add(nameValueHeaderValue);
+
+                return header;
+            }).ToArray();
+
+            return transferCodingWithQualityHeaderValue;
         }
 
         private static TransferCodingHeaderValue MapToTransferCodingHeaderValue(
@@ -252,10 +263,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 return null;
 
             return new ViaHeaderValue(
-                viaHeader.ProtocolName,
-                viaHeader.ProtocolVersion,
-                viaHeader.ReceivedBy,
-                viaHeader.Comment);
+                protocolVersion: viaHeader.ProtocolVersion,
+                receivedBy: viaHeader.ReceivedBy,
+                protocolName: viaHeader.ProtocolName,
+                comment: viaHeader.Comment);
         }
         
         private static WarningHeaderValue MapToWarningHeaderValue(WarningHeader warningHeader)
@@ -264,10 +275,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 return null;
 
             return new WarningHeaderValue(
-                warningHeader.Code,
-                warningHeader.Agent,
-                warningHeader.Text,
-                warningHeader.Date.Value);
+                code: warningHeader.Code,
+                agent: warningHeader.Agent,
+                text: warningHeader.Text,
+                date: warningHeader.Date.Value);
         }
     }
 }
