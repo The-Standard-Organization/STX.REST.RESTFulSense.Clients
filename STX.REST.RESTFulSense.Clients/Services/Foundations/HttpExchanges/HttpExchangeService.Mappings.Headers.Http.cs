@@ -2,7 +2,6 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System;
 using System.Linq;
 using System.Net.Http.Headers;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -32,7 +31,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 authenticationHeader.Schema,
                 authenticationHeader.Value);
         }
-        
+
         private static MediaTypeWithQualityHeaderValue MapToMediaTypeWithQualityHeaderValue(
             MediaTypeHeader mediaTypeHeader)
         {
@@ -64,7 +63,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             if (stringWithQualityHeader is null)
                 return null;
-            
+
             return new StringWithQualityHeaderValue(
                 stringWithQualityHeader.Value,
                 stringWithQualityHeader.Quality.Value);
@@ -75,17 +74,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             if (stringWithQualityHeader is null)
                 return null;
-            
+
             return new StringWithQualityHeaderValue(
                 stringWithQualityHeader.Value);
         }
-        
+
         private static RangeConditionHeaderValue MapToRangeConditionHeaderValue(
             RangeConditionHeader rangeConditionHeader)
         {
             if (rangeConditionHeader is null)
                 return null;
-            
+
             return
                 rangeConditionHeader.Date is not null
                     ? new RangeConditionHeaderValue(rangeConditionHeader.Date.Value)
@@ -107,7 +106,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             if (rangeHeader is null)
                 return null;
-            
+
             var rangeHeaderValue = new RangeHeaderValue
             {
                 Unit = rangeHeader.Unit,
@@ -182,12 +181,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             if (productInfoHeader is null)
                 return null;
-            
-            return  string.IsNullOrEmpty(productInfoHeader.Comment)
+
+            return string.IsNullOrEmpty(productInfoHeader.Comment)
                 ? new ProductInfoHeaderValue(MapToProductHeaderValue(productInfoHeader.Product))
                 : new ProductInfoHeaderValue(productInfoHeader.Comment);
         }
-        
+
         private static NameValueWithParametersHeaderValue MapToNameValueWithParametersHeaderValue(
             NameValueWithParameters nameValueWithParameters)
         {
@@ -238,17 +237,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
                 return header;
             }).ToArray();
-            
+
             cacheControlHeader.PrivateHeaders.Select(header =>
             {
                 cacheControlHeaderValue.PrivateHeaders.Add(header);
 
                 return header;
             }).ToArray();
-            
+
             cacheControlHeader.Extensions.Select(header =>
             {
-                var nameValueHeaderValue =MapToNameValueHeaderValue(header);
+                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
                 cacheControlHeaderValue.Extensions.Add(nameValueHeaderValue);
 
                 return header;
@@ -268,7 +267,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 protocolName: viaHeader.ProtocolName,
                 comment: viaHeader.Comment);
         }
-        
+
         private static WarningHeaderValue MapToWarningHeaderValue(WarningHeader warningHeader)
         {
             if (warningHeader is null)
