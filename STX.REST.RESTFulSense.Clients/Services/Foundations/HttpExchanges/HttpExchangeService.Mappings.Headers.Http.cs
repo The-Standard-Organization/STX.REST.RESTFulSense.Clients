@@ -221,5 +221,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 viaHeader.ReceivedBy,
                 viaHeader.Comment);
         }
+        
+        private static WarningHeaderValue MapToWarningHeaderValue(WarningHeader warningHeader)
+        {
+            if (warningHeader is null)
+                return null;
+
+            return new WarningHeaderValue(
+                warningHeader.Code,
+                warningHeader.Agent,
+                warningHeader.Text,
+                warningHeader.Date ?? default);
+        }
     }
 }

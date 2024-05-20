@@ -195,8 +195,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             //     
             //     return header;
             // }).ToArray();
-            
-            
+            //
+            // httpExchangeRequestHeaders.Warning.Select(header =>
+            // {
+            //     var warningHeaderValue = MapToWarningHeaderValue(header);
+            //     httpRequestHeaders.Warning.Add(warningHeaderValue);
+            //     
+            //     return header;
+            // }).ToArray();
         }
 
         
