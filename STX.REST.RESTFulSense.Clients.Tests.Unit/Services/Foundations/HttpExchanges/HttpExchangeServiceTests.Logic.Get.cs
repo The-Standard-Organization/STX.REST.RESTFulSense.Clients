@@ -14,23 +14,20 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
     public partial class HttpExchangeServiceTests
     {
         [Theory]
-        [InlineData(false, false, false)]
-        [InlineData(false, true, false)]
-        [InlineData(false, true, true)]
-        [InlineData(true, false, false)]
-        [InlineData(true, true, false)]
-        [InlineData(true, true, true)]
+        [InlineData(false, false)]
+        [InlineData(false, true)]
+        [InlineData(true, false)]
+        [InlineData(true, true)]
         private async Task ShouldSendHttpRequestWhenGetAsyncIsCalledAsync(
             bool sendUrlParameters,
-            bool sendRequestHeaders,
-            bool sendRequestContent)
+            bool sendRequestHeaders)
         {
             // given
             dynamic randomProperties =
                 CreateRandomHttpProperties(
                     sendUrlParameters,
                     sendRequestHeaders,
-                    sendRequestContent);
+                    sendRequestContent: false);
 
             HttpExchange inputHttpExchange =
                 CreateRandomHttpExchangeRequest(
