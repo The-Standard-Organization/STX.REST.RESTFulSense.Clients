@@ -86,8 +86,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             this.httpBroker.Verify(
                 broker =>
                     broker.SendRequestAsync(
-                        It.Is<HttpRequestMessage>(x=>
-                            SameHttpRequestMessageAs(x, expectedHttpRequestMessage).Compile().Invoke(x)),
+                        It.Is<HttpRequestMessage>(actualHttpRequestMessage =>
+                            SameHttpRequestMessageAs(
+                                actualHttpRequestMessage,
+                                expectedHttpRequestMessage)
+                            .Compile()
+                            .Invoke(actualHttpRequestMessage)),
                         default),
                 Times.Once);
 

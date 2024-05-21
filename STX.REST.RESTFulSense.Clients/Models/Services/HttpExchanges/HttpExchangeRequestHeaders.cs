@@ -41,6 +41,5 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public ProductInfoHeader[] UserAgent { get; init; }
         public ViaHeader[] Via { get; init; }
         public WarningHeader[] Warning { get; init; }
-
     }
 }

@@ -114,6 +114,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 return null;
 
             ProductHeader productHeader = null;
+
             if (productInfoHeaderValue.Product is not null)
             {
                 productHeader =
@@ -137,6 +138,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return new CacheControlHeader
             {
                 NoCache = cacheControlHeaderValue.NoCache,
+
                 NoCacheHeaders =
                     MapArray(
                         cacheControlHeaderValue.NoCacheHeaders,
@@ -152,6 +154,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 OnlyIfCached = cacheControlHeaderValue.OnlyIfCached,
                 Public = cacheControlHeaderValue.Public,
                 Private = cacheControlHeaderValue.Private,
+
                 PrivateHeaders =
                     MapArray(
                         cacheControlHeaderValue.PrivateHeaders,

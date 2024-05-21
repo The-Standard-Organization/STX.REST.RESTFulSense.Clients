@@ -40,9 +40,17 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 ProxyAuthorization = CreateRandomAuthorizationHeader(),
                 Range = CreateRandomRangeHeader(),
                 Referrer = CreateRandomUri(),
-                TE = CreateRandomTransferEncodingWithQualityHeaderArray(isTransferEncodingChunked),
+
+                TE =
+                    CreateRandomTransferEncodingWithQualityHeaderArray(
+                        isTransferEncodingChunked),
+
                 Trailer = CreateRandomStringArray(),
-                TransferEncoding = CreateRandomTransferEncodingHeaderArray(isTransferEncodingChunked),
+
+                TransferEncoding =
+                    CreateRandomTransferEncodingHeaderArray(
+                        isTransferEncodingChunked),
+
                 TransferEncodingChunked = isTransferEncodingChunked,
                 Upgrade = CreateRandomProductHeaderArray(),
                 UserAgent = CreateRandomProductInfoHeaderArray(),
@@ -80,7 +88,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 RetryAfter = CreateRandomRetryConditionHeader(),
                 Server = CreateRandomProductInfoHeaderArray(),
                 Trailer = CreateRandomStringArray(),
-                TransferEncoding = CreateRandomTransferEncodingHeaderArray(isTransferEncodingChunked),
+
+                TransferEncoding =
+                    CreateRandomTransferEncodingHeaderArray(
+                        isTransferEncodingChunked),
+
                 TransferEncodingChunked = isTransferEncodingChunked,
                 Upgrade = CreateRandomProductHeaderArray(),
                 Vary = CreateRandomStringArray(),

@@ -81,7 +81,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             httpExchangeRequestHeaders.Expect.Select(header =>
             {
-                var nameValueWithParametersHeaderValue = MapToNameValueWithParametersHeaderValue(header);
+                var nameValueWithParametersHeaderValue =
+                    MapToNameValueWithParametersHeaderValue(header);
+
                 httpRequestHeaders.Expect.Add(nameValueWithParametersHeaderValue);
 
                 return header;
@@ -100,6 +102,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 .Select(header =>
             {
                 httpRequestHeaders.IfMatch.Add(new EntityTagHeaderValue(header));
+
                 return header;
             }).ToArray();
 
@@ -110,6 +113,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 .Select(header =>
                 {
                     httpRequestHeaders.IfNoneMatch.Add(new EntityTagHeaderValue(header));
+
                     return header;
                 }).ToArray();
 
@@ -125,7 +129,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             httpExchangeRequestHeaders.Pragma.Select(header =>
             {
-                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
+                var nameValueHeaderValue =
+                    MapToNameValueHeaderValue(header);
+
                 httpRequestHeaders.Pragma.Add(nameValueHeaderValue);
 
                 return header;
@@ -165,7 +171,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             httpExchangeRequestHeaders.TransferEncoding.Select(header =>
             {
-                var transferCodingHeaderValue = MapToTransferCodingHeaderValue(header);
+                var transferCodingHeaderValue =
+                    MapToTransferCodingHeaderValue(header);
+
                 httpRequestHeaders.TransferEncoding.Add(transferCodingHeaderValue);
 
                 return header;

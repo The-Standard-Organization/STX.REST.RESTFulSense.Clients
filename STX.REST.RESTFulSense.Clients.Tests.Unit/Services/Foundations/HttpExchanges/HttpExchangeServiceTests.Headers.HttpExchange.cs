@@ -17,12 +17,17 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             var contentDispositionHeader = new ContentDispositionHeader
             {
-                DispositionType = randomContentDispositionHeaderProperties.DispositionType,
+                DispositionType =
+                    randomContentDispositionHeaderProperties.DispositionType,
+
                 Name = randomContentDispositionHeaderProperties.Name,
                 FileName = randomContentDispositionHeaderProperties.FileName,
                 FileNameStar = randomContentDispositionHeaderProperties.FileNameStar,
                 CreationDate = randomContentDispositionHeaderProperties.CreationDate,
-                ModificationDate = randomContentDispositionHeaderProperties.ModificationDate,
+
+                ModificationDate =
+                    randomContentDispositionHeaderProperties.ModificationDate,
+
                 ReadDate = randomContentDispositionHeaderProperties.ReadDate,
                 Size = randomContentDispositionHeaderProperties.Size
             };
@@ -78,10 +83,11 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 MustRevalidate = randomCacheControlHeaderProperties.MustRevalidate,
                 ProxyRevalidate = randomCacheControlHeaderProperties.ProxyRevalidate,
 
-                Extensions = (randomCacheControlHeaderProperties.Extensions as dynamic[])
-                    .Select(extensionHeader =>
-                        (NameValueHeader)CreateNameValueHeader(extensionHeader))
-                    .ToArray()
+                Extensions =
+                    (randomCacheControlHeaderProperties.Extensions as dynamic[])
+                        .Select(extensionHeader =>
+                            (NameValueHeader)CreateNameValueHeader(extensionHeader))
+                        .ToArray()
             };
 
             return cacheControlHeader;
@@ -103,10 +109,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             var nameValueWithParameters = new NameValueWithParameters
             {
                 Name = randomNameValueWithParametersProperties.Name,
-                Parameters = (randomNameValueWithParametersProperties.Parameters as dynamic[])
-                    .Select(header =>
-                        (NameValueHeader)CreateNameValueHeader(header))
-                    .ToArray()
+
+                Parameters =
+                    (randomNameValueWithParametersProperties.Parameters as dynamic[])
+                        .Select(header =>
+                            (NameValueHeader)CreateNameValueHeader(header))
+                        .ToArray()
             };
 
             return nameValueWithParameters;
@@ -148,9 +156,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return new RangeHeader()
             {
                 Unit = randomRangeHeaderProperties.Unit,
-                Ranges = (randomRangeHeaderProperties.Ranges as dynamic[])
-                    .Select(header => (RangeItemHeader)CreateRangeItemHeader(header))
-                    .ToArray()
+
+                Ranges =
+                    (randomRangeHeaderProperties.Ranges as dynamic[])
+                        .Select(header =>
+                            (RangeItemHeader)CreateRangeItemHeader(header))
+                        .ToArray()
             };
         }
 
@@ -182,6 +193,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return new ProductInfoHeader
             {
                 Comment = randomProductInfoHeaderProperties.Comment,
+
                 Product =
                     CreateProductHeader(
                         randomProductInfoHeaderProperties.Product)
@@ -195,10 +207,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             {
                 Quality = randomTransferCodingHeaderProperties.Quality,
                 Value = randomTransferCodingHeaderProperties.Value,
-                Parameters = (randomTransferCodingHeaderProperties.Parameters as dynamic[])
-                    .Select(parametersHeader =>
-                        (NameValueHeader)CreateNameValueHeader(parametersHeader))
-                    .ToArray()
+
+                Parameters =
+                    (randomTransferCodingHeaderProperties.Parameters as dynamic[])
+                        .Select(parametersHeader =>
+                            (NameValueHeader)CreateNameValueHeader(parametersHeader))
+                        .ToArray()
             };
         }
 
@@ -413,7 +427,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.CacheControl)
                     .Use((CacheControlHeader)CreateCacheControlHeader(
-                            randomResponseHeadersProperties.CacheControl))
+                        randomResponseHeadersProperties.CacheControl))
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.Connection)
                     .Use((string[])randomResponseHeadersProperties.Connection)
@@ -508,7 +522,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
                 .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentDisposition)
                     .Use((ContentDispositionHeader)CreateContentDispositionHeader(
-                            randomHeaderProperties.ContentDisposition))
+                        randomHeaderProperties.ContentDisposition))
 
                 .OnProperty(httpExchangeContentHeader => httpExchangeContentHeader.ContentEncoding)
                     .Use((string[])randomHeaderProperties.ContentEncoding)

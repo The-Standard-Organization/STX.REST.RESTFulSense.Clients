@@ -424,30 +424,46 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             var bogusHttpResponse =
                 new Faker<HttpResponseMessage>()
                     .RuleFor(
-                        httpResponseMessage => httpResponseMessage.Content,
-                        new StreamContent(randomProperties.ResponseContent.StreamContent))
+                        httpResponseMessage =>
+                            httpResponseMessage.Content,
+
+                        new StreamContent(
+                            randomProperties.ResponseContent.StreamContent))
 
                     .RuleFor(
-                        httpResponseMessage => httpResponseMessage.IsSuccessStatusCode,
+                        httpResponseMessage =>
+                            httpResponseMessage.IsSuccessStatusCode,
+
                         (bool)randomProperties.IsSuccessStatusCode)
 
                     .RuleFor(
-                        httpResponseMessage => httpResponseMessage.ReasonPhrase,
+                        httpResponseMessage =>
+                            httpResponseMessage.ReasonPhrase,
+
                         (string)randomProperties.ReasonPhrase)
 
                     .RuleFor(
-                        httpResponseMessage => httpResponseMessage.StatusCode,
+                        httpResponseMessage =>
+                            httpResponseMessage.StatusCode,
+
                         (HttpStatusCode)randomProperties.StatusCode)
 
                     .RuleFor(
-                        httpResponseMessage => httpResponseMessage.Version,
+                        httpResponseMessage =>
+                            httpResponseMessage.Version,
+
                         (Version)randomProperties.Version);
 
             HttpResponseMessage httpResponseMessage =
                 bogusHttpResponse.Generate();
 
-            CreateHttpResponseHeaders(randomProperties.ResponseHeaders, httpResponseMessage.Headers);
-            CreateHttpContentHeaders(randomProperties.ResponseContent.Headers, httpResponseMessage.Content.Headers);
+            CreateHttpResponseHeaders(
+                randomProperties.ResponseHeaders,
+                httpResponseMessage.Headers);
+
+            CreateHttpContentHeaders(
+                randomProperties.ResponseContent.Headers,
+                httpResponseMessage.Content.Headers);
 
             return httpResponseMessage;
         }
