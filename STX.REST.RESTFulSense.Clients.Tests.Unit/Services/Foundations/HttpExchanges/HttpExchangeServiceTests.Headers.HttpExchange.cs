@@ -54,7 +54,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             var mediaTypeHeader = new MediaTypeHeader
             {
-                CharSet = randomMediaTypeHeaderProperties.Charset,
+                CharSet = randomMediaTypeHeaderProperties.CharSet,
                 MediaType = randomMediaTypeHeaderProperties.MediaType,
                 Quality = randomMediaTypeHeaderProperties.Quality
             };

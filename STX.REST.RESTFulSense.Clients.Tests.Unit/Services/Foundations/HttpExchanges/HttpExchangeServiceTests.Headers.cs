@@ -138,7 +138,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             return new
             {
-                Charset = GetRandomString(),
+                CharSet = GetRandomString(),
                 MediaType = $"{type}/{subtype}",
                 Quality = default(double?)
             };
@@ -159,7 +159,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             return new
             {
-                Charset = GetRandomString(),
+                CharSet = GetRandomString(),
                 MediaType = $"{type}/{subtype}",
                 Quality = GetRandomDoubleBetweenZeroAndOne(),
             };

@@ -41,7 +41,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return new MediaTypeWithQualityHeaderValue(
                 mediaTypeHeader.MediaType)
             {
-                Quality = mediaTypeHeader.Quality
+                Quality = mediaTypeHeader.Quality,
+                CharSet = mediaTypeHeader.CharSet
             };
         }
 

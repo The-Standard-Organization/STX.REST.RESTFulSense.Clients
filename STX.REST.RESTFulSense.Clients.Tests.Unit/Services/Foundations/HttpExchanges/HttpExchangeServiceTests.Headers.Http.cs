@@ -264,7 +264,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             return new MediaTypeHeaderValue(
                 mediaType: randomMediaTypeHeaderValueProperties.MediaType,
-                charSet: randomMediaTypeHeaderValueProperties.Charset);
+                charSet: randomMediaTypeHeaderValueProperties.CharSet);
         }
 
         private static MediaTypeWithQualityHeaderValue CreateMediaTypeWithQualityHeaderValue(
@@ -272,7 +272,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             return new MediaTypeWithQualityHeaderValue(
                 mediaType: randomMediaTypeHeaderValueProperties.MediaType,
-                quality: randomMediaTypeHeaderValueProperties.Quality);
+                quality: randomMediaTypeHeaderValueProperties.Quality)
+            {
+                CharSet = randomMediaTypeHeaderValueProperties.CharSet
+            };
         }
 
         private static StringWithQualityHeaderValue CreateStringWithQualityHeaderValue(
