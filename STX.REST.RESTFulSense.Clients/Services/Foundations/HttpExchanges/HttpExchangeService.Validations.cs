@@ -7,7 +7,6 @@ using System.Net;
 using System.Net.Http;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
@@ -21,26 +20,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             ValidateHttpExchangeNotNull(httpExchange);
             ValidateHttpExchangeRequestNotNull(httpExchange.Request);
+
             ValidateHttpExchangeRequestNotInvalid(
                 httpExchange.Request,
                 defaultHttpMethod,
                 defaultHttpVersion);
-            ValidateHttpExchangeRangeConditionRequestHeaderNotInvalid(httpExchange);
-            }
-        
-        private static void ValidateHttpExchangeRangeConditionRequestHeaderNotInvalid(
-            HttpExchange httpExchange)
-        {
-            if (httpExchange.Request.Headers is null)
-                return;
-            
-            RangeConditionHeader ifRange = httpExchange.Request.Headers.IfRange;
-            
-            if (ifRange.Date is not null && ifRange.EntityTag is not null)
-            {
-                throw new InvalidRangeConditionHeaderException(
-                    message: "Exactly one of date and entityTag can be set at a time, fix errors and try again");
-            } 
+
+            ValidateHttpExchangRequestHeaders(httpExchange.Request.Headers);
         }
 
         private static void ValidateHttpExchangeNotNull(HttpExchange httpExchange)
@@ -54,7 +40,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static void ValidateHttpExchangeRequestNotNull(HttpExchangeRequest httpExchangeRequest)
         {
-            Validate(
+            ValidateHttpRequest(
                 (Rule: IsInvalid(httpExchangeRequest), Parameter: nameof(HttpExchange.Request)));
         }
 
@@ -63,7 +49,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             HttpMethod defaultHttpMethod,
             Version defaultHttpVersion)
         {
-            Validate(
+            ValidateHttpRequest(
                 (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
                     Parameter: nameof(HttpExchangeRequest.BaseAddress)),
 
@@ -77,48 +63,52 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     Parameter: nameof(HttpExchangeRequest.Version)));
         }
 
-        private static dynamic IsInvalid(object @object) => new
-        {
-            Condition = @object is null,
-            Message = "Value is required"
-        };
+        private static dynamic IsInvalid(object @object) =>
+            new
+            {
+                Condition = @object is null,
+                Message = "Value is required"
+            };
 
-        private static dynamic IsInvalid(string text) => new
-        {
-            Condition = string.IsNullOrWhiteSpace(text),
-            Message = "Value is required"
-        };
+        private static dynamic IsInvalid(string text) =>
+            new
+            {
+                Condition = string.IsNullOrWhiteSpace(text),
+                Message = "Value is required"
+            };
 
-        private static dynamic IsInvalidHttpMethod(string customHttpMethod, HttpMethod defaultHttpMethod) => new
-        {
-            Condition =
-                (defaultHttpMethod is null
-                    && string.IsNullOrWhiteSpace(customHttpMethod))
-                || (defaultHttpMethod is not null
-                    && !string.IsNullOrWhiteSpace(customHttpMethod)
-                    && customHttpMethod != defaultHttpMethod.Method),
+        private static dynamic IsInvalidHttpMethod(string customHttpMethod, HttpMethod defaultHttpMethod) =>
+            new
+            {
+                Condition =
+                    (defaultHttpMethod is null
+                        && string.IsNullOrWhiteSpace(customHttpMethod))
+                    || (defaultHttpMethod is not null
+                        && !string.IsNullOrWhiteSpace(customHttpMethod)
+                        && customHttpMethod != defaultHttpMethod.Method),
 
-            Message = "HttpMethod required is invalid"
-        };
+                Message = "HttpMethod required is invalid"
+            };
 
-        private static dynamic IsInvalidHttpVersion(string customHttpVersion, Version defaultHttpVersion) => new
-        {
-            Condition =
-                (customHttpVersion is not null
-                    && customHttpVersion != HttpVersion.Version10.ToString()
-                    && customHttpVersion != HttpVersion.Version11.ToString()
-                    && customHttpVersion != HttpVersion.Version20.ToString()
-                    && customHttpVersion != HttpVersion.Version30.ToString())
-                || (customHttpVersion is null
-                    && defaultHttpVersion != HttpVersion.Version10
-                    && defaultHttpVersion != HttpVersion.Version11
-                    && defaultHttpVersion != HttpVersion.Version20
-                    && defaultHttpVersion != HttpVersion.Version30),
+        private static dynamic IsInvalidHttpVersion(string customHttpVersion, Version defaultHttpVersion) =>
+            new
+            {
+                Condition =
+                    (customHttpVersion is not null
+                        && customHttpVersion != HttpVersion.Version10.ToString()
+                        && customHttpVersion != HttpVersion.Version11.ToString()
+                        && customHttpVersion != HttpVersion.Version20.ToString()
+                        && customHttpVersion != HttpVersion.Version30.ToString())
+                    || (customHttpVersion is null
+                        && defaultHttpVersion != HttpVersion.Version10
+                        && defaultHttpVersion != HttpVersion.Version11
+                        && defaultHttpVersion != HttpVersion.Version20
+                        && defaultHttpVersion != HttpVersion.Version30),
 
-            Message = "HttpVersion required is invalid"
-        };
+                Message = "HttpVersion required is invalid"
+            };
 
-        private static void Validate(params (dynamic Rule, string Parameter)[] validations)
+        private static void ValidateHttpRequest(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeRequestException =
                 new InvalidHttpExchangeRequestException(

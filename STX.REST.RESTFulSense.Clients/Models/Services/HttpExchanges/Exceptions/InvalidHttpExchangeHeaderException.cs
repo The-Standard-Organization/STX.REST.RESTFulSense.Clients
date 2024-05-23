@@ -6,9 +6,9 @@ using Xeptions;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions
 {
-    public class InvalidRangeConditionHeaderException : Xeption
+    public class InvalidHttpExchangeHeaderException : Xeption
     {
-        public InvalidRangeConditionHeaderException(string message) : base(message)
+        public InvalidHttpExchangeHeaderException(string message) : base(message)
         { }
     }
 }

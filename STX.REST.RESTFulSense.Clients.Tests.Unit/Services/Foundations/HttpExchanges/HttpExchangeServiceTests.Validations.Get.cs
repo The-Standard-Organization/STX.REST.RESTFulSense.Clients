@@ -6,6 +6,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Moq;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -134,13 +135,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             this.httpBroker.VerifyNoOtherCalls();
         }
 
-        [Fact]
-        private async Task ShouldThrowHttpExchangeValidationExceptionIfRangeConditionHeaderValueIsInvalidAsync()
+        [Theory]
+        [MemberData(nameof(InvalidHeadersExceptions))]
+        private async Task ShouldThrowHttpExchangeValidationExceptionIfHeaderValueIsInvalidAsync(
+            dynamic invalidaHeaderException)
         {
             // given
-            string randomString = GetRandomString();
-            DateTimeOffset randomDateTimeOffset = GetRandomDateTime();
-            
             var httpExchange = new HttpExchange
             {
                 Request = new HttpExchangeRequest
@@ -149,23 +149,19 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     RelativeUrl = CreateRandomUri().PathAndQuery,
                     HttpMethod = HttpMethod.Get.Method,
                     Version = GetRandomHttpVersion().ToString(),
-                    Headers = new HttpExchangeRequestHeaders
-                    {
-                        IfRange = new RangeConditionHeader
-                        {
-                            Date = randomDateTimeOffset,
-                            EntityTag = randomString
-                        }
-                    }
+                    Headers = invalidaHeaderException.HttpExchangeRequestHeaders
                 }
             };
 
-            var invalidRangeConditionHeaderException = new InvalidRangeConditionHeaderException(
-                message: "Exactly one of date and entityTag can be set at a time, fix errors and try again");
-
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",
-                innerException: invalidRangeConditionHeaderException);
+                innerException: invalidaHeaderException.InvalidHttpExchangeHeaderException);
+
+            this.httpBroker
+                .Setup(broker =>
+                    broker.SendRequestAsync(
+                        It.IsAny<HttpRequestMessage>(),
+                        default));
 
             // when
             ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
@@ -176,7 +172,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             // then
             actualHttpExchangeValidationException.Should().BeEquivalentTo(
                 expectedHttpExchangeValidationException);
-            
+
+            this.httpBroker
+                .Verify(broker =>
+                    broker.SendRequestAsync(
+                        It.IsAny<HttpRequestMessage>(),
+                        default),
+                    Times.Never);
+
             this.httpBroker.VerifyNoOtherCalls();
         }
     }
