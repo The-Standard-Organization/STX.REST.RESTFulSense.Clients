@@ -30,8 +30,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeValidationException(
                     invalidHttpExchangeRequestException);
             }
+            catch (InvalidRangeConditionHeaderException invalidRangeConditionHeaderException)
+            {
+                throw CreateHttpExchangeValidationException(
+                    invalidRangeConditionHeaderException);
+            }
         }
-        
+
         private static HttpExchangeValidationException CreateHttpExchangeValidationException(
             Xeption exception)
         {

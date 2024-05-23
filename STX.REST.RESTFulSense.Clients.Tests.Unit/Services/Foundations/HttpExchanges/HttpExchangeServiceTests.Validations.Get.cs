@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
@@ -144,6 +145,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             {
                 Request = new HttpExchangeRequest
                 {
+                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
+                    RelativeUrl = CreateRandomUri().PathAndQuery,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = GetRandomHttpVersion().ToString(),
                     Headers = new HttpExchangeRequestHeaders
                     {
                         IfRange = new RangeConditionHeader

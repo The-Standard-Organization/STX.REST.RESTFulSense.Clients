@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
@@ -24,7 +25,23 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 httpExchange.Request,
                 defaultHttpMethod,
                 defaultHttpVersion);
+            ValidateHttpExchangeRangeConditionRequestHeaderNotInvalid(httpExchange);
             }
+        
+        private static void ValidateHttpExchangeRangeConditionRequestHeaderNotInvalid(
+            HttpExchange httpExchange)
+        {
+            if (httpExchange.Request.Headers is null)
+                return;
+            
+            RangeConditionHeader ifRange = httpExchange.Request.Headers.IfRange;
+            
+            if (ifRange.Date is not null && ifRange.EntityTag is not null)
+            {
+                throw new InvalidRangeConditionHeaderException(
+                    message: "Exactly one of date and entityTag can be set at a time, fix errors and try again");
+            } 
+        }
 
         private static void ValidateHttpExchangeNotNull(HttpExchange httpExchange)
         {
