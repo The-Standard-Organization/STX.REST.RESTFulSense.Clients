@@ -24,7 +24,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 httpExchange.Request,
                 defaultHttpMethod,
                 defaultHttpVersion);
-        }
+            }
 
         private static void ValidateHttpExchangeNotNull(HttpExchange httpExchange)
         {

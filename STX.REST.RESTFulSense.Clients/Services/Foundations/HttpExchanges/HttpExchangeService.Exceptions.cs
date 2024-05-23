@@ -31,7 +31,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     invalidHttpExchangeRequestException);
             }
         }
-
+        
         private static HttpExchangeValidationException CreateHttpExchangeValidationException(
             Xeption exception)
         {

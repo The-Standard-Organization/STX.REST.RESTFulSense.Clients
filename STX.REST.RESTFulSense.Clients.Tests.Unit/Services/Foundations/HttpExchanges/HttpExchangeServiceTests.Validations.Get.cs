@@ -2,10 +2,12 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
@@ -128,6 +130,48 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             actualHttpExchangeValidationException.Should().BeEquivalentTo(
                 expectedHttpExchangeValidationException);
 
+            this.httpBroker.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        private async Task ShouldThrowHttpExchangeValidationExceptionIfRangeConditionHeaderValueIsInvalidAsync()
+        {
+            // given
+            string randomString = GetRandomString();
+            DateTimeOffset randomDateTimeOffset = GetRandomDateTime();
+            
+            var httpExchange = new HttpExchange
+            {
+                Request = new HttpExchangeRequest
+                {
+                    Headers = new HttpExchangeRequestHeaders
+                    {
+                        IfRange = new RangeConditionHeader
+                        {
+                            Date = randomDateTimeOffset,
+                            EntityTag = randomString
+                        }
+                    }
+                }
+            };
+
+            var invalidRangeConditionHeaderException = new InvalidRangeConditionHeaderException(
+                message: "Exactly one of date and entityTag can be set at a time, fix errors and try again");
+
+            var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
+                message: "HttpExchange validation errors occurred, fix errors and try again.",
+                innerException: invalidRangeConditionHeaderException);
+
+            // when
+            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
+
+            HttpExchangeValidationException actualHttpExchangeValidationException =
+                await Assert.ThrowsAsync<HttpExchangeValidationException>(getAsyncTask.AsTask);
+
+            // then
+            actualHttpExchangeValidationException.Should().BeEquivalentTo(
+                expectedHttpExchangeValidationException);
+            
             this.httpBroker.VerifyNoOtherCalls();
         }
     }
