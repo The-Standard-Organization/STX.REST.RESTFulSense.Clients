@@ -138,7 +138,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         [Theory]
         [MemberData(nameof(InvalidHeadersExceptions))]
         private async Task ShouldThrowHttpExchangeValidationExceptionIfHeaderValueIsInvalidAsync(
-            dynamic invalidaHeaderException)
+            dynamic invalidHeaderException)
         {
             // given
             var httpExchange = new HttpExchange
@@ -149,13 +149,13 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     RelativeUrl = CreateRandomUri().PathAndQuery,
                     HttpMethod = HttpMethod.Get.Method,
                     Version = GetRandomHttpVersion().ToString(),
-                    Headers = invalidaHeaderException.HttpExchangeRequestHeaders
+                    Headers = invalidHeaderException.HttpExchangeRequestHeaders
                 }
             };
 
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",
-                innerException: invalidaHeaderException.InvalidHttpExchangeHeaderException);
+                innerException: invalidHeaderException.InvalidHttpExchangeHeaderException);
 
             this.httpBroker
                 .Setup(broker =>
