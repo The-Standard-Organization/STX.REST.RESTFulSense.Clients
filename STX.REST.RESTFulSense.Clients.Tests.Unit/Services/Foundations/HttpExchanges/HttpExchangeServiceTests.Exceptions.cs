@@ -64,6 +64,48 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         
             this.httpBroker.VerifyNoOtherCalls();
         }
-    
+
+        [Fact]
+        private async Task ShouldThrowDependencyValidationExceptionOnGetIfFormatExceptionOccurs()
+        {
+            // given
+            var httpExchange = new HttpExchange
+            {
+                Request = new HttpExchangeRequest
+                {
+                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
+                    RelativeUrl = CreateRandomUri().PathAndQuery,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = GetRandomHttpVersion().ToString(),
+                }
+            };
+
+            var formatException = new FormatException();
+
+            var invalidHttpExchangeHeaderFormatException =
+                new InvalidHttpExchangeHeaderFormatException(
+                    message: "Invalid format error occured, contact support.",
+                    innerException: formatException);
+
+            var expectedHttpExchangeDependencyValidationException =
+                new HttpExchangeDependencyValidationException(
+                    message: "HttpExchange dependency validation errors occurred, fix errors and try again.",
+                    innerException: invalidHttpExchangeHeaderFormatException);
+            
+            this.httpBroker.Setup(broker =>
+                broker.SendRequestAsync(It.IsAny<HttpRequestMessage>(), default))
+                    .ThrowsAsync(formatException);
+            
+            // when
+            ValueTask<HttpExchange> getTaskAsync = this.httpExchangeService.GetAsync(httpExchange);
+
+            HttpExchangeDependencyValidationException actualHttpExchangeDependencyValidationException =
+                await Assert.ThrowsAsync<HttpExchangeDependencyValidationException>(
+                    getTaskAsync.AsTask);
+            
+            // then
+            actualHttpExchangeDependencyValidationException.Should().BeEquivalentTo(
+                    expectedHttpExchangeDependencyValidationException);
+        }
     }
 }
