@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
@@ -35,6 +36,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeValidationException(
                     invalidHttpExchangeHeaderException);
             }
+            catch (ArgumentException argumentException)
+            {
+                var invalidHttpExchangeHeaderArgumentException =
+                    new InvalidHttpExchangeHeaderArgumentException(
+                        message: "Invalid argument error occured, contact support.",
+                        innerException: argumentException);
+
+                throw CreateHttpExchangeDependencyValidationException(
+                    invalidHttpExchangeHeaderArgumentException);
+            }
         }
 
         private static HttpExchangeValidationException CreateHttpExchangeValidationException(
@@ -42,6 +53,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             return new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",
+                innerException: exception);
+        }
+
+        private static HttpExchangeDependencyValidationException CreateHttpExchangeDependencyValidationException(
+            Xeption exception)
+        {
+            return new HttpExchangeDependencyValidationException(
+                message: "HttpExchange dependency validation errors occurred, fix errors and try again.",
                 innerException: exception);
         }
     }
