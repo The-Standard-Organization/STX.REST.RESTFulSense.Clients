@@ -518,5 +518,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             };
         }
+
+        public static TheoryData ArgumentExceptions()
+        {
+            return new TheoryData<ArgumentException>
+            {
+                new ArgumentNullException(),
+                new ArgumentException(),
+                new ArgumentOutOfRangeException()
+            };
+        }
     }
 }
