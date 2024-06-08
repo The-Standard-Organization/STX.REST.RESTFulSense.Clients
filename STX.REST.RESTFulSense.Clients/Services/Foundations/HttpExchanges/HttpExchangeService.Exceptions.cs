@@ -46,6 +46,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeDependencyValidationException(
                     invalidHttpExchangeHeaderArgumentException);
             }
+            catch (FormatException formatException)
+            {
+                var invalidHttpExchangeHeaderFormatException =
+                    new InvalidHttpExchangeHeaderFormatException(
+                        message: "Invalid format error occured, contact support.",
+                        innerException: formatException);
+
+                throw CreateHttpExchangeDependencyValidationException(
+                    invalidHttpExchangeHeaderFormatException);
+            }
         }
 
         private static HttpExchangeValidationException CreateHttpExchangeValidationException(
