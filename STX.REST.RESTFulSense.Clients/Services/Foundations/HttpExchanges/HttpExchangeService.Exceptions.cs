@@ -3,6 +3,7 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
@@ -35,6 +36,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 throw CreateHttpExchangeValidationException(
                     invalidHttpExchangeHeaderException);
+            }
+            catch(HttpRequestException httpRequestException)
+            {
+                var failedHttpExchangeException =
+                    new FailedHttpExchangeException(
+                        message: "Failed http request error occured, contact support.",
+                        innerException: httpRequestException);
+
+                throw CreateHttpExchangeDependencyException(
+                    failedHttpExchangeException);
             }
             catch (ArgumentException argumentException)
             {
@@ -71,6 +82,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             return new HttpExchangeDependencyValidationException(
                 message: "HttpExchange dependency validation errors occurred, fix errors and try again.",
+                innerException: exception);
+        }
+
+        private static HttpExchangeDependencyException CreateHttpExchangeDependencyException(
+            Xeption exception)
+        {
+            return new HttpExchangeDependencyException(
+                message: "HttpExchange dependency error occured, contact support",
                 innerException: exception);
         }
     }
