@@ -41,7 +41,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 var failedHttpExchangeException =
                     new FailedHttpExchangeException(
-                        message: "Failed http request error occured, contact support.",
+                        message: "Failed http request error occurred, contact support.",
                         innerException: httpRequestException);
 
                 throw CreateHttpExchangeDependencyException(

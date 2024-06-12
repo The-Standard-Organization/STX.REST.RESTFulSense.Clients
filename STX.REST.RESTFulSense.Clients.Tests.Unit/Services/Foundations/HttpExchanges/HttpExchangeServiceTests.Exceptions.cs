@@ -130,7 +130,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 innerException: httpRequestException);
 
             var expectedHttpExchangeDependencyException = new HttpExchangeDependencyException(
-                message: "HttpExchange dependency error occured, contact support",
+                message: "HttpExchange dependency error occurred, contact support",
                 innerException: failedHttpExchangeException);
 
             this.httpBroker.Setup(broker =>
