@@ -57,6 +57,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeDependencyException(
                     failedHttpExchangeException);
             }
+            catch(InvalidOperationException invalidOperationException)
+            {
+                var invalidHttpExchangeRequestException =
+                    new InvalidHttpExchangeRequestException(
+                        message: "Invalid http request operation error occurred, please contact support.",
+                        innerException: invalidOperationException);
+
+                throw CreateHttpExchangeDependencyException(
+                    invalidHttpExchangeRequestException);
+            }
             catch (ArgumentException argumentException)
             {
                 var invalidHttpExchangeHeaderArgumentException =
