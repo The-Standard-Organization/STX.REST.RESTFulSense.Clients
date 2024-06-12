@@ -47,6 +47,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeDependencyException(
                     failedHttpExchangeException);
             }
+            catch(TaskCanceledException taskCanceledException)
+            {
+                var failedHttpExchangeException =
+                    new FailedHttpExchangeException(
+                        message: "Request timeout error occurred, please contact support.",
+                        innerException: taskCanceledException);
+
+                throw CreateHttpExchangeDependencyException(
+                    failedHttpExchangeException);
+            }
             catch (ArgumentException argumentException)
             {
                 var invalidHttpExchangeHeaderArgumentException =
