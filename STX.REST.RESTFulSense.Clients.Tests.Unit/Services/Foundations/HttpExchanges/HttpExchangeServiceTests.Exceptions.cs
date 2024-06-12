@@ -130,7 +130,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 innerException: httpRequestException);
 
             var expectedHttpExchangeDependencyException = new HttpExchangeDependencyException(
-                message: "HttpExchange dependency error occurred, contact support",
+                message: "HttpExchange dependency error occurred, contact support.",
                 innerException: failedHttpExchangeException);
 
             this.httpBroker.Setup(broker =>
@@ -143,6 +143,49 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             HttpExchangeDependencyException actualHttpExchangeDependencyException =
                 await Assert.ThrowsAsync<HttpExchangeDependencyException>(getTaskAsync.AsTask);
+
+            // then
+            actualHttpExchangeDependencyException.Should().BeEquivalentTo(
+                expectedHttpExchangeDependencyException);
+        }
+
+        [Fact]
+        private async Task ShouldThrowDependencyExceptionOnGetIfTaskCanceledExceptionOccurs()
+        {
+            // given
+            var httpExchange = new HttpExchange
+            {
+                Request = new HttpExchangeRequest
+                {
+                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
+                    RelativeUrl = CreateRandomUri().PathAndQuery,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = GetRandomHttpVersion().ToString(),
+                }
+            };
+
+            var taskCanceledException = new TaskCanceledException();
+
+            var failedHttpExchangeException = new FailedHttpExchangeException(
+                message: "Request timeout error occurred, please contact support.",
+                innerException: taskCanceledException);
+
+            var expectedHttpExchangeDependencyException =
+                new HttpExchangeDependencyException(
+                    message: "HttpExchange dependency error occurred, contact support.",
+                    innerException: failedHttpExchangeException);
+
+            this.httpBroker.Setup(broker =>
+                broker.SendRequestAsync(It.IsAny<HttpRequestMessage>(), default))
+                    .ThrowsAsync(taskCanceledException);
+
+            // when
+            ValueTask<HttpExchange> getTaskAsync =
+                this.httpExchangeService.GetAsync(httpExchange);
+
+            HttpExchangeDependencyException actualHttpExchangeDependencyException =
+                await Assert.ThrowsAsync<HttpExchangeDependencyException>(
+                    getTaskAsync.AsTask);
 
             // then
             actualHttpExchangeDependencyException.Should().BeEquivalentTo(

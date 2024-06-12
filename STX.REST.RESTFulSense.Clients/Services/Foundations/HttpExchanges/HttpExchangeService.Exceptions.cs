@@ -89,7 +89,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Xeption exception)
         {
             return new HttpExchangeDependencyException(
-                message: "HttpExchange dependency error occurred, contact support",
+                message: "HttpExchange dependency error occurred, contact support.",
                 innerException: exception);
         }
     }
