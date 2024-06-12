@@ -107,5 +107,46 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             actualHttpExchangeDependencyValidationException.Should().BeEquivalentTo(
                     expectedHttpExchangeDependencyValidationException);
         }
+
+        [Fact]
+        private async Task ShouldThrowDependencyExceptionOnGetIfHttpRequestExceptionOccursAsync()
+        {
+            // given
+            var httpExchange = new HttpExchange
+            {
+                Request = new HttpExchangeRequest
+                {
+                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
+                    RelativeUrl = CreateRandomUri().PathAndQuery,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = GetRandomHttpVersion().ToString(),
+                }
+            };
+
+            var httpRequestException = new HttpRequestException();
+
+            var failedHttpExchangeException = new FailedHttpExchangeException(
+                message: "Failed http request error occured, contact support.",
+                innerException: httpRequestException);
+
+            var expectedHttpExchangeDependencyException = new HttpExchangeDependencyException(
+                message: "HttpExchange dependency error occured, contact support",
+                innerException: failedHttpExchangeException);
+
+            this.httpBroker.Setup(broker =>
+                broker.SendRequestAsync(It.IsAny<HttpRequestMessage>(), default))
+                    .ThrowsAsync(httpRequestException);
+
+            // when
+            ValueTask<HttpExchange> getTaskAsync =
+                this.httpExchangeService.GetAsync(httpExchange);
+
+            HttpExchangeDependencyException actualHttpExchangeDependencyException =
+                await Assert.ThrowsAsync<HttpExchangeDependencyException>(getTaskAsync.AsTask);
+
+            // then
+            actualHttpExchangeDependencyException.Should().BeEquivalentTo(
+                expectedHttpExchangeDependencyException);
+        }
     }
 }
