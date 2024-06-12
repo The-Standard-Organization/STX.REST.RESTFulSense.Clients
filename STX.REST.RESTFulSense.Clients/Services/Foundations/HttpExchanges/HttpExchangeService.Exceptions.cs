@@ -51,7 +51,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 var invalidHttpExchangeHeaderArgumentException =
                     new InvalidHttpExchangeHeaderArgumentException(
-                        message: "Invalid argument error occured, contact support.",
+                        message: "Invalid argument error occurred, contact support.",
                         innerException: argumentException);
 
                 throw CreateHttpExchangeDependencyValidationException(
@@ -61,7 +61,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 var invalidHttpExchangeHeaderFormatException =
                     new InvalidHttpExchangeHeaderFormatException(
-                        message: "Invalid format error occured, contact support.",
+                        message: "Invalid format error occurred, contact support.",
                         innerException: formatException);
 
                 throw CreateHttpExchangeDependencyValidationException(
@@ -89,7 +89,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Xeption exception)
         {
             return new HttpExchangeDependencyException(
-                message: "HttpExchange dependency error occured, contact support",
+                message: "HttpExchange dependency error occurred, contact support",
                 innerException: exception);
         }
     }
