@@ -136,8 +136,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Theory]
-        [MemberData(nameof(InvalidHeadersExceptions))]
-        private async Task ShouldThrowHttpExchangeValidationExceptionIfHeaderValueIsInvalidAsync(
+        [MemberData(nameof(SendRequestValidationExceptions))]
+        private async Task ShouldThrowHttpExchangeValidationExceptionIfInvalidHeaderWhenSendingRequestAsync(
             dynamic invalidHeaderException)
         {
             // given
