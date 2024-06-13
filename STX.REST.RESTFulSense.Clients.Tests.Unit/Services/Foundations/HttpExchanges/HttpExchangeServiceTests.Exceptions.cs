@@ -234,5 +234,53 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             actualHttpExchangeDependencyException.Should().BeEquivalentTo(
                 expectedHttpExchangeDependencyException);
         }
+
+        [Fact]
+        private async Task ShouldThrowDependencyExceptionOnGetIfObjectDisposedExceptionOccurs()
+        {
+            // given
+            string randomString = GetRandomString();
+            string someMessage = randomString;
+
+            var httpExchange = new HttpExchange
+            {
+                Request = new HttpExchangeRequest
+                {
+                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
+                    RelativeUrl = CreateRandomUri().PathAndQuery,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = GetRandomHttpVersion().ToString(),
+                }
+            };
+
+            var objectDisposedException = new ObjectDisposedException(
+                objectName: someMessage,
+                message: someMessage);
+
+            var invalidHttpExchangeException = new InvalidHttpExchangeRequestException(
+                message: "Object already disposed error occurred, please fix errors and try again.",
+                innerException: objectDisposedException);
+
+            var expectedHttpExchangeDependencyException =
+                new HttpExchangeDependencyException(
+                    message: "HttpExchange dependency error occurred, contact support.",
+                    innerException: invalidHttpExchangeException);
+
+            this.httpBroker.Setup(broker =>
+                broker.SendRequestAsync(It.IsAny<HttpRequestMessage>(), default))
+                    .ThrowsAsync(objectDisposedException);
+
+            // when
+            ValueTask<HttpExchange> getTaskAsync =
+                this.httpExchangeService.GetAsync(httpExchange);
+
+            HttpExchangeDependencyException actualHttpExchangeDependencyException =
+                await Assert.ThrowsAsync<HttpExchangeDependencyException>(
+                    getTaskAsync.AsTask);
+
+            // then
+            actualHttpExchangeDependencyException.Should().BeEquivalentTo(
+                expectedHttpExchangeDependencyException);
+        }
     }
 }
