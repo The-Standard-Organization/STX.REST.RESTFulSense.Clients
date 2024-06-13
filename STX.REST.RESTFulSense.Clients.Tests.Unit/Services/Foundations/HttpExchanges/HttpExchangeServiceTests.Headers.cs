@@ -446,7 +446,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Authorization),
-                value: "Authorization is invalid configuration, fix errors and try again");
+                value: "Authorization header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -471,7 +471,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Authorization),
-                value: "Authorization is invalid configuration, fix errors and try again");
+                value: "Cache Control header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -498,7 +498,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.IfRange),
-                value: "Exactly one of date and entityTag can be set at a time, fix errors and try again");
+                value: "Range Condition header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again.");
 
             var httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
