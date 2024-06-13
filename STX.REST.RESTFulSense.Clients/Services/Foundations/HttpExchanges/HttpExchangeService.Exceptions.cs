@@ -57,8 +57,19 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeDependencyException(
                     failedHttpExchangeException);
             }
+            catch(ObjectDisposedException objectDisposedException)
+            {
+                var invalidHttpExchangeRequestException =
+                    new InvalidHttpExchangeRequestException(
+                        message: "Object already disposed error occurred, please fix errors and try again.",
+                        innerException: objectDisposedException);
+
+                throw CreateHttpExchangeDependencyException(
+                    invalidHttpExchangeRequestException);
+            }
             catch(InvalidOperationException invalidOperationException)
             {
+
                 var invalidHttpExchangeRequestException =
                     new InvalidHttpExchangeRequestException(
                         message: "Invalid http request operation error occurred, please contact support.",
