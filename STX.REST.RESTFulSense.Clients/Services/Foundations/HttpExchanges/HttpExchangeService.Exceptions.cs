@@ -59,44 +59,43 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             }
             catch(ObjectDisposedException objectDisposedException)
             {
-                var invalidHttpExchangeRequestException =
-                    new InvalidHttpExchangeRequestException(
+                var failedHttpExchangeException =
+                    new FailedHttpExchangeException(
                         message: "Object already disposed error occurred, please fix errors and try again.",
                         innerException: objectDisposedException);
 
                 throw CreateHttpExchangeDependencyException(
-                    invalidHttpExchangeRequestException);
+                    failedHttpExchangeException);
             }
             catch(InvalidOperationException invalidOperationException)
             {
-
-                var invalidHttpExchangeRequestException =
-                    new InvalidHttpExchangeRequestException(
+                var failedHttpExchangeException =
+                    new FailedHttpExchangeException(
                         message: "Invalid http request operation error occurred, please contact support.",
                         innerException: invalidOperationException);
 
                 throw CreateHttpExchangeDependencyException(
-                    invalidHttpExchangeRequestException);
+                    failedHttpExchangeException);
             }
             catch (ArgumentException argumentException)
             {
-                var invalidHttpExchangeHeaderArgumentException =
-                    new InvalidHttpExchangeHeaderArgumentException(
+                var failedHttpExchangeException =
+                    new FailedHttpExchangeException(
                         message: "Invalid argument error occurred, contact support.",
                         innerException: argumentException);
 
-                throw CreateHttpExchangeDependencyValidationException(
-                    invalidHttpExchangeHeaderArgumentException);
+                throw CreateHttpExchangeDependencyException(
+                    failedHttpExchangeException);
             }
             catch (FormatException formatException)
             {
-                var invalidHttpExchangeHeaderFormatException =
-                    new InvalidHttpExchangeHeaderFormatException(
+                var failedHttpExchangeException =
+                    new FailedHttpExchangeException(
                         message: "Invalid format error occurred, contact support.",
                         innerException: formatException);
 
-                throw CreateHttpExchangeDependencyValidationException(
-                    invalidHttpExchangeHeaderFormatException);
+                throw CreateHttpExchangeDependencyException(
+                    failedHttpExchangeException);
             }
         }
 
@@ -105,14 +104,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             return new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",
-                innerException: exception);
-        }
-
-        private static HttpExchangeDependencyValidationException CreateHttpExchangeDependencyValidationException(
-            Xeption exception)
-        {
-            return new HttpExchangeDependencyValidationException(
-                message: "HttpExchange dependency validation errors occurred, fix errors and try again.",
                 innerException: exception);
         }
 

@@ -482,14 +482,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                         .AreEqual;
         }
 
-        public static TheoryData InvalidHeadersExceptions()
-        {
-            return new TheoryData<dynamic>
-            {
-                CreateRangeConditionHeaderException(),
-            };
-        }
-
         private static dynamic CreateRangeConditionHeaderException()
         {
             string randomString = GetRandomString();
@@ -515,17 +507,50 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             {
                 HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
                 InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
-
             };
         }
 
-        public static TheoryData ArgumentExceptions()
+        public static TheoryData GetValidationExceptions()
         {
-            return new TheoryData<ArgumentException>
+            return new TheoryData<dynamic>
             {
-                new ArgumentNullException(),
-                new ArgumentException(),
-                new ArgumentOutOfRangeException()
+                CreateRangeConditionHeaderException(),
+            };
+        }
+
+        public static TheoryData<Exception, string> SendRequestDependencyExceptions()
+        {
+            return new TheoryData<Exception, string>
+            {
+                {
+                    new HttpRequestException(),
+                    "Failed http request error occurred, contact support."
+                },
+
+                {
+                    new TaskCanceledException(),
+                    "Request timeout error occurred, please contact support."
+                },
+
+                {
+                    new ObjectDisposedException(null),
+                    "Object already disposed error occurred, please fix errors and try again."
+                },
+
+                {
+                    new InvalidOperationException(),
+                    "Invalid http request operation error occurred, please contact support."
+                },
+
+                {
+                    new ArgumentNullException(),
+                    "Invalid argument error occurred, contact support."
+                },
+
+                {
+                    new FormatException(),
+                    "Invalid format error occurred, contact support."
+                },
             };
         }
     }
