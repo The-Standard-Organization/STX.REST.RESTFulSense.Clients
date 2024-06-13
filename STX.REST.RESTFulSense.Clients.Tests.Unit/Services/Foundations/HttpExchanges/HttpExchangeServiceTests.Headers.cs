@@ -5,6 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
 {
@@ -433,6 +436,83 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 From = from,
                 To = to,
                 Length = length
+            };
+        }
+
+        private static dynamic CreateAuthenticationHeaderValue(string schema, string value)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Authorization),
+                value: "Authorization is invalid configuration, fix errors and try again");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Authorization = new AuthenticationHeader
+                {
+                    Schema = schema,
+                    Value = value
+                }
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateCacheControlHeaderValue()
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Authorization),
+                value: "Authorization is invalid configuration, fix errors and try again");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                CacheControl = new CacheControlHeader
+                {
+
+                }
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateRangeConditionHeaderException()
+        {
+            string randomString = GetRandomString();
+            DateTimeOffset randomDateTimeOffset = GetRandomDateTime();
+
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+               message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.IfRange),
+                value: "Exactly one of date and entityTag can be set at a time, fix errors and try again");
+
+            var httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                IfRange = new RangeConditionHeader
+                {
+                    Date = randomDateTimeOffset,
+                    EntityTag = randomString
+                }
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
             };
         }
     }
