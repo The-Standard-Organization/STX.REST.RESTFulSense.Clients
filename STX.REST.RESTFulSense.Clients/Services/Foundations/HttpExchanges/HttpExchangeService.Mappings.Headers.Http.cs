@@ -189,7 +189,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         }
 
         private static NameValueWithParametersHeaderValue MapToNameValueWithParametersHeaderValue(
-            NameValueWithParameters nameValueWithParameters)
+            NameValueWithParametersHeader nameValueWithParameters)
         {
             if (nameValueWithParameters is null)
                 return null;

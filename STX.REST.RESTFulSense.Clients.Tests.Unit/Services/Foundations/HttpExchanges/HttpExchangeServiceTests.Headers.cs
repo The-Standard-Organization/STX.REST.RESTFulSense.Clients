@@ -439,7 +439,91 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateAuthenticationHeaderValue(string schema, string value)
+        private static dynamic CreateAcceptHeaderException(MediaTypeHeader[] invalidAcceptHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Accept),
+                value: "Accept header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Accept = invalidAcceptHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateAcceptCharsetHeaderException(StringWithQualityHeader[] invalidAcceptCharsetHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.AcceptCharset),
+                value: "Accept charset header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                AcceptCharset = invalidAcceptCharsetHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateAcceptEncodingHeaderException(StringWithQualityHeader[] invalidAcceptEncodingHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.AcceptEncoding),
+                value: "Accept encoding header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                AcceptEncoding = invalidAcceptEncodingHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateAcceptLanguageHeaderException(StringWithQualityHeader[] invalidAcceptLanguageHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.AcceptLanguage),
+                value: "Accept language header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                AcceptLanguage = invalidAcceptLanguageHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateAuthenticationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
         {
             var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
               message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
@@ -450,11 +534,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
-                Authorization = new AuthenticationHeader
-                {
-                    Schema = schema,
-                    Value = value
-                }
+                Authorization = invalidAuthenticationHeader
             };
 
             return new
@@ -464,21 +544,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateCacheControlHeaderValue()
+        private static dynamic CreateCacheControlHeaderException(CacheControlHeader invalidCacheControlHeader)
         {
             var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
               message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeHeaderException.UpsertDataList(
-                key: nameof(HttpExchangeRequestHeaders.Authorization),
+                key: nameof(HttpExchangeRequestHeaders.CacheControl),
                 value: "Cache Control header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
-                CacheControl = new CacheControlHeader
-                {
-
-                }
+                CacheControl = invalidCacheControlHeader
             };
 
             return new
@@ -488,7 +565,133 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateRangeConditionHeaderException()
+        private static dynamic CreateConnectionHeaderException(string[] invalidConnectionHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Connection),
+                value: "Connection header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Connection = invalidConnectionHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateExpectHeaderException(NameValueWithParametersHeader[] invalidExpectHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Expect),
+                value: "Expect header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Expect = invalidExpectHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateFromHeaderException(string invalidFromHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.From),
+                value: "From header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                From = invalidFromHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateHostHeaderException(string invalidHostHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Host),
+                value: "Host header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Host = invalidHostHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateIfMatchHeaderException(string[] invalidIfMatchHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.IfMatch),
+                value: "IfMatch header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                IfMatch = invalidIfMatchHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateIfNoneMatchHeaderException(string[] invalidIfNoneMatchHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.IfNoneMatch),
+                value: "IfNoneMatch header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                IfNoneMatch = invalidIfNoneMatchHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateIfRangeHeaderException()
         {
             string randomString = GetRandomString();
             DateTimeOffset randomDateTimeOffset = GetRandomDateTime();
@@ -498,7 +701,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.IfRange),
-                value: "Range Condition header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again.");
+                value: "IfRange header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again.");
 
             var httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -514,6 +717,531 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
                 InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
             };
+        }
+
+        private static dynamic CreatePragmaHeaderException(NameValueHeader[] invalidPragmaHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Pragma),
+                value: "Pragma header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Pragma = invalidPragmaHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateProtocolHeaderException(string invalidProtocolHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Protocol),
+                value: "Protocol header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Protocol = invalidProtocolHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateProxyAuthorizationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.ProxyAuthorization),
+                value: "Proxy Authentication header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                ProxyAuthorization = invalidAuthenticationHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateRangeHeaderException(RangeHeader invalidRangeHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Range),
+                value: "Range header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Range = invalidRangeHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateTEHeaderException(TransferCodingHeader[] invalidTEHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.TE),
+                value: "TE header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                TE = invalidTEHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateTrailerHeaderException(string[] invalidTrailerHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Trailer),
+                value: "Trailer header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Trailer = invalidTrailerHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateTransferEncodingException(TransferCodingHeader[] invalidTransferEncodingHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.TransferEncoding),
+                value: "Transfer Encoding header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                TransferEncoding = invalidTransferEncodingHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateUpgradeHeaderException(ProductHeader[] invalidUpgradeHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Upgrade),
+                value: "Upgrade header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Upgrade = invalidUpgradeHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateUserAgentHeaderException(ProductInfoHeader[] invalidUserAgentHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.UserAgent),
+                value: "User Agent header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                UserAgent = invalidUserAgentHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateViaHeaderException(ViaHeader[] invalidViaHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Via),
+                value: "Via header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Via = invalidViaHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateWarningHeaderException(WarningHeader[] invalidWarningHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeRequestHeaders.Warning),
+                value: "Warning header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
+            {
+                Warning = invalidWarningHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static MediaTypeHeader[] CreateInvalidMediaTypes()
+        {
+            string[] invalidCharSetHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidStringMediaTypeHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<MediaTypeHeader> invalidMediaTypeHeaders =
+               from invalidCharSetHeader in invalidCharSetHeaders
+               from invalidStringMediaTypeHeader in invalidStringMediaTypeHeaders
+               select new MediaTypeHeader
+               {
+                   CharSet = invalidCharSetHeader,
+                   MediaType = invalidStringMediaTypeHeader
+               };
+
+            return invalidMediaTypeHeaders
+                .Prepend(null)
+                .Prepend(
+                    new MediaTypeHeader
+                    {
+                        CharSet = null,
+                        MediaType = null
+                    })
+                .ToArray();
+        }
+
+        private static StringWithQualityHeader[] CreateInvalidStringWithQualityHeaders()
+        {
+            string[] invalidValueHeaders = CreateInvalidStringArrayHeaders();
+
+            return invalidValueHeaders
+                .Select(invalidValueHeader =>
+                    new StringWithQualityHeader
+                    {
+                        Value = invalidValueHeader
+                    })
+                .Prepend(null)
+                .ToArray();
+        }
+
+        private static AuthenticationHeader[] CreateInvalidAuthenticationHeaders()
+        {
+            string[] invalidSchemaHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidValueHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<AuthenticationHeader> invalidAutenticationHeaders =
+               from invalidSchemaHeader in invalidSchemaHeaders
+               from invalidValueHeader in invalidValueHeaders
+               select new AuthenticationHeader
+               {
+                   Schema = invalidSchemaHeader,
+                   Value = invalidValueHeader
+               };
+
+            return invalidAutenticationHeaders
+                .Prepend(
+                    new AuthenticationHeader
+                    {
+                        Schema = null,
+                        Value = null
+                    })
+                .ToArray();
+        }
+
+        private static CacheControlHeader[] CreateInvalidCacheControlHeaders()
+        {
+            NameValueHeader[] invalidExtensionHeaders =
+                CreateInvalidNameValueHeaders();
+
+            string[] invalidPrivateHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidNoCacheHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<CacheControlHeader> invalidCacheControlHeaders =
+               from invalidExtensionHeader in invalidExtensionHeaders
+               from invalidPrivateHeader in invalidPrivateHeaders
+               from invalidNoCacheHeader in invalidNoCacheHeaders
+               select new CacheControlHeader
+               {
+                   Extensions = new NameValueHeader[] { invalidExtensionHeader },
+                   PrivateHeaders = new string[] { invalidPrivateHeader },
+                   NoCacheHeaders = new string[] { invalidNoCacheHeader }
+               };
+
+            return invalidCacheControlHeaders
+                .Prepend(
+                    new CacheControlHeader
+                    {
+                        Extensions = null,
+                        PrivateHeaders = null,
+                        NoCacheHeaders = null
+                    })
+                .ToArray();
+        }
+
+        private static NameValueHeader[] CreateInvalidNameValueHeaders()
+        {
+            string[] invalidNameHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidValueHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<NameValueHeader> invalidNameValueHeaders =
+               from invalidNameHeader in invalidNameHeaders
+               from invalidValueHeader in invalidValueHeaders
+               select new NameValueHeader
+               {
+                   Name = invalidNameHeader,
+                   Value = invalidValueHeader
+               };
+
+            return invalidNameValueHeaders
+                .Prepend(null)
+                .ToArray();
+        }
+
+        private static string[] CreateInvalidStringArrayHeaders()
+        {
+            return new string[]
+            {
+                null,
+                "",
+                " "
+            };
+        }
+
+        private static RangeItemHeader[] CreateInvalidRangeItemHeaders()
+        {
+            return new RangeItemHeader[]
+            {
+                new RangeItemHeader
+                {
+                    From = null,
+                    To = null
+                },
+                new RangeItemHeader
+                {
+                    From = 1,
+                    To = null
+                },
+                new RangeItemHeader
+                {
+                    From = null,
+                    To = 1
+                },
+                new RangeItemHeader
+                {
+                    From = 1,
+                    To = 0
+                }
+            };
+        }
+
+        private static NameValueWithParametersHeader[] CreateInvalidNameValueWithParametersHeaders()
+        {
+            NameValueHeader[] invalidParametersHeaders =
+                CreateInvalidNameValueHeaders();
+
+            string[] invalidNameHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<NameValueWithParametersHeader> invalidNameValueWithParametersHeaders =
+                from invalidNameHeader in invalidNameHeaders
+                from invalidParametersHeader in invalidParametersHeaders
+                select new NameValueWithParametersHeader
+                {
+                    Name = invalidNameHeader,
+                    Parameters = new NameValueHeader[] { invalidParametersHeader }
+                };
+
+            return invalidNameValueWithParametersHeaders.ToArray();
+        }
+
+        private static RangeHeader[] CreateInvalidRangeHeaders()
+        {
+            RangeItemHeader[] invalidRangeItemHeaders =
+                CreateInvalidRangeItemHeaders();
+
+            string[] invalidUnitHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<RangeHeader> invalidRangeHeaders =
+                from invalidUnitHeader in invalidUnitHeaders
+                from invalidRangeItemHeader in invalidRangeItemHeaders
+                select new RangeHeader
+                {
+                    Unit = invalidUnitHeader,
+                    Ranges = new RangeItemHeader[] { invalidRangeItemHeader }
+                };
+
+            return invalidRangeHeaders
+                .Prepend(null)
+                .ToArray();
+        }
+
+        private static TransferCodingHeader[] CreateInvalidTransferCodingHeaders()
+        {
+            NameValueHeader[] invalidNameValueHeaders =
+                CreateInvalidNameValueHeaders();
+
+            string[] invalidValueHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<TransferCodingHeader> invalidTransferCodingHeaders =
+                from invalidNameValueHeader in invalidNameValueHeaders
+                from invalidValueHeader in invalidValueHeaders
+                select new TransferCodingHeader
+                {
+                    Parameters = new NameValueHeader[] { invalidNameValueHeader },
+                    Value = invalidValueHeader
+                };
+
+            return invalidTransferCodingHeaders
+                .Prepend(null)
+                .ToArray();
+        }
+
+        private static ProductHeader[] CreateInvalidProductHeaders()
+        {
+            string[] invalidNameHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidVersionHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<ProductHeader> invalidProductHeaders =
+                from invalidNameHeader in invalidNameHeaders
+                from invalidVersionHeader in invalidVersionHeaders
+                select new ProductHeader
+                {
+                    Name = invalidNameHeader,
+                    Version = invalidVersionHeader
+                };
+
+            return invalidProductHeaders
+                .Prepend(null)
+                .ToArray();
+        }
+
+        private static ProductInfoHeader[] CreateInvalidProductInfoHeaders()
+        {
+            ProductHeader[] invalidProductHeaders =
+                CreateInvalidProductHeaders();
+
+            string[] invalidCommentHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<ProductInfoHeader> invalidProductInfoHeaders =
+                from invalidCommentHeader in invalidCommentHeaders
+                from invalidProductHeader in invalidProductHeaders
+                select new ProductInfoHeader
+                {
+                    Comment = invalidCommentHeader,
+                    Product = invalidProductHeader
+                };
+
+            return invalidProductInfoHeaders
+                .Prepend(null)
+                .ToArray();
+        }
+
+        private static ViaHeader[] CreateInvalidViaHeaders()
+        {
+            string[] invalidCommentHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidProtocolNameHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidProtocolVersionHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidReceivedByHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<ViaHeader> invalidViaHeaders =
+                from invalidCommentHeader in invalidCommentHeaders
+                from invalidProtocolNameHeader in invalidProtocolNameHeaders
+                from invalidProtocolVersionHeader in invalidProtocolVersionHeaders
+                from invalidReceivedByHeader in invalidReceivedByHeaders
+                select new ViaHeader
+                {
+                    Comment = invalidCommentHeader,
+                    ProtocolName = invalidProtocolNameHeader,
+                    ProtocolVersion = invalidProtocolVersionHeader,
+                    ReceivedBy = invalidReceivedByHeader
+                };
+
+            return invalidViaHeaders
+                .Prepend(null)
+                .ToArray();
+        }
+
+        private static WarningHeader[] CreateInvalidWarningHeaders()
+        {
+            string[] invalidAgentHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidTextHeaders = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<WarningHeader> invalidViaHeaders =
+                from invalidAgentHeader in invalidAgentHeaders
+                from invalidTextHeader in invalidTextHeaders
+                select new WarningHeader
+                {
+                    Agent = invalidAgentHeader,
+                    Text = invalidTextHeader
+                };
+
+            return invalidViaHeaders
+                .Prepend(null)
+                .ToArray();
         }
     }
 }

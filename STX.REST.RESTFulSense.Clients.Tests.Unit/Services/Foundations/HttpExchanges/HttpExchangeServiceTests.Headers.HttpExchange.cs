@@ -103,10 +103,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static NameValueWithParameters CreateNameValueWithParameters(
+        private static NameValueWithParametersHeader CreateNameValueWithParameters(
             dynamic randomNameValueWithParametersProperties)
         {
-            var nameValueWithParameters = new NameValueWithParameters
+            var nameValueWithParameters = new NameValueWithParametersHeader
             {
                 Name = randomNameValueWithParametersProperties.Name,
 
@@ -120,7 +120,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return nameValueWithParameters;
         }
 
-        private static AuthenticationHeader CreateAuthenticateHeader(
+        private static AuthenticationHeader CreateAuthenticationHeader(
             dynamic randomAuthenticationHeaderProperties)
         {
             return new AuthenticationHeader
@@ -296,7 +296,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                         .ToArray())
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.Authorization)
-                    .Use((AuthenticationHeader)CreateAuthenticateHeader(
+                    .Use((AuthenticationHeader)CreateAuthenticationHeader(
                             randomHeaderProperties.Authorization))
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.CacheControl)
@@ -315,7 +315,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.Expect)
                     .Use((randomHeaderProperties.Expect as dynamic[])
                         .Select(header =>
-                            (NameValueWithParameters)CreateNameValueWithParameters(header))
+                            (NameValueWithParametersHeader)CreateNameValueWithParameters(header))
                         .ToArray())
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.ExpectContinue)
@@ -355,7 +355,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     .Use((string)randomHeaderProperties.Protocol)
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.ProxyAuthorization)
-                    .Use((AuthenticationHeader)CreateAuthenticateHeader(
+                    .Use((AuthenticationHeader)CreateAuthenticationHeader(
                         randomHeaderProperties.ProxyAuthorization))
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.Range)
@@ -453,7 +453,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.ProxyAuthenticate)
                     .Use((randomResponseHeadersProperties.ProxyAuthenticate as dynamic[])
                         .Select(proxyAuthenticateHeader =>
-                            (AuthenticationHeader)CreateAuthenticateHeader(proxyAuthenticateHeader))
+                            (AuthenticationHeader)CreateAuthenticationHeader(proxyAuthenticateHeader))
                         .ToArray())
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.RetryAfter)
@@ -501,7 +501,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.WwwAuthenticate)
                     .Use((randomResponseHeadersProperties.WwwAuthenticate as dynamic[])
                         .Select(wwwAuthenticateHeader =>
-                            (AuthenticationHeader)CreateAuthenticateHeader(wwwAuthenticateHeader))
+                            (AuthenticationHeader)CreateAuthenticationHeader(wwwAuthenticateHeader))
                         .ToArray());
 
             return filler;

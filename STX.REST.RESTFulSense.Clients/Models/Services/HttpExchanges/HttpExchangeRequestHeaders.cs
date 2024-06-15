@@ -18,7 +18,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public string[] Connection { get; init; }
         public bool? ConnectionClose { get; init; }
         public DateTimeOffset? Date { get; init; }
-        public NameValueWithParameters[] Expect { get; init; }
+        public NameValueWithParametersHeader[] Expect { get; init; }
         public bool? ExpectContinue { get; init; }
         public string From { get; init; }
         public string Host { get; init; }
