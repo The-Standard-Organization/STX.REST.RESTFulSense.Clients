@@ -21,6 +21,7 @@ namespace STX.REST.RESTFulSense.Clients.Infrastructure.Build.Services
         public void GenerateBuildScript()
         {
             string branchName = "main";
+            string projectName = "STX.REST.RESTFulSense.Clients";
 
             var githubPipeline = new GithubPipeline
             {
@@ -28,21 +29,8 @@ namespace STX.REST.RESTFulSense.Clients.Infrastructure.Build.Services
 
                 OnEvents = new Events
                 {
-                    Push = new PushEvent
-                    {
-                        Branches = new string[] { branchName }
-                    },
-
-                    PullRequest = new PullRequestEvent
-                    {
-                        Types = new string[] { "opened", "synchronize", "reopened", "closed" },
-                        Branches = new string[] { branchName }
-                    }
-                },
-
-                EnvironmentVariables = new Dictionary<string, string>
-                {
-                    { "IS_RELEASE_CANDIDATE", EnvironmentVariables.IsGitHubReleaseCandidate() }
+                    Push = new PushEvent { Branches = [branchName] },
+                    PullRequest = new PullRequestEvent { Branches = [branchName] }
                 },
 
                 Jobs = new Dictionary<string, Job>
@@ -51,6 +39,7 @@ namespace STX.REST.RESTFulSense.Clients.Infrastructure.Build.Services
                         "build",
                         new Job
                         {
+                            Name = "Build",
                             RunsOn = BuildMachines.UbuntuLatest,
 
                             Steps = new List<GithubTask>
@@ -66,7 +55,7 @@ namespace STX.REST.RESTFulSense.Clients.Infrastructure.Build.Services
 
                                     With = new TargetDotNetVersionV3
                                     {
-                                        DotNetVersion = "7.0.201"
+                                        DotNetVersion = "8.0.302"
                                     }
                                 },
 
@@ -92,9 +81,12 @@ namespace STX.REST.RESTFulSense.Clients.Infrastructure.Build.Services
                         new TagJob(
                             runsOn: BuildMachines.UbuntuLatest,
                             dependsOn: "build",
-                            projectRelativePath: "STX.REST.RESTFulSense.Clients/STX.REST.RESTFulSense.Clients.csproj",
+                            projectRelativePath: $"{projectName}/{projectName}.csproj",
                             githubToken: "${{ secrets.PAT_FOR_TAGGING }}",
                             branchName: branchName)
+                        {
+                            Name = "Tag and Release"
+                        }
                     },
                     {
                         "publish",
@@ -102,6 +94,9 @@ namespace STX.REST.RESTFulSense.Clients.Infrastructure.Build.Services
                             runsOn: BuildMachines.UbuntuLatest,
                             dependsOn: "add_tag",
                             nugetApiKey: "${{ secrets.NUGET_ACCESS }}")
+                        {
+                            Name = "Publish To NuGet"
+                        }
                     }
                 }
             };
