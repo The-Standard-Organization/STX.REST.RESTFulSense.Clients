@@ -4,30 +4,11 @@ on:
     branches:
     - main
   pull_request:
-    types:
-    - opened
-    - synchronize
-    - reopened
-    - closed
     branches:
     - main
-env:
-  IS_RELEASE_CANDIDATE: >-
-    ${{
-      (
-        github.event_name == 'pull_request' && 
-        startsWith(github.event.pull_request.title, 'RELEASES:') && 
-        contains(github.event.pull_request.labels.*.name, 'RELEASES')
-      )
-      ||
-      (
-        github.event_name == 'push' && 
-        startsWith(github.event.head_commit.message, 'RELEASES:') && 
-        startsWith(github.ref_name, 'RELEASE')
-      )
-    }}
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
     - name: Check out
@@ -35,7 +16,7 @@ jobs:
     - name: Setup .Net
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.201
+        dotnet-version: 8.0.6
     - name: Restore
       run: dotnet restore
     - name: Build
@@ -43,6 +24,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
   add_tag:
+    name: Tag and Release
     runs-on: ubuntu-latest
     needs:
     - build
@@ -73,7 +55,7 @@ jobs:
 
         sudo apt-get install xmlstarlet
 
-        version_number=$(xmlstarlet sel -t -v "//Version" -n STX.REST.RESTFulSense/STX.REST.RESTFulSense.csproj)
+        version_number=$(xmlstarlet sel -t -v "//Version" -n STX.REST.RESTFulSense.Clients/STX.REST.RESTFulSense.Clients.csproj)
 
         echo "$version_number"
 
@@ -92,7 +74,7 @@ jobs:
 
         sudo apt-get install xmlstarlet
 
-        package_release_notes=$(xmlstarlet sel -t -v "//PackageReleaseNotes" -n STX.REST.RESTFulSense/STX.REST.RESTFulSense.csproj)
+        package_release_notes=$(xmlstarlet sel -t -v "//PackageReleaseNotes" -n STX.REST.RESTFulSense.Clients/STX.REST.RESTFulSense.Clients.csproj)
 
         echo "$package_release_notes"
 
@@ -124,6 +106,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.PAT_FOR_TAGGING }}
   publish:
+    name: Publish To NuGet
     runs-on: ubuntu-latest
     needs:
     - add_tag
