@@ -55,7 +55,7 @@ namespace STX.REST.RESTFulSense.Clients.Infrastructure.Build.Services
 
                                     With = new TargetDotNetVersionV3
                                     {
-                                        DotNetVersion = "8.0.6"
+                                        DotNetVersion = "8.0.302"
                                     }
                                 },
 
