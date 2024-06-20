@@ -954,7 +954,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic CreateAllowHeaderException(string[] invalidAllowHeader)
         {
             var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
 
             invalidHttpExchangeHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.Allow),
@@ -972,7 +972,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateContentDispositionHeaderException(ContentDispositionHeader invalidContentDispositionHeader)
+        private static dynamic CreateContentDispositionHeaderException(
+            ContentDispositionHeader invalidContentDispositionHeader)
         {
             var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
               message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
@@ -989,6 +990,27 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return new
             {
                 HttpExchangeContentHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateContentEncodingHeaderException(string[] invalidContentEncodingHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeContentHeaders.Allow),
+                value: "Content Encoding header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeContentHeaders httpExchangeRequestHeaders = new HttpExchangeContentHeaders
+            {
+                ContentEncoding = invalidContentEncodingHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
                 InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
             };
         }
@@ -1604,6 +1626,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                         return theoryData;
                     })
                     .ToArray();
+
+            string[] invalidAllowHeaders = CreateInvalidStringArrayHeaders();
+            invalidAllowHeaders
+                .Select(invalidAllowHeader =>
+                {
+                    theoryData.Add(
+                        CreateAllowHeaderException(
+                            new string[] { invalidAllowHeader }));
+
+                    return theoryData;
+                })
+                .ToArray();
 
             return theoryData;
         }
