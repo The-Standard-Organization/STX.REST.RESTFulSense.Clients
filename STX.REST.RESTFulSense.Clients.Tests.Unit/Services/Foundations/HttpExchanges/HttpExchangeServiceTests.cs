@@ -757,6 +757,17 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 })
                 .ToArray();
 
+            string[] invalidAllowHeaders = CreateInvalidStringArrayHeaders();
+            invalidAllowHeaders
+                .Select(invalidAllowHeader =>
+                {
+                    theoryData.Add(
+                        CreateFromHeaderException(invalidAllowHeader));
+
+                    return theoryData;
+                })
+                .ToArray();
+
             ContentDispositionHeader[] invalidContentDispositionHeaders =
                 CreateInvalidContentDispositionHeaders();
 

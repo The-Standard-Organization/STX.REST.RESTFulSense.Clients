@@ -950,6 +950,27 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
+        private static dynamic CreateAllowHeaderException(string[] invalidAllowHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeContentHeaders.Allow),
+                value: "Allow header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeContentHeaders httpExchangeRequestHeaders = new HttpExchangeContentHeaders
+            {
+                Allow = invalidAllowHeader
+            };
+
+            return new
+            {
+                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
         private static dynamic CreateContentDispositionHeaderException(ContentDispositionHeader invalidContentDispositionHeader)
         {
             var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
