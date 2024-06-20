@@ -960,14 +960,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 key: nameof(HttpExchangeContentHeaders.Allow),
                 value: "Allow header has invalid configuration, fix errors and try again.");
 
-            HttpExchangeContentHeaders httpExchangeRequestHeaders = new HttpExchangeContentHeaders
+            HttpExchangeContentHeaders httpExchangeContentHeaders = new HttpExchangeContentHeaders
             {
                 Allow = invalidAllowHeader
             };
 
             return new
             {
-                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                HttpExchangeContentHeaders = httpExchangeContentHeaders,
                 InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
             };
         }
@@ -982,14 +982,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 key: nameof(HttpExchangeContentHeaders.ContentDisposition),
                 value: "Content Disposition header has invalid configuration, fix errors and try again.");
 
-            HttpExchangeContentHeaders httpExchangeRequestHeaders = new HttpExchangeContentHeaders
+            HttpExchangeContentHeaders httpExchangeContentHeaders = new HttpExchangeContentHeaders
             {
                 ContentDisposition = invalidContentDispositionHeader
             };
 
             return new
             {
-                HttpExchangeContentHeaders = httpExchangeRequestHeaders,
+                HttpExchangeContentHeaders = httpExchangeContentHeaders,
                 InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
             };
         }
@@ -1613,6 +1613,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static TheoryData<dynamic> CreateRequestContentHeadersValidationExceptions(TheoryData<dynamic> theoryData)
         {
+            string[] invalidAllowHeaders = CreateInvalidStringArrayHeaders();
+            invalidAllowHeaders
+                .Select(invalidAllowHeader =>
+                {
+                    theoryData.Add(
+                        CreateAllowHeaderException(
+                            new string[] { invalidAllowHeader }));
+
+                    return theoryData;
+                })
+                .ToArray();
+
             ContentDispositionHeader[] invalidContentDispositionHeaders =
                 CreateInvalidContentDispositionHeaders();
 
@@ -1626,18 +1638,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                         return theoryData;
                     })
                     .ToArray();
-
-            string[] invalidAllowHeaders = CreateInvalidStringArrayHeaders();
-            invalidAllowHeaders
-                .Select(invalidAllowHeader =>
-                {
-                    theoryData.Add(
-                        CreateAllowHeaderException(
-                            new string[] { invalidAllowHeader }));
-
-                    return theoryData;
-                })
-                .ToArray();
 
             return theoryData;
         }
