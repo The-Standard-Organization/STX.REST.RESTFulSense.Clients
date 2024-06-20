@@ -950,6 +950,27 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
+        private static dynamic CreateContentDispositionHeaderException(ContentDispositionHeader invalidContentDispositionHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeContentHeaders.ContentDisposition),
+                value: "Content Disposition header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeContentHeaders httpExchangeRequestHeaders = new HttpExchangeContentHeaders
+            {
+                ContentDisposition = invalidContentDispositionHeader
+            };
+
+            return new
+            {
+                HttpExchangeContentHeaders = httpExchangeRequestHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
         private static MediaTypeHeader[] CreateInvalidMediaTypes()
         {
             string[] invalidCharSetHeaders = CreateInvalidStringArrayHeaders();
@@ -1240,6 +1261,31 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 };
 
             return invalidViaHeaders
+                .Prepend(null)
+                .ToArray();
+        }
+
+        private static ContentDispositionHeader[] CreateInvalidContentDispositionHeaders()
+        {
+            string[] invalidDispositionTypes = CreateInvalidStringArrayHeaders();
+            string[] invalidNames = CreateInvalidStringArrayHeaders();
+            string[] invalidFileNames = CreateInvalidStringArrayHeaders();
+            string[] invalidFileNameStars = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<ContentDispositionHeader> invalidContentDispositionHeaders =
+                from invalidDispositionType in invalidDispositionTypes
+                from invalidName in invalidNames
+                from invalidFileName in invalidFileNames
+                from invalidFileNameStar in invalidFileNameStars
+                select new ContentDispositionHeader
+                {
+                    DispositionType = invalidDispositionType,
+                    Name = invalidName,
+                    FileName = invalidFileName,
+                    FileNameStar = invalidFileNameStar,
+                };
+
+            return invalidContentDispositionHeaders
                 .Prepend(null)
                 .ToArray();
         }

@@ -757,6 +757,20 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 })
                 .ToArray();
 
+            ContentDispositionHeader[] invalidContentDispositionHeaders =
+                CreateInvalidContentDispositionHeaders();
+
+            invalidContentDispositionHeaders
+                .Select(invalidContentDispositionHeader =>
+                {
+                    theoryData.Add(
+                        CreateContentDispositionHeaderException(
+                            invalidContentDispositionHeader));
+
+                    return theoryData;
+                })
+                .ToArray();
+
             return theoryData;
         }
 
