@@ -1639,6 +1639,20 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                         return theoryData;
                     })
                     .ToArray();
+
+            string[] invalidContentEncodingHeaders = CreateInvalidStringArrayHeaders();
+            invalidContentEncodingHeaders
+                .Select(invalidContentEncodingHeader =>
+                {
+                    theoryData.Add(
+                        CreateContentEncodingHeaderException(
+                            new string[] { invalidContentEncodingHeader }));
+
+                    return theoryData;
+                })
+                .ToArray();
+
+            return theoryData;
         }
     }
 }
