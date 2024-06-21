@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
@@ -976,7 +977,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             ContentDispositionHeader invalidContentDispositionHeader)
         {
             var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
 
             invalidHttpExchangeHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.ContentDisposition),
@@ -1003,14 +1004,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 key: nameof(HttpExchangeContentHeaders.Allow),
                 value: "Content Encoding header has invalid configuration, fix errors and try again.");
 
-            HttpExchangeContentHeaders httpExchangeRequestHeaders = new HttpExchangeContentHeaders
+            HttpExchangeContentHeaders httpExchangeContentHeaders = new HttpExchangeContentHeaders
             {
                 ContentEncoding = invalidContentEncodingHeader
             };
 
             return new
             {
-                HttpExchangeRequestHeaders = httpExchangeRequestHeaders,
+                HttpExchangeContentHeaders = httpExchangeContentHeaders,
                 InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
             };
         }
@@ -1638,8 +1639,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                         return theoryData;
                     })
                     .ToArray();
-
-            return theoryData;
         }
     }
 }
