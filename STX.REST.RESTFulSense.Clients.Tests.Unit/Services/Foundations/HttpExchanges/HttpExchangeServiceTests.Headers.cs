@@ -1001,7 +1001,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
               message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
 
             invalidHttpExchangeHeaderException.UpsertDataList(
-                key: nameof(HttpExchangeContentHeaders.Allow),
+                key: nameof(HttpExchangeContentHeaders.ContentEncoding),
                 value: "Content Encoding header has invalid configuration, fix errors and try again.");
 
             HttpExchangeContentHeaders httpExchangeContentHeaders = new HttpExchangeContentHeaders
