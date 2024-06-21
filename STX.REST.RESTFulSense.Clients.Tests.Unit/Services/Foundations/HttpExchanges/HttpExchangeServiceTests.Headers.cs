@@ -1016,6 +1016,27 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
+        private static dynamic CreateContentLanguageHeaderException(string[] invalidContentLanguageHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeContentHeaders.ContentLanguage),
+                value: "Content Language header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeContentHeaders httpExchangeContentHeaders = new HttpExchangeContentHeaders
+            {
+                ContentEncoding = invalidContentLanguageHeader
+            };
+
+            return new
+            {
+                HttpExchangeContentHeaders = httpExchangeContentHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
         private static MediaTypeHeader[] CreateInvalidMediaTypes()
         {
             string[] invalidCharSetHeaders = CreateInvalidStringArrayHeaders();
@@ -1647,6 +1668,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     theoryData.Add(
                         CreateContentEncodingHeaderException(
                             new string[] { invalidContentEncodingHeader }));
+
+                    return theoryData;
+                })
+                .ToArray();
+
+            string[] invalidContentLanguageHeaders = CreateInvalidStringArrayHeaders();
+            invalidContentLanguageHeaders
+                .Select(invalidContentLanguageHeader =>
+                {
+                    theoryData.Add(
+                        CreateContentLanguageHeaderException(
+                            new string[] { invalidContentLanguageHeader }));
 
                     return theoryData;
                 })
