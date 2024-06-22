@@ -1046,7 +1046,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.ContentRange),
-                value: "Content Range Header has invalid configuration, fix errors and try again.");
+                value: "Content Range header has invalid configuration, fix errors and try again.");
 
             HttpExchangeContentHeaders httpExchangeContentHeaders = new HttpExchangeContentHeaders
             {
@@ -1404,12 +1404,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static ContentRangeHeader[] CreateInvalidContentRangeHeaders()
         {
             string[] invalidUnits = CreateInvalidStringArrayHeaders();
+            long invalidfrom = GetRandomLong();
+            long invalidTo = CreateRandomLongToValue(invalidfrom);
+            long invalidLength = invalidTo;
 
             IEnumerable<ContentRangeHeader> invalidContentRangeHeaders =
                 from invalidUnit in invalidUnits
                 select new ContentRangeHeader
                 {
-                    Unit = invalidUnit
+                    Unit = invalidUnit,
+                    From = invalidfrom,
+                    To = invalidTo,
+                    Length = invalidLength
                 };
 
             return invalidContentRangeHeaders
@@ -1419,13 +1425,13 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static TheoryData<dynamic> CreateRequestHeadersValidationExceptions(TheoryData<dynamic> theoryData)
         {
-            MediaTypeHeader[] invalidMediaTypeHeaders = CreateInvalidMediaTypes();
-            invalidMediaTypeHeaders
-                .Select(invalidMediaTypeHeader =>
+            MediaTypeHeader[] invalidAcceptHeaders = CreateInvalidMediaTypes();
+            invalidAcceptHeaders
+                .Select(invalidAcceptHeader =>
                     {
                         theoryData.Add(
                             CreateAcceptHeaderException(
-                                new MediaTypeHeader[] { invalidMediaTypeHeader }));
+                                new MediaTypeHeader[] { invalidAcceptHeader }));
 
                         return theoryData;
                     })
@@ -1760,13 +1766,13 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 })
                     .ToArray();
 
-            MediaTypeHeader[] invalidMediaTypeHeaders = CreateInvalidMediaTypes();
-            invalidMediaTypeHeaders
-                .Select(invalidMediaTypeHeader =>
+            MediaTypeHeader[] invalidContentTypeHeaders = CreateInvalidMediaTypes();
+            invalidContentTypeHeaders
+                .Select(invalidContentTypeHeader =>
                 {
                     theoryData.Add(
                         CreateContentTypeHeaderException(
-                           invalidMediaTypeHeader));
+                           invalidContentTypeHeader));
 
                     return theoryData;
                 })
