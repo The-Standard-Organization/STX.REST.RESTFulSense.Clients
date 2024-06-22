@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Mime;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -1037,6 +1038,50 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
+        private static dynamic CreateContentRangeHeaderException(
+            ContentRangeHeader invalidContentRangeHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeContentHeaders.ContentRange),
+                value: "Content Range Header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeContentHeaders httpExchangeContentHeaders = new HttpExchangeContentHeaders
+            {
+                ContentRange = invalidContentRangeHeader
+            };
+
+            return new
+            {
+                HttpExchangeContentHeaders = httpExchangeContentHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
+        private static dynamic CreateContentTypeHeaderException(
+            MediaTypeHeader invalidContentTypeHeader)
+        {
+            var invalidHttpExchangeHeaderException = new InvalidHttpExchangeHeaderException(
+              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+
+            invalidHttpExchangeHeaderException.UpsertDataList(
+                key: nameof(HttpExchangeContentHeaders.ContentType),
+                value: "Content Type Header has invalid configuration, fix errors and try again.");
+
+            HttpExchangeContentHeaders httpExchangeContentHeaders = new HttpExchangeContentHeaders
+            {
+                ContentType = invalidContentTypeHeader
+            };
+
+            return new
+            {
+                HttpExchangeContentHeaders = httpExchangeContentHeaders,
+                InvalidHttpExchangeHeaderException = invalidHttpExchangeHeaderException
+            };
+        }
+
         private static MediaTypeHeader[] CreateInvalidMediaTypes()
         {
             string[] invalidCharSetHeaders = CreateInvalidStringArrayHeaders();
@@ -1352,6 +1397,22 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 };
 
             return invalidContentDispositionHeaders
+                .Prepend(null)
+                .ToArray();
+        }
+
+        private static ContentRangeHeader[] CreateInvalidContentRangeHeaders()
+        {
+            string[] invalidUnits = CreateInvalidStringArrayHeaders();
+
+            IEnumerable<ContentRangeHeader> invalidContentRangeHeaders =
+                from invalidUnit in invalidUnits
+                select new ContentRangeHeader
+                {
+                    Unit = invalidUnit
+                };
+
+            return invalidContentRangeHeaders
                 .Prepend(null)
                 .ToArray();
         }
@@ -1680,6 +1741,32 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     theoryData.Add(
                         CreateContentLanguageHeaderException(
                             new string[] { invalidContentLanguageHeader }));
+
+                    return theoryData;
+                })
+                .ToArray();
+
+            ContentRangeHeader[] invalidContentRangeHeaders =
+                CreateInvalidContentRangeHeaders();
+
+            invalidContentRangeHeaders
+                .Select(invalidContentRangeHeader =>
+                {
+                    theoryData.Add(
+                        CreateContentRangeHeaderException(
+                            invalidContentRangeHeader));
+
+                    return theoryData;
+                })
+                    .ToArray();
+
+            MediaTypeHeader[] invalidMediaTypeHeaders = CreateInvalidMediaTypes();
+            invalidMediaTypeHeaders
+                .Select(invalidMediaTypeHeader =>
+                {
+                    theoryData.Add(
+                        CreateContentTypeHeaderException(
+                           invalidMediaTypeHeader));
 
                     return theoryData;
                 })
