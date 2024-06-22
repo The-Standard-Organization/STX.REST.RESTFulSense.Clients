@@ -1068,7 +1068,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.ContentType),
-                value: "Content Type Header has invalid configuration, fix errors and try again.");
+                value: "Content Type header has invalid configuration, fix errors and try again.");
 
             HttpExchangeContentHeaders httpExchangeContentHeaders = new HttpExchangeContentHeaders
             {
