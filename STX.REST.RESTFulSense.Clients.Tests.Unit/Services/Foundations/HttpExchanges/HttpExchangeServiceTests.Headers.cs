@@ -1404,16 +1404,19 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static ContentRangeHeader[] CreateInvalidContentRangeHeaders()
         {
             string[] invalidUnits = CreateInvalidStringArrayHeaders();
-            long invalidfrom = GetRandomLong();
-            long invalidTo = CreateRandomLongToValue(invalidfrom);
-            long invalidLength = invalidTo;
+            long?[] invalidFroms = [null, 0];
+            long?[] invalidTos = [null, 0];
+            long?[] invalidLengths = [null, 0];
 
             IEnumerable<ContentRangeHeader> invalidContentRangeHeaders =
                 from invalidUnit in invalidUnits
+                from invalidFrom in invalidFroms
+                from invalidTo in invalidTos
+                from invalidLength in invalidLengths
                 select new ContentRangeHeader
                 {
                     Unit = invalidUnit,
-                    From = invalidfrom,
+                    From = invalidFrom,
                     To = invalidTo,
                     Length = invalidLength
                 };
