@@ -12,7 +12,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions
         public InvalidHttpExchangeRequestException(string message) : base(message)
         { }
 
-        public InvalidHttpExchangeRequestException(string message, Exception innerException)
+        public InvalidHttpExchangeRequestException(string message, Xeption innerException)
             : base(message, innerException)
         { }
     }
