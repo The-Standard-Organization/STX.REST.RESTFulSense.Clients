@@ -6,5 +6,9 @@ namespace STX.REST.RESTFulSense.Clients
 	{
 	internal class DeleteMe
 		{
+		public void Foo()
+			{
+
+			}
 		}
 	}
