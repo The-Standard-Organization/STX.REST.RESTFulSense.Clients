@@ -9,7 +9,6 @@ using FluentAssertions;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges

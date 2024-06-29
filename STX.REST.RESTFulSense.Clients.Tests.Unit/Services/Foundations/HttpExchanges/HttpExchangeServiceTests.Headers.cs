@@ -6,7 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net.Mime;
+using System.Net.Http;
+using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -1782,6 +1783,84 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     return theoryData;
                 })
                 .ToArray();
+
+            return theoryData;
+        }
+
+        private static dynamic CreateSendRequestDependencyExceptions(TheoryData<dynamic> theoryData)
+        {
+            var someMessage = GetRandomString();
+            var httpRequestException = new HttpRequestException();
+
+            var failedRequestHttpExchangeException = new FailedRequestHttpExchangeException(
+                message: "Failed http request error occurred, contact support.",
+                innerException: httpRequestException);
+
+            theoryData.Add(new
+            {
+                ExternalException = httpRequestException,
+                LocalizedException = failedRequestHttpExchangeException
+            });
+
+            var taskCanceledException = new TaskCanceledException();
+
+            var taskCanceledHttpExchangeException = new TaskCanceledHttpExchangeException(
+                message: "Request timeout error occurred, please contact support.",
+                innerException: taskCanceledException);
+
+            theoryData.Add(new
+            {
+                ExternalException = taskCanceledException,
+                LocalizedException = taskCanceledHttpExchangeException
+            });
+
+            var objectDisposedException = new ObjectDisposedException(someMessage);
+
+            var objectDisposedHttpExchangeException = new ObjectDisposedHttpExchangeException(
+                message: "Object already disposed error occurred, please fix errors and try again.",
+                innerException: objectDisposedException);
+
+            theoryData.Add(new
+            {
+                ExternalException = objectDisposedException,
+                LocalizedException = objectDisposedHttpExchangeException
+            });
+
+            var invalidOperationException = new InvalidOperationException();
+
+            var invalidOperationHttpExchangeException = new InvalidOperationHttpExchangeException(
+                message: "Invalid http request operation error occurred, please contact support.",
+                innerException: invalidOperationException);
+
+            theoryData.Add(new
+            {
+                ExternalException = invalidOperationException,
+                LocalizedException = invalidOperationHttpExchangeException
+            });
+
+            var argumentNullException = new ArgumentNullException();
+
+            var invalidArgumentHttpExchangeException = new InvalidArgumentHttpExchangeException(
+                message: "Invalid argument error occurred, contact support.",
+                innerException: argumentNullException);
+
+            theoryData.Add(new
+            {
+                ExternalException = argumentNullException,
+                LocalizedException = invalidArgumentHttpExchangeException
+            });
+
+            var formatException = new FormatException();
+
+            var invalidFormatHttpExchangeException = new InvalidFormatHttpExchangeException(
+                message: "Invalid format error occurred, contact support.",
+                innerException: formatException);
+
+            theoryData.Add(new
+            {
+                ExternalException = formatException,
+                LocalizedException = invalidFormatHttpExchangeException
+            });
 
             return theoryData;
         }

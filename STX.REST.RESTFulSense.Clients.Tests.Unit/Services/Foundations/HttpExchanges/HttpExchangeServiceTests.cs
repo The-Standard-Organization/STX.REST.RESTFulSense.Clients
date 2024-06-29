@@ -496,7 +496,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return theoryData;
         }
 
-        public static TheoryData<Exception, string> SendRequestDependencyExceptions()
+        public static TheoryData<dynamic> SendRequestDependencyExceptions()
+        {
+            var theoryData = new TheoryData<dynamic>();
+            theoryData = CreateSendRequestDependencyExceptions(theoryData);
+
+            return theoryData;
+        }
+
+        public static TheoryData<Exception, string> SendRequestDependencyExceptionss()
         {
             return new TheoryData<Exception, string>
             {

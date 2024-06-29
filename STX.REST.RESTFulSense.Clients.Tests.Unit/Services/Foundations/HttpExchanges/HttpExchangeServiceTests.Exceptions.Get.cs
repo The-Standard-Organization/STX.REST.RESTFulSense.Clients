@@ -18,7 +18,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         [Theory]
         [MemberData(nameof(SendRequestDependencyExceptions))]
         private async Task ShouldThrowDependencyExceptionOnGetIfExternalExceptionOccurs(
-            Exception exception, string exceptionMessage)
+            dynamic dependencyException)
         {
             // given
             var httpExchange = new HttpExchange
@@ -32,20 +32,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }
             };
 
-            var failedHttpExchangeException =
-                new FailedHttpExchangeException(
-                    message: exceptionMessage,
-                    innerException: exception);
-
             var expectedHttpExchangeDependencyException =
                 new HttpExchangeDependencyException(
                     message: "HttpExchange dependency error occurred, contact support.",
-                    innerException: failedHttpExchangeException);
+                    innerException: dependencyException.LocalizedException);
 
             this.httpBroker.Setup(
                 broker => broker.SendRequestAsync(
                     It.IsAny<HttpRequestMessage>(), default))
-                        .Throws(exception);
+                        .Throws(dependencyException.ExternalException);
 
             // when
             ValueTask<HttpExchange> getTaskAsync = this.httpExchangeService.GetAsync(httpExchange);

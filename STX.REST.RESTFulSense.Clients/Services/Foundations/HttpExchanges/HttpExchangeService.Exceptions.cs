@@ -37,65 +37,65 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeValidationException(
                     invalidHttpExchangeHeaderException);
             }
-            catch(HttpRequestException httpRequestException)
+            catch (HttpRequestException httpRequestException)
             {
-                var failedHttpExchangeException =
-                    new FailedHttpExchangeException(
+                var failedRequestHttpExchangeException =
+                    new FailedRequestHttpExchangeException(
                         message: "Failed http request error occurred, contact support.",
                         innerException: httpRequestException);
 
                 throw CreateHttpExchangeDependencyException(
-                    failedHttpExchangeException);
+                    failedRequestHttpExchangeException);
             }
-            catch(TaskCanceledException taskCanceledException)
+            catch (TaskCanceledException taskCanceledException)
             {
-                var failedHttpExchangeException =
-                    new FailedHttpExchangeException(
+                var taskCanceledHttpExchangeException =
+                    new TaskCanceledHttpExchangeException(
                         message: "Request timeout error occurred, please contact support.",
                         innerException: taskCanceledException);
 
                 throw CreateHttpExchangeDependencyException(
-                    failedHttpExchangeException);
+                    taskCanceledHttpExchangeException);
             }
-            catch(ObjectDisposedException objectDisposedException)
+            catch (ObjectDisposedException objectDisposedException)
             {
-                var failedHttpExchangeException =
-                    new FailedHttpExchangeException(
+                var objectDisposedHttpExchangeException =
+                    new ObjectDisposedHttpExchangeException(
                         message: "Object already disposed error occurred, please fix errors and try again.",
                         innerException: objectDisposedException);
 
                 throw CreateHttpExchangeDependencyException(
-                    failedHttpExchangeException);
+                    objectDisposedHttpExchangeException);
             }
-            catch(InvalidOperationException invalidOperationException)
+            catch (InvalidOperationException invalidOperationException)
             {
-                var failedHttpExchangeException =
-                    new FailedHttpExchangeException(
+                var invalidOperationHttpExchangeException =
+                    new InvalidOperationHttpExchangeException(
                         message: "Invalid http request operation error occurred, please contact support.",
                         innerException: invalidOperationException);
 
                 throw CreateHttpExchangeDependencyException(
-                    failedHttpExchangeException);
+                    invalidOperationHttpExchangeException);
             }
             catch (ArgumentException argumentException)
             {
-                var failedHttpExchangeException =
-                    new FailedHttpExchangeException(
+                var invalidArgumentHttpExchangeException =
+                    new InvalidArgumentHttpExchangeException(
                         message: "Invalid argument error occurred, contact support.",
                         innerException: argumentException);
 
                 throw CreateHttpExchangeDependencyException(
-                    failedHttpExchangeException);
+                    invalidArgumentHttpExchangeException);
             }
             catch (FormatException formatException)
             {
-                var failedHttpExchangeException =
-                    new FailedHttpExchangeException(
+                var invalidFormatHttpExchangeException =
+                    new InvalidFormatHttpExchangeException(
                         message: "Invalid format error occurred, contact support.",
                         innerException: formatException);
 
                 throw CreateHttpExchangeDependencyException(
-                    failedHttpExchangeException);
+                    invalidFormatHttpExchangeException);
             }
         }
 
