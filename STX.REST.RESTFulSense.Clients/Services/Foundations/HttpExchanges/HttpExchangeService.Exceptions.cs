@@ -32,7 +32,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeValidationException(
                     invalidHttpExchangeRequestException);
             }
-            catch (InvalidHttpExchangeHeaderException invalidHttpExchangeHeaderException)
+            catch (InvalidHttpExchangeRequestHeaderException invalidHttpExchangeHeaderException)
             {
                 throw CreateHttpExchangeValidationException(
                     invalidHttpExchangeHeaderException);

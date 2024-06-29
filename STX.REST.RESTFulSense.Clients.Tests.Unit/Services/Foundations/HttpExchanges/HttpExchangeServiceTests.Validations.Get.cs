@@ -136,8 +136,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Theory]
-        [MemberData(nameof(GetValidationExceptions))]
-        private async Task ShouldThrowHttpExchangeValidationExceptionIfInvalidHeaderWhenGetAsync(
+        [MemberData(nameof(GetRequestValidationExceptions))]
+        private async Task ShouldThrowHttpExchangeValidationExceptionIfInvalidRequestHeaderWhenGetAsync(
             dynamic invalidHeaderException)
         {
             // given
@@ -155,7 +155,55 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",
-                innerException: invalidHeaderException.InvalidHttpExchangeHeaderException);
+                innerException: invalidHeaderException.InvalidHttpExchangeRequestHeaderException);
+
+            this.httpBroker
+                .Setup(broker =>
+                    broker.SendRequestAsync(
+                        It.IsAny<HttpRequestMessage>(),
+                        default));
+
+            // when
+            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
+
+            HttpExchangeValidationException actualHttpExchangeValidationException =
+                await Assert.ThrowsAsync<HttpExchangeValidationException>(getAsyncTask.AsTask);
+
+            // then
+            actualHttpExchangeValidationException.Should().BeEquivalentTo(
+                expectedHttpExchangeValidationException);
+
+            this.httpBroker
+                .Verify(broker =>
+                    broker.SendRequestAsync(
+                        It.IsAny<HttpRequestMessage>(),
+                        default),
+                    Times.Never);
+
+            this.httpBroker.VerifyNoOtherCalls();
+        }
+
+        [Theory]
+        [MemberData(nameof(GetContentValidationExceptions))]
+        private async Task ShouldThrowHttpExchangeValidationExceptionIfInvalidContentHeaderWhenGetAsync(
+            dynamic invalidHeaderException)
+        {
+            // given
+            var httpExchange = new HttpExchange
+            {
+                Request = new HttpExchangeRequest
+                {
+                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
+                    RelativeUrl = CreateRandomUri().PathAndQuery,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = GetRandomHttpVersion().ToString(),
+                    Headers = invalidHeaderException.HttpExchangeContentHeaders
+                }
+            };
+
+            var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
+                message: "HttpExchange validation errors occurred, fix errors and try again.",
+                innerException: invalidHeaderException.InvalidHttpExchangeContentHeaderException);
 
             this.httpBroker
                 .Setup(broker =>

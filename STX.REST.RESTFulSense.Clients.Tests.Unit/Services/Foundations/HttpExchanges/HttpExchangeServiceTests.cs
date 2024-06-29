@@ -480,10 +480,17 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                         .AreEqual;
         }
 
-        public static TheoryData<dynamic> GetValidationExceptions()
+        public static TheoryData<dynamic> GetRequestValidationExceptions()
         {
             var theoryData = new TheoryData<dynamic>();
             theoryData = CreateRequestHeadersValidationExceptions(theoryData);
+
+            return theoryData;
+        }
+
+        public static TheoryData<dynamic> GetContentValidationExceptions()
+        {
+            var theoryData = new TheoryData<dynamic>();
             theoryData = CreateRequestContentHeadersValidationExceptions(theoryData);
 
             return theoryData;

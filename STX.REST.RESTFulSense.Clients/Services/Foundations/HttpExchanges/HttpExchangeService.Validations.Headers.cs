@@ -36,7 +36,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static void ValidateHttpRequestHeaders(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeHeaderException =
-                new InvalidHttpExchangeHeaderException(
+                new InvalidHttpExchangeRequestHeaderException(
                     message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             foreach ((dynamic rule, string parameter) in validations)
