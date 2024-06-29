@@ -6,7 +6,7 @@ using System;
 using System.Net;
 using Moq;
 using STX.REST.RESTFulSense.Clients.Brokers.Errors;
-using STX.REST.RESTFulSense.Clients.Models.Errors;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers;
 using STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers;
 using Tynamix.ObjectFiller;
 
@@ -20,7 +20,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
         public ErrorMapperServiceTests()
         {
             this.errorBrokerMock = new Mock<IErrorBroker>();
-            
+
             this.errorMapperService =
                 new ErrorMapperService(errorBrokerMock.Object);
         }
@@ -30,7 +30,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             int min = (int)HttpStatusCode.Continue;
             int max = (int)HttpStatusCode.HttpVersionNotSupported;
             Random random = new Random();
-            
+
             HttpStatusCode randomHttpStatusCode =
                 (HttpStatusCode)random.Next(min, max + 1);
 

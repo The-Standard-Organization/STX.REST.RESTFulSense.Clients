@@ -4,12 +4,11 @@
 
 using Xeptions;
 
-namespace STX.REST.RESTFulSense.Clients.Models.ErrorMappers.Exceptions
+namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions
 {
-    public class ErrorMapperValidationException : Xeption
+    public class NullHttpExchangeException : Xeption
     {
-        public ErrorMapperValidationException(string message, Xeption innerException)
-            : base(message, innerException)
+        public NullHttpExchangeException(string message) : base(message)
         { }
     }
 }

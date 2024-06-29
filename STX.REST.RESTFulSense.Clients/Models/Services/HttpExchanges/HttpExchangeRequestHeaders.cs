@@ -2,8 +2,8 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 using System;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
 {
@@ -15,17 +15,16 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public StringWithQualityHeader[] AcceptLanguage { get; init; }
         public AuthenticationHeader Authorization { get; init; }
         public CacheControlHeader CacheControl { get; init; }
-        public string Connection { get; init; }
+        public string[] Connection { get; init; }
         public bool? ConnectionClose { get; init; }
         public DateTimeOffset? Date { get; init; }
-        public NameValueHeader[] Expect { get; init; }
+        public NameValueWithParametersHeader[] Expect { get; init; }
         public bool? ExpectContinue { get; init; }
-        public NameValueWithParameters[] ExpectCore { get; init; }
         public string From { get; init; }
         public string Host { get; init; }
-        public string IfMatch { get; init; }
+        public string[] IfMatch { get; init; }
         public DateTimeOffset? IfModifiedSince { get; init; }
-        public string IfNoneMatch { get; init; }
+        public string[] IfNoneMatch { get; init; }
         public RangeConditionHeader IfRange { get; init; }
         public DateTimeOffset? IfUnmodifiedSince { get; init; }
         public int? MaxForwards { get; init; }
@@ -40,8 +39,7 @@ namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges
         public bool? TransferEncodingChunked { get; init; }
         public ProductHeader[] Upgrade { get; init; }
         public ProductInfoHeader[] UserAgent { get; init; }
-        public ViaHeader Via { get; init; }
-        public WarningHeader Warning { get; init; }
-
+        public ViaHeader[] Via { get; init; }
+        public WarningHeader[] Warning { get; init; }
     }
 }
