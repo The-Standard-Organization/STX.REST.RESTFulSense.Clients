@@ -21,7 +21,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             this.httpBroker = httpClientBroker;
         }
 
-        public ValueTask<HttpExchange>  GetAsync(
+        public ValueTask<HttpExchange> GetAsync(
             HttpExchange httpExchange,
             CancellationToken cancellationToken = default) =>
         TryCatch(async () =>
@@ -32,7 +32,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             HttpVersionPolicy defaultHttpVersionPolicy =
                 HttpVersionPolicy.RequestVersionOrLower;
 
-            ValidateHttpExchange(
+            ValidateOnGet(
                 httpExchange,
                 defaultHttpMethod,
                 defaultHttpVersion,

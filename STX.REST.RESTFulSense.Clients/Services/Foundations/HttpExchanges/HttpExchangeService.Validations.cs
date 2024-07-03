@@ -12,7 +12,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
-        private static void ValidateHttpExchange(
+        private static void ValidateOnGet(
             HttpExchange httpExchange,
             HttpMethod defaultHttpMethod,
             Version defaultHttpVersion,
