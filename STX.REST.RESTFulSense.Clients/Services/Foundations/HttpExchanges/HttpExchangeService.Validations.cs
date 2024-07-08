@@ -23,6 +23,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             ValidateHttpMethod(
                 httpExchangeRequest: httpExchange.Request,
                 httpMethod: defaultHttpMethod);
+
+            ValidateVersion(
+                httpExchangeRequest: httpExchange.Request,
+                httpVersion: defaultHttpVersion);
         }
 
         private static void ValidateHttpExchange(HttpExchange httpExchange)
@@ -50,6 +54,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Validate((
                 Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, httpMethod),
                 Parameter: nameof(HttpExchangeRequest.HttpMethod)));
+        }
+
+        private static void ValidateVersion(HttpExchangeRequest httpExchangeRequest, Version httpVersion)
+        {
+            Validate((
+                Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
+                    Parameter: nameof(HttpExchangeRequest.Version)));
         }
 
         private static void ValidateHttpExchangeNotNull(HttpExchange httpExchange)
