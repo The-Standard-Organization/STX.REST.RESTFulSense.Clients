@@ -56,25 +56,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 (Rule: IsInvalid(httpExchangeRequest), Parameter: nameof(HttpExchange.Request)));
         }
 
-        private static void ValidateHttpExchangeRequestNotInvalid(
-            HttpExchangeRequest httpExchangeRequest,
-            HttpMethod defaultHttpMethod,
-            Version defaultHttpVersion)
-        {
-            Validate(
-                (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
-                    Parameter: nameof(HttpExchangeRequest.BaseAddress)),
-
-                (Rule: IsInvalid(httpExchangeRequest.RelativeUrl),
-                    Parameter: nameof(HttpExchangeRequest.RelativeUrl)),
-
-                (Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, defaultHttpMethod),
-                    Parameter: nameof(HttpExchangeRequest.HttpMethod)),
-
-                (Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, defaultHttpVersion),
-                    Parameter: nameof(HttpExchangeRequest.Version)));
-        }
-
         private static dynamic IsInvalid(object @object) =>
             new
             {
