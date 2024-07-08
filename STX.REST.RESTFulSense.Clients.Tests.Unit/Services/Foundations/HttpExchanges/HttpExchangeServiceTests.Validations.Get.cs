@@ -160,6 +160,45 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             this.httpBroker.VerifyNoOtherCalls();
         }
 
+        [Fact]
+        private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpVersionIsInvalidAsync()
+        {
+            // given
+            var httpExchange = new HttpExchange()
+            {
+                Request = new HttpExchangeRequest
+                {
+                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
+                    RelativeUrl = CreateRandomUri().PathAndQuery,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = "0.1"
+                }
+            };
+
+            var invalidHttpExchangeRequestException = new InvalidHttpExchangeRequestException(
+                message: "Invalid HttpExchange request error occurred, fix errors and try again.");
+
+            invalidHttpExchangeRequestException.UpsertDataList(
+                key: nameof(HttpExchangeRequest.Version),
+                value: "HttpVersion required is invalid");
+
+            var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
+                message: "HttpExchange validation errors occurred, fix errors and try again.",
+                innerException: invalidHttpExchangeRequestException);
+
+            // when
+            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
+
+            HttpExchangeValidationException actualHttpExchangeValidationException =
+               await Assert.ThrowsAsync<HttpExchangeValidationException>(getAsyncTask.AsTask);
+
+            // then
+            actualHttpExchangeValidationException.Should().BeEquivalentTo(
+                expectedHttpExchangeValidationException);
+
+            this.httpBroker.VerifyNoOtherCalls();
+        }
+
         [Theory]
         [MemberData(nameof(GetRequestValidationExceptions))]
         private async Task ShouldThrowHttpExchangeValidationExceptionIfInvalidRequestHeaderWhenGetAsync(
