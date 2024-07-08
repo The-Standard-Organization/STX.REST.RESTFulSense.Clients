@@ -77,14 +77,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Theory]
-        [InlineData(null, null, "POST", "0.1")]
-        [InlineData("", "", "POST", "0,1")]
-        [InlineData(" ", " ", "POST", "0.1")]
+        [InlineData(null, null)]
+        [InlineData("", "")]
+        [InlineData(" ", " ")]
         private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsInvalidAsync(
             string invalidBaseAddress,
-            string invalidRelativeUrl,
-            string invalidHttpMethod,
-            string invalidHttpVersion)
+            string invalidRelativeUrl)
         {
             // given
             var httpExchange = new HttpExchange()
@@ -92,9 +90,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 Request = new HttpExchangeRequest
                 {
                     BaseAddress = invalidBaseAddress,
-                    RelativeUrl = invalidRelativeUrl,
-                    HttpMethod = invalidHttpMethod,
-                    Version = invalidHttpVersion,
+                    RelativeUrl = invalidRelativeUrl
                 }
             };
 
@@ -108,14 +104,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.RelativeUrl),
                 value: "Value is required");
-
-            invalidHttpExchangeRequestException.UpsertDataList(
-                key: nameof(HttpExchangeRequest.HttpMethod),
-                value: "HttpMethod required is invalid");
-
-            invalidHttpExchangeRequestException.UpsertDataList(
-                key: nameof(HttpExchangeRequest.Version),
-                value: "HttpVersion required is invalid");
 
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",

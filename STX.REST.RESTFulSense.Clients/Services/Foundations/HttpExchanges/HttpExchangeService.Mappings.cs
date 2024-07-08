@@ -61,6 +61,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             HttpVersionPolicy defaultHttpVersionPolicy)
         {
             var baseAddress = new Uri(httpExchangeRequest.BaseAddress);
+
             string relativeUrl =
                 MapUrlParameters(
                     httpExchangeRequest.UrlParameters,

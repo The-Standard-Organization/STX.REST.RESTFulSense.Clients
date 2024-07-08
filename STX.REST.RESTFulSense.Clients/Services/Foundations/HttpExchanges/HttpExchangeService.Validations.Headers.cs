@@ -21,7 +21,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "Range Condition header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again."
             };
 
-        private static void ValidateHttpExchangRequestHeaders(
+        private static void ValidateHttpExchangeRequestHeaders(
             HttpExchangeRequestHeaders httpExchangeRequestHeaders)
         {
             if (httpExchangeRequestHeaders is null)
