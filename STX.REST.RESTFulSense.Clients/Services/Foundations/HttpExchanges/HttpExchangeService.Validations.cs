@@ -19,16 +19,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             HttpVersionPolicy defaultHttpVersionPolicy)
         {
             ValidateHttpExchange(httpExchange);
-
-            ValidateHttpExchangeNotNull(httpExchange);
-            ValidateHttpExchangeRequestNotNull(httpExchange.Request);
-
-            ValidateHttpExchangeRequestNotInvalid(
-                httpExchange.Request,
-                defaultHttpMethod,
-                defaultHttpVersion);
-
-            ValidateHttpExchangeRequestHeaders(httpExchange.Request.Headers);
         }
 
         private static void ValidateHttpExchange(HttpExchange httpExchange)
