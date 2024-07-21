@@ -149,8 +149,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static void ValidateInput(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeRequestException =
-                new InvalidHttpExchangeRequestException(
-                    message: "Invalid HttpExchange request error occurred, fix errors and try again.");
+                new InvalidArgumentHttpExchangeException(
+                    message: "Invalid argument, fix errors and try again.");
 
             foreach ((dynamic rule, string parameter) in validations)
             {
