@@ -126,24 +126,24 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Theory]
-        [MemberData(nameof(GetRequestConfigValidationExceptions))]
+        [MemberData(nameof(GetInvalidRequestConfigs))]
         private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpConfigIsInvalidAsync(
-            dynamic validationException)
+            dynamic invalidRequestConfig)
         {
             // given
             var invalidArgumentHttpExchangeException = new InvalidArgumentHttpExchangeException(
                 message: "Invalid argument, fix errors and try again.");
 
             invalidArgumentHttpExchangeException.UpsertDataList(
-                key: validationException.ConfigKey,
-                value: validationException.ConfigValue);
+                key: invalidRequestConfig.ConfigKey,
+                value: invalidRequestConfig.ConfigValue);
 
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",
                 innerException: invalidArgumentHttpExchangeException);
 
             // when
-            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(validationException.HttpExchange);
+            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(invalidRequestConfig.HttpExchange);
 
             HttpExchangeValidationException actualHttpExchangeValidationException =
                await Assert.ThrowsAsync<HttpExchangeValidationException>(getAsyncTask.AsTask);

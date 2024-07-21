@@ -488,7 +488,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return theoryData;
         }
 
-        public static TheoryData<dynamic> GetRequestConfigValidationExceptions()
+        public static TheoryData<dynamic> GetInvalidRequestConfigs()
         {
             var theoryData = new TheoryData<dynamic>();
 
