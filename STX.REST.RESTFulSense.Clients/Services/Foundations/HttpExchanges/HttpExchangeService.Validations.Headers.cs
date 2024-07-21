@@ -29,7 +29,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             ValidateHttpRequestHeaders(
                 (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
-                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)));
+                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
+                (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
+                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
+                (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
+                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
+                (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
+                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
+                (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
+                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
+
+                );
         }
 
 

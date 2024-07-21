@@ -499,6 +499,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
                     RelativeUrl = CreateRandomUri().PathAndQuery,
                     HttpMethod = "POST",
+                    Version = "1.0"
                 }
             };
 
@@ -518,6 +519,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 {
                     BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
                     RelativeUrl = CreateRandomUri().PathAndQuery,
+                    HttpMethod = "GET",
                     Version = "0.1"
                 }
             };
@@ -549,42 +551,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             theoryData = CreateSendRequestDependencyExceptions(theoryData);
 
             return theoryData;
-        }
-
-        public static TheoryData<Exception, string> SendRequestDependencyExceptionss()
-        {
-            return new TheoryData<Exception, string>
-            {
-                {
-                    new HttpRequestException(),
-                    "Failed http request error occurred, contact support."
-                },
-
-                {
-                    new TaskCanceledException(),
-                    "Request timeout error occurred, please contact support."
-                },
-
-                {
-                    new ObjectDisposedException(null),
-                    "Object already disposed error occurred, please fix errors and try again."
-                },
-
-                {
-                    new InvalidOperationException(),
-                    "Invalid http request operation error occurred, please contact support."
-                },
-
-                {
-                    new ArgumentNullException(),
-                    "Invalid argument error occurred, contact support."
-                },
-
-                {
-                    new FormatException(),
-                    "Invalid format error occurred, contact support."
-                },
-            };
         }
     }
 }
