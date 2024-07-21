@@ -22,10 +22,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 return await returningHttpExchangeFunction();
             }
-            catch (NullHttpExchangeException nullHttpExchangeException)
+            catch (InvalidHttpExchangeException invalidHttpExchangeException)
             {
                 throw CreateHttpExchangeValidationException(
-                    exception: nullHttpExchangeException);
+                    exception: invalidHttpExchangeException);
             }
             catch (InvalidArgumentHttpExchangeException invalidArgumentHttpExchangeException)
             {
