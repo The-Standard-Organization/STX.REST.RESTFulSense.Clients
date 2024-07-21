@@ -18,6 +18,11 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Version defaultHttpVersion,
             HttpVersionPolicy defaultHttpVersionPolicy)
         {
+            Validate(
+                (Rule: IsInvalid(httpExchange), Parameter: nameof(HttpExchange)),
+                (Rule: IsInvalid(defaultHttpMethod), Parameter: nameof(HttpMethod)),
+                (Rule: IsInvalid(defaultHttpVersion), Parameter: nameof(Version)));
+
             ValidateHttpExchange(httpExchange);
 
             ValidateHttpMethod(
@@ -31,7 +36,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static void ValidateHttpExchange(HttpExchange httpExchange)
         {
-            ValidateHttpExchangeNotNull(httpExchange);
             ValidateHttpExchangeRequest(httpExchangeRequest: httpExchange.Request);
         }
 
@@ -39,7 +43,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             ValidateHttpExchangeRequestNotNull(httpExchangeRequest);
 
-            Validate(
+            ValidateInput(
                 (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
                     Parameter: nameof(HttpExchangeRequest.BaseAddress)),
 
@@ -51,14 +55,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static void ValidateHttpMethod(HttpExchangeRequest httpExchangeRequest, HttpMethod httpMethod)
         {
-            Validate((
+            ValidateInput((
                 Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, httpMethod),
                 Parameter: nameof(HttpExchangeRequest.HttpMethod)));
         }
 
         private static void ValidateVersion(HttpExchangeRequest httpExchangeRequest, Version httpVersion)
         {
-            Validate((
+            ValidateInput((
                 Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
                     Parameter: nameof(HttpExchangeRequest.Version)));
         }
@@ -74,7 +78,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static void ValidateHttpExchangeRequestNotNull(HttpExchangeRequest httpExchangeRequest)
         {
-            Validate(
+            ValidateInput(
                 (Rule: IsInvalid(httpExchangeRequest), Parameter: nameof(HttpExchange.Request)));
         }
 
@@ -102,7 +106,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         && !string.IsNullOrWhiteSpace(customHttpMethod)
                         && customHttpMethod != defaultHttpMethod.Method),
 
-                Message = "HttpMethod required is invalid"
+                Message = "HttpMethod is invalid"
             };
 
         private static dynamic IsInvalidHttpVersion(string customHttpVersion, Version defaultHttpVersion) =>
@@ -120,10 +124,29 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         && defaultHttpVersion != HttpVersion.Version20
                         && defaultHttpVersion != HttpVersion.Version30),
 
-                Message = "HttpVersion required is invalid"
+                Message = "HttpVersion is invalid"
             };
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
+        {
+            var invalidHttpExchangeException =
+                new InvalidHttpExchangeException(
+                    message: "Invalid HttpExchange error occurred, fix errors and try again.");
+
+            foreach ((dynamic rule, string parameter) in validations)
+            {
+                if (rule.Condition)
+                {
+                    invalidHttpExchangeException.UpsertDataList(
+                        key: parameter,
+                        value: rule.Message);
+                }
+            }
+
+            invalidHttpExchangeException.ThrowIfContainsErrors();
+        }
+
+        private static void ValidateInput(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeRequestException =
                 new InvalidHttpExchangeRequestException(
