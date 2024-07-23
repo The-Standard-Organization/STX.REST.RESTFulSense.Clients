@@ -11,18 +11,25 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
+        private static dynamic IsInvalidAcceptHeader(MediaTypeHeader[] mediaTypeHeaders) => new
+        {
+            Condition = mediaTypeHeaders is not null
+                && mediaTypeHeaders.Any(header =>
+                {
+                    return string.IsNullOrWhiteSpace(header.MediaType) && string.IsNullOrWhiteSpace(header.CharSet);
+                }),
+            Message = "Accept header has invalid configuration. fix errors and try again."
+        };
 
-
-        private static dynamic IsInvalidRangeConditionHeader(RangeConditionHeader rangeConditionHeader) =>
-            new
-            {
-                Condition =
+        private static dynamic IsInvalidRangeConditionHeader(RangeConditionHeader rangeConditionHeader) => new
+        {
+            Condition =
                     rangeConditionHeader is not null
                         && rangeConditionHeader.Date is not null
                         && rangeConditionHeader.EntityTag is not null,
 
-                Message = "Range Condition header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again."
-            };
+            Message = "Range Condition header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again."
+        };
 
         private static void ValidateHttpExchangeRequestHeaders(
             HttpExchangeRequestHeaders httpExchangeRequestHeaders)
