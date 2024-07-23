@@ -488,55 +488,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return theoryData;
         }
 
-        public static TheoryData<dynamic> GetInvalidRequestConfigs()
-        {
-            var theoryData = new TheoryData<dynamic>();
-
-            var httpExchangeForMethod = new HttpExchange()
-            {
-                Request = new HttpExchangeRequest
-                {
-                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
-                    RelativeUrl = CreateRandomUri().PathAndQuery,
-                    HttpMethod = "POST",
-                    Version = "1.0"
-                }
-            };
-
-            string invalidHttpMethodKey = nameof(HttpExchangeRequest.HttpMethod);
-            string invalidHttpMethodValue = "HttpMethod is invalid";
-
-            theoryData.Add(new
-            {
-                HttpExchange = httpExchangeForMethod,
-                ConfigKey = invalidHttpMethodKey,
-                ConfigValue = invalidHttpMethodValue
-            });
-
-            var httpExchangeForVersion = new HttpExchange()
-            {
-                Request = new HttpExchangeRequest
-                {
-                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
-                    RelativeUrl = CreateRandomUri().PathAndQuery,
-                    HttpMethod = "GET",
-                    Version = "0.1"
-                }
-            };
-
-            string invalidHttpVersionKey = nameof(HttpExchangeRequest.Version);
-            string invalidHttpVersionValue = "HttpVersion is invalid";
-
-            theoryData.Add(new
-            {
-                HttpExchange = httpExchangeForVersion,
-                ConfigKey = invalidHttpVersionKey,
-                ConfigValue = invalidHttpVersionValue
-            });
-
-            return theoryData;
-        }
-
         public static TheoryData<dynamic> GetContentValidationExceptions()
         {
             var theoryData = new TheoryData<dynamic>();

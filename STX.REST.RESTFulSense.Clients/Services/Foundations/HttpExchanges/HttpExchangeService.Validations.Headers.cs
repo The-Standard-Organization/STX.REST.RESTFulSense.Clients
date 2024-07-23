@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System.Linq;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -10,6 +11,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
+
+
         private static dynamic IsInvalidRangeConditionHeader(RangeConditionHeader rangeConditionHeader) =>
             new
             {
@@ -29,16 +32,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             ValidateHttpRequestHeaders(
                 (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
-                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
-                (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
-                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
-                (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
-                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
-                (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
-                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
-                (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
-                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
-
+                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange))
                 );
         }
 

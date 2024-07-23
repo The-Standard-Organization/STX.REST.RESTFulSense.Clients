@@ -23,32 +23,30 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 (Rule: IsInvalid(defaultHttpMethod), Parameter: nameof(HttpMethod)),
                 (Rule: IsInvalid(defaultHttpVersion), Parameter: nameof(Version)));
 
-            ValidateHttpExchange(httpExchange);
-
-            ValidateHttpMethod(
-                httpExchangeRequest: httpExchange.Request,
-                httpMethod: defaultHttpMethod);
-
-            ValidateVersion(
-                httpExchangeRequest: httpExchange.Request,
-                httpVersion: defaultHttpVersion);
+            ValidateHttpExchange(httpExchange, defaultHttpMethod, defaultHttpVersion);
         }
 
-        private static void ValidateHttpExchange(HttpExchange httpExchange)
+        private static void ValidateHttpExchange(HttpExchange httpExchange, HttpMethod httpMethod, Version httpVersion)
         {
-            ValidateHttpExchangeRequest(httpExchangeRequest: httpExchange.Request);
+            ValidateHttpExchangeRequest(httpExchangeRequest: httpExchange.Request, httpMethod, httpVersion);
         }
 
-        private static void ValidateHttpExchangeRequest(HttpExchangeRequest httpExchangeRequest)
+        private static void ValidateHttpExchangeRequest(
+            HttpExchangeRequest httpExchangeRequest,
+            HttpMethod httpMethod,
+            Version httpVersion)
         {
             ValidateHttpExchangeRequestNotNull(httpExchangeRequest);
 
             ValidateInput(
                 (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
                     Parameter: nameof(HttpExchangeRequest.BaseAddress)),
-
                 (Rule: IsInvalid(httpExchangeRequest.RelativeUrl),
-                    Parameter: nameof(HttpExchangeRequest.RelativeUrl)));
+                    Parameter: nameof(HttpExchangeRequest.RelativeUrl)),
+                (Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, httpMethod),
+                    Parameter: nameof(HttpExchangeRequest.HttpMethod)),
+                (Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
+                    Parameter: nameof(HttpExchangeRequest.Version)));
 
             ValidateHttpExchangeRequestHeaders(httpExchangeRequestHeaders: httpExchangeRequest.Headers);
         }

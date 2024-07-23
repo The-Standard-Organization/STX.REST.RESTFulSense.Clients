@@ -80,12 +80,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Theory]
-        [InlineData(null, null)]
-        [InlineData("", "")]
-        [InlineData(" ", " ")]
+        [InlineData(null, null, "POST", "0.1")]
+        [InlineData("", "", "POST", "0,1")]
+        [InlineData(" ", " ", "POST", "0.1")]
         private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsInvalidAsync(
             string invalidBaseAddress,
-            string invalidRelativeUrl)
+            string invalidRelativeUrl,
+            string invalidHttpMethod,
+            string invalidHttpVersion)
         {
             // given
             var httpExchange = new HttpExchange()
@@ -93,7 +95,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 Request = new HttpExchangeRequest
                 {
                     BaseAddress = invalidBaseAddress,
-                    RelativeUrl = invalidRelativeUrl
+                    RelativeUrl = invalidRelativeUrl,
+                    HttpMethod = invalidHttpMethod,
+                    Version = invalidHttpVersion,
                 }
             };
 
@@ -108,42 +112,20 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 key: nameof(HttpExchangeRequest.RelativeUrl),
                 value: "Value is required");
 
+            invalidArgumentHttpExchangeException.UpsertDataList(
+                key: nameof(HttpExchangeRequest.HttpMethod),
+                value: "HttpMethod is invalid");
+
+            invalidArgumentHttpExchangeException.UpsertDataList(
+                key: nameof(HttpExchangeRequest.Version),
+                value: "HttpVersion is invalid");
+
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",
                 innerException: invalidArgumentHttpExchangeException);
 
             // when
             ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
-
-            HttpExchangeValidationException actualHttpExchangeValidationException =
-               await Assert.ThrowsAsync<HttpExchangeValidationException>(getAsyncTask.AsTask);
-
-            // then
-            actualHttpExchangeValidationException.Should().BeEquivalentTo(
-                expectedHttpExchangeValidationException);
-
-            this.httpBroker.VerifyNoOtherCalls();
-        }
-
-        [Theory]
-        [MemberData(nameof(GetInvalidRequestConfigs))]
-        private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpConfigIsInvalidAsync(
-            dynamic invalidRequestConfig)
-        {
-            // given
-            var invalidArgumentHttpExchangeException = new InvalidArgumentHttpExchangeException(
-                message: "Invalid argument, fix errors and try again.");
-
-            invalidArgumentHttpExchangeException.UpsertDataList(
-                key: invalidRequestConfig.ConfigKey,
-                value: invalidRequestConfig.ConfigValue);
-
-            var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
-                message: "HttpExchange validation errors occurred, fix errors and try again.",
-                innerException: invalidArgumentHttpExchangeException);
-
-            // when
-            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(invalidRequestConfig.HttpExchange);
 
             HttpExchangeValidationException actualHttpExchangeValidationException =
                await Assert.ThrowsAsync<HttpExchangeValidationException>(getAsyncTask.AsTask);
