@@ -11,15 +11,19 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
-        private static dynamic IsInvalidAcceptHeader(MediaTypeHeader[] mediaTypeHeaders) => new
+        private static dynamic IsInvalidMediaTypeHeader(MediaTypeHeader[] mediaTypeHeaders) => new
         {
-            Condition = mediaTypeHeaders is not null
-                && mediaTypeHeaders.Any(header =>
+            Condition =
+                mediaTypeHeaders is not null && mediaTypeHeaders.Any(header =>
                 {
-                    return string.IsNullOrWhiteSpace(header.MediaType) && string.IsNullOrWhiteSpace(header.CharSet);
+                    return string.IsNullOrWhiteSpace(header.MediaType) || string.IsNullOrWhiteSpace(header.CharSet);
                 }),
+
             Message = "Accept header has invalid configuration. fix errors and try again."
         };
+
+        private static dynamic IsInvalidAcceptHeader(MediaTypeHeader[] mediaTypeHeaders) =>
+            IsInvalidMediaTypeHeader(mediaTypeHeaders);
 
         private static dynamic IsInvalidRangeConditionHeader(RangeConditionHeader rangeConditionHeader) => new
         {
@@ -38,11 +42,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 return;
 
             ValidateHttpRequestHeaders(
+                (Rule: IsInvalidAcceptHeader(httpExchangeRequestHeaders.Accept),
+                Parameter: nameof(HttpExchangeRequestHeaders.Accept)),
                 (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
-                    Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
-                 (Rule: IsInvalidAcceptHeader(httpExchangeRequestHeaders.Accept),
-                    Parameter: nameof(HttpExchangeRequestHeaders.Accept))
-                );
+                Parameter: nameof(HttpExchangeRequestHeaders.IfRange)));
         }
 
 
