@@ -38,7 +38,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 new HttpExchangeService(httpBroker.Object);
         }
 
-        const int INVALID_VERSION_POLICY = 3;
+        const int InvalidVersionPolicy = 3;
 
         private static string GetRandomString() =>
             new MnemonicString().GetValue();

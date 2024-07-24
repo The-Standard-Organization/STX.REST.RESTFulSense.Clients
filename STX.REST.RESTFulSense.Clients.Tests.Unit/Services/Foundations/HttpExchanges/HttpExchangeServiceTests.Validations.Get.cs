@@ -80,9 +80,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Theory]
-        [InlineData(null, null, "POST", "0.1", INVALID_VERSION_POLICY)]
-        [InlineData("", "", "POST", "0.1", INVALID_VERSION_POLICY)]
-        [InlineData(" ", " ", "POST", "0.1", INVALID_VERSION_POLICY)]
+        [InlineData(null, null, "POST", "0.1", InvalidVersionPolicy)]
+        [InlineData("", "", "POST", "0.1", InvalidVersionPolicy)]
+        [InlineData(" ", " ", "POST", "0.1", InvalidVersionPolicy)]
         private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsInvalidAsync(
             string invalidBaseAddress,
             string invalidRelativeUrl,

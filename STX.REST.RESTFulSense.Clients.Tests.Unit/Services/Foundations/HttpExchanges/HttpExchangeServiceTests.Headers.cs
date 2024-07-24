@@ -464,7 +464,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateAcceptCharsetHeaderException(StringWithQualityHeader[] invalidAcceptCharsetHeader)
+        private static dynamic CreateAcceptCharsetHeaderException(
+            StringWithQualityHeader[] invalidAcceptCharsetHeader)
         {
             var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
               message: "Invalid HttpExchange request header error occurred, fix errors and try again.");

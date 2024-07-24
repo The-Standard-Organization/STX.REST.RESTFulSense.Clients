@@ -30,9 +30,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static dynamic IsInvalidRangeConditionHeader(RangeConditionHeader rangeConditionHeader) => new
         {
             Condition =
-                    rangeConditionHeader is not null
-                        && rangeConditionHeader.Date is not null
-                        && rangeConditionHeader.EntityTag is not null,
+                rangeConditionHeader is not null
+                    && rangeConditionHeader.Date is not null
+                    && rangeConditionHeader.EntityTag is not null,
 
             Message = "Range Condition header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again."
         };
@@ -46,6 +46,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             ValidateHttpRequestHeaders(
                 (Rule: IsInvalidAcceptHeader(httpExchangeRequestHeaders.Accept),
                 Parameter: nameof(HttpExchangeRequestHeaders.Accept)),
+
                 (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
                 Parameter: nameof(HttpExchangeRequestHeaders.IfRange)));
         }

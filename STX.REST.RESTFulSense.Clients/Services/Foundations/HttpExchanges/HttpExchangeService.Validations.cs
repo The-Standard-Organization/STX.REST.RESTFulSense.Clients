@@ -82,7 +82,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             ValidateInput((
                 Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
-                    Parameter: nameof(HttpExchangeRequest.Version)));
+                Parameter: nameof(HttpExchangeRequest.Version)));
         }
 
         private static void ValidateHttpExchangeNotNull(HttpExchange httpExchange)
@@ -145,7 +145,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "HttpVersion is invalid"
             };
 
-        private static dynamic IsInvalidHttpVersionPolicy(int? customHttpVersionPolicy, HttpVersionPolicy defaultHttpVersionPolicy) =>
+        private static dynamic IsInvalidHttpVersionPolicy(
+            int? customHttpVersionPolicy,
+            HttpVersionPolicy defaultHttpVersionPolicy) =>
             new
             {
                 Condition =
