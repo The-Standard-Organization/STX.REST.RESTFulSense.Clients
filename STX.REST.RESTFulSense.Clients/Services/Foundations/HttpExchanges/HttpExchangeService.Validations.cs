@@ -55,12 +55,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             ValidateInput(
                 (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
                     Parameter: nameof(HttpExchangeRequest.BaseAddress)),
+
                 (Rule: IsInvalid(httpExchangeRequest.RelativeUrl),
                     Parameter: nameof(HttpExchangeRequest.RelativeUrl)),
+
                 (Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, httpMethod),
                     Parameter: nameof(HttpExchangeRequest.HttpMethod)),
+
                 (Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
                     Parameter: nameof(HttpExchangeRequest.Version)),
+
                 (Rule: IsInvalidHttpVersionPolicy(httpExchangeRequest.VersionPolicy, httpVersionPolicy),
                     Parameter: nameof(HttpExchangeRequest.VersionPolicy)));
 
