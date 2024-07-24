@@ -35,13 +35,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             HttpExchange httpExchange,
             HttpMethod httpMethod,
             Version httpVersion,
-            HttpVersionPolicy defaultHttpVersionPolicy)
+            HttpVersionPolicy httpVersionPolicy)
         {
             ValidateHttpExchangeRequest(
                 httpExchangeRequest: httpExchange.Request,
                 httpMethod,
                 httpVersion,
-                defaultHttpVersionPolicy);
+                httpVersionPolicy);
         }
 
         private static void ValidateHttpExchangeRequest(
@@ -156,7 +156,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
                 Message = "HttpVersionPolicy is invalid"
             };
-
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {

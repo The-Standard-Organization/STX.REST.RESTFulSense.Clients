@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using System.Net.Http.Headers;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
 {

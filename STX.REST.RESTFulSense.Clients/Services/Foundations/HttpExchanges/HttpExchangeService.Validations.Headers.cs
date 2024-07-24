@@ -13,15 +13,18 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
     {
         private static dynamic IsInvalidAcceptHeader(MediaTypeHeader[] mediaTypeHeaders) => new
         {
-            Condition = mediaTypeHeaders is not null && mediaTypeHeaders.Any(IsInvalidMediaTypeHeader),
-            Message = "Accept header has invalid configuration. Fix errors and try again."
+            Condition =
+                mediaTypeHeaders is not null
+                    && mediaTypeHeaders.Any(IsInvalidMediaTypeHeader),
+
+            Message = "Accept header has invalid configuration, fix errors and try again."
         };
 
         private static bool IsInvalidMediaTypeHeader(MediaTypeHeader header)
         {
             return header is not null
                 && (string.IsNullOrWhiteSpace(header.MediaType)
-                || string.IsNullOrWhiteSpace(header.CharSet));
+                    || string.IsNullOrWhiteSpace(header.CharSet));
         }
 
         private static dynamic IsInvalidRangeConditionHeader(RangeConditionHeader rangeConditionHeader) => new
