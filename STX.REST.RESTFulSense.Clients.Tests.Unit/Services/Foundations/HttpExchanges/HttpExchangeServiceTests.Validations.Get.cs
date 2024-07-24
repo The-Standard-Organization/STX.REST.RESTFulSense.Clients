@@ -80,14 +80,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Theory]
-        [InlineData(null, null, "POST", "0.1")]
-        [InlineData("", "", "POST", "0,1")]
-        [InlineData(" ", " ", "POST", "0.1")]
+        [InlineData(null, null, "POST", "0.1", 3)]
+        [InlineData("", "", "POST", "0,1", 3)]
+        [InlineData(" ", " ", "POST", "0.1", 3)]
         private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsInvalidAsync(
             string invalidBaseAddress,
             string invalidRelativeUrl,
             string invalidHttpMethod,
-            string invalidHttpVersion)
+            string invalidHttpVersion,
+            int invalidHttpVersionPolicy)
         {
             // given
             var httpExchange = new HttpExchange()
@@ -98,6 +99,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     RelativeUrl = invalidRelativeUrl,
                     HttpMethod = invalidHttpMethod,
                     Version = invalidHttpVersion,
+                    VersionPolicy = invalidHttpVersionPolicy
                 }
             };
 
@@ -119,6 +121,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             invalidArgumentHttpExchangeException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.Version),
                 value: "HttpVersion is invalid");
+            
+            invalidArgumentHttpExchangeException.UpsertDataList(
+                key: nameof(HttpExchangeRequest.VersionPolicy),
+                value: "HttpVersionPolicy is invalid");
 
             var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
                 message: "HttpExchange validation errors occurred, fix errors and try again.",

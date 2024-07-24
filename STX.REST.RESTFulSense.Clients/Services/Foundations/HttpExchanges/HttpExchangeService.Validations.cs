@@ -21,20 +21,34 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Validate(
                 (Rule: IsInvalid(httpExchange), Parameter: nameof(HttpExchange)),
                 (Rule: IsInvalid(defaultHttpMethod), Parameter: nameof(HttpMethod)),
-                (Rule: IsInvalid(defaultHttpVersion), Parameter: nameof(Version)));
+                (Rule: IsInvalid(defaultHttpVersion), Parameter: nameof(Version)),
+                (Rule: IsInvalid(defaultHttpVersionPolicy), Parameter: nameof(HttpVersionPolicy)));
 
-            ValidateHttpExchange(httpExchange, defaultHttpMethod, defaultHttpVersion);
+            ValidateHttpExchange(
+                httpExchange,
+                defaultHttpMethod,
+                defaultHttpVersion,
+                defaultHttpVersionPolicy);
         }
 
-        private static void ValidateHttpExchange(HttpExchange httpExchange, HttpMethod httpMethod, Version httpVersion)
+        private static void ValidateHttpExchange(
+            HttpExchange httpExchange,
+            HttpMethod httpMethod,
+            Version httpVersion,
+            HttpVersionPolicy defaultHttpVersionPolicy)
         {
-            ValidateHttpExchangeRequest(httpExchangeRequest: httpExchange.Request, httpMethod, httpVersion);
+            ValidateHttpExchangeRequest(
+                httpExchangeRequest: httpExchange.Request,
+                httpMethod,
+                httpVersion,
+                defaultHttpVersionPolicy);
         }
 
         private static void ValidateHttpExchangeRequest(
             HttpExchangeRequest httpExchangeRequest,
             HttpMethod httpMethod,
-            Version httpVersion)
+            Version httpVersion,
+            HttpVersionPolicy httpVersionPolicy)
         {
             ValidateHttpExchangeRequestNotNull(httpExchangeRequest);
 
@@ -46,7 +60,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 (Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, httpMethod),
                     Parameter: nameof(HttpExchangeRequest.HttpMethod)),
                 (Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
-                    Parameter: nameof(HttpExchangeRequest.Version)));
+                    Parameter: nameof(HttpExchangeRequest.Version)),
+                (Rule: IsInvalidHttpVersionPolicy(httpExchangeRequest.VersionPolicy, httpVersionPolicy),
+                    Parameter: nameof(HttpExchangeRequest.VersionPolicy)));
 
             ValidateHttpExchangeRequestHeaders(httpExchangeRequestHeaders: httpExchangeRequest.Headers);
         }
@@ -124,6 +140,23 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
                 Message = "HttpVersion is invalid"
             };
+
+        private static dynamic IsInvalidHttpVersionPolicy(int? customHttpVersionPolicy, HttpVersionPolicy defaultVersionPolicy) =>
+            new
+            {
+                Condition =
+                    (customHttpVersionPolicy is not null
+                        && customHttpVersionPolicy != (int)HttpVersionPolicy.RequestVersionOrLower
+                        && customHttpVersionPolicy != (int)HttpVersionPolicy.RequestVersionOrHigher
+                        && customHttpVersionPolicy != (int)HttpVersionPolicy.RequestVersionExact)
+                    || (customHttpVersionPolicy is null
+                        && defaultVersionPolicy != HttpVersionPolicy.RequestVersionOrLower
+                        && defaultVersionPolicy != HttpVersionPolicy.RequestVersionOrHigher
+                        && defaultVersionPolicy != HttpVersionPolicy.RequestVersionExact),
+
+                Message = "HttpVersionPolicy is invalid"
+            };
+
 
         private static void Validate(params (dynamic Rule, string Parameter)[] validations)
         {
