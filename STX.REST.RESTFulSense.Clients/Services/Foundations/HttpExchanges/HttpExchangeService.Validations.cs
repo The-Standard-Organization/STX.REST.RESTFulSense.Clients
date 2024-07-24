@@ -141,7 +141,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "HttpVersion is invalid"
             };
 
-        private static dynamic IsInvalidHttpVersionPolicy(int? customHttpVersionPolicy, HttpVersionPolicy defaultVersionPolicy) =>
+        private static dynamic IsInvalidHttpVersionPolicy(int? customHttpVersionPolicy, HttpVersionPolicy defaultHttpVersionPolicy) =>
             new
             {
                 Condition =
@@ -150,9 +150,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         && customHttpVersionPolicy != (int)HttpVersionPolicy.RequestVersionOrHigher
                         && customHttpVersionPolicy != (int)HttpVersionPolicy.RequestVersionExact)
                     || (customHttpVersionPolicy is null
-                        && defaultVersionPolicy != HttpVersionPolicy.RequestVersionOrLower
-                        && defaultVersionPolicy != HttpVersionPolicy.RequestVersionOrHigher
-                        && defaultVersionPolicy != HttpVersionPolicy.RequestVersionExact),
+                        && defaultHttpVersionPolicy != HttpVersionPolicy.RequestVersionOrLower
+                        && defaultHttpVersionPolicy != HttpVersionPolicy.RequestVersionOrHigher
+                        && defaultHttpVersionPolicy != HttpVersionPolicy.RequestVersionExact),
 
                 Message = "HttpVersionPolicy is invalid"
             };
