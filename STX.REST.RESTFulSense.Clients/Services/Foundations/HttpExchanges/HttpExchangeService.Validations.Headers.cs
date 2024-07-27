@@ -20,11 +20,44 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Message = "Accept header has invalid configuration, fix errors and try again."
         };
 
+        private static dynamic IsInvalidAcceptCharsetHeader(StringWithQualityHeader[] stringWithQualityHeaders) => new
+        {
+            Condition =
+                stringWithQualityHeaders is not null
+                    && stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader),
+
+            Message = "Accept Charset header has invalid configuration, fix errors and try again."
+        };
+
+        private static dynamic IsInvalidAcceptEncodingHeader(StringWithQualityHeader[] stringWithQualityHeaders) => new
+        {
+            Condition =
+                stringWithQualityHeaders is not null
+                    && stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader),
+
+            Message = "Accept Encoding header has invalid configuration, fix errors and try again."
+        };
+
+        private static dynamic IsInvalidAcceptLanguageHeader(StringWithQualityHeader[] stringWithQualityHeaders) => new
+        {
+            Condition =
+                stringWithQualityHeaders is not null
+                    && stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader),
+
+            Message = "Accept Language header has invalid configuration, fix errors and try again."
+        };
+
         private static bool IsInvalidMediaTypeHeader(MediaTypeHeader header)
         {
             return header is not null
                 && (string.IsNullOrWhiteSpace(header.MediaType)
                     || string.IsNullOrWhiteSpace(header.CharSet));
+        }
+
+        private static bool IaInvalidStringWithQualityHeader(StringWithQualityHeader header)
+        {
+            return header is not null
+                && (string.IsNullOrWhiteSpace(header.Value));
         }
 
         private static dynamic IsInvalidRangeConditionHeader(RangeConditionHeader rangeConditionHeader) => new
@@ -46,6 +79,15 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             ValidateHttpRequestHeaders(
                 (Rule: IsInvalidAcceptHeader(httpExchangeRequestHeaders.Accept),
                 Parameter: nameof(HttpExchangeRequestHeaders.Accept)),
+
+                (Rule: IsInvalidAcceptCharsetHeader(httpExchangeRequestHeaders.AcceptCharset),
+                Parameter: nameof(HttpExchangeRequestHeaders.AcceptCharset)),
+
+                (Rule: IsInvalidAcceptEncodingHeader(httpExchangeRequestHeaders.AcceptEncoding),
+                Parameter: nameof(HttpExchangeRequestHeaders.AcceptEncoding)),
+                
+                (Rule: IsInvalidAcceptLanguageHeader(httpExchangeRequestHeaders.AcceptLanguage),
+                Parameter: nameof(HttpExchangeRequestHeaders.AcceptLanguage)),
 
                 (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
                 Parameter: nameof(HttpExchangeRequestHeaders.IfRange)));
