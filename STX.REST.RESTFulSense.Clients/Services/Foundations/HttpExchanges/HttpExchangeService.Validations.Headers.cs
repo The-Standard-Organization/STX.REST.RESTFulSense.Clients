@@ -29,7 +29,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Message = "Accept Charset header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidAcceptEncodingHeader(StringWithQualityHeader[] stringWithQualityHeaders) => new
+        private static dynamic IsInvalidAcceptEncodingHeader(
+            StringWithQualityHeader[] stringWithQualityHeaders) => new
         {
             Condition =
                 stringWithQualityHeaders is not null
@@ -38,7 +39,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Message = "Accept Encoding header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidAcceptLanguageHeader(StringWithQualityHeader[] stringWithQualityHeaders) => new
+        private static dynamic IsInvalidAcceptLanguageHeader(
+            StringWithQualityHeader[] stringWithQualityHeaders) => new
         {
             Condition =
                 stringWithQualityHeaders is not null
@@ -85,7 +87,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
                 (Rule: IsInvalidAcceptEncodingHeader(httpExchangeRequestHeaders.AcceptEncoding),
                 Parameter: nameof(HttpExchangeRequestHeaders.AcceptEncoding)),
-                
+
                 (Rule: IsInvalidAcceptLanguageHeader(httpExchangeRequestHeaders.AcceptLanguage),
                 Parameter: nameof(HttpExchangeRequestHeaders.AcceptLanguage)),
 
