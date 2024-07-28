@@ -31,16 +31,15 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Message = "Accept Charset header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidAcceptEncodingHeader(
-            StringWithQualityHeader[] stringWithQualityHeaders) => new
-            {
-                Condition =
+        private static dynamic IsInvalidAcceptEncodingHeader(StringWithQualityHeader[] stringWithQualityHeaders) => new
+        {
+            Condition =
                     stringWithQualityHeaders is not null
                         && (stringWithQualityHeaders.Any(header => header is null)
                             || stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader)),
 
-                Message = "Accept Encoding header has invalid configuration, fix errors and try again."
-            };
+            Message = "Accept Encoding header has invalid configuration, fix errors and try again."
+        };
 
         private static dynamic IsInvalidAcceptLanguageHeader(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
