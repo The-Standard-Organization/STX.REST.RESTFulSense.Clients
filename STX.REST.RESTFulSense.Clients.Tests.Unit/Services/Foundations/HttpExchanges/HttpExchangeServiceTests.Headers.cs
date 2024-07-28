@@ -472,7 +472,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptCharset),
-                value: "Accept charset header has invalid configuration, fix errors and try again.");
+                value: "Accept Charset header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -494,7 +494,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptEncoding),
-                value: "Accept encoding header has invalid configuration, fix errors and try again.");
+                value: "Accept Encoding header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -516,7 +516,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptLanguage),
-                value: "Accept language header has invalid configuration, fix errors and try again.");
+                value: "Accept Language header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {

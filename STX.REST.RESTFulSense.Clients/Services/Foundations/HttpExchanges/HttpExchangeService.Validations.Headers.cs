@@ -15,7 +15,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             Condition =
                 mediaTypeHeaders is not null
-                    && mediaTypeHeaders.Any(IsInvalidMediaTypeHeader),
+                    && (mediaTypeHeaders.Any(header => header is null)
+                        || mediaTypeHeaders.Any(IsInvalidMediaTypeHeader)),
 
             Message = "Accept header has invalid configuration, fix errors and try again."
         };
@@ -24,30 +25,32 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             Condition =
                 stringWithQualityHeaders is not null
-                    && stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader),
+                    && (stringWithQualityHeaders.Any(header => header is null)
+                        || stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader)),
 
             Message = "Accept Charset header has invalid configuration, fix errors and try again."
         };
 
         private static dynamic IsInvalidAcceptEncodingHeader(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
-        {
-            Condition =
-                stringWithQualityHeaders is not null
-                    && stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader),
+            {
+                Condition =
+                    stringWithQualityHeaders is not null
+                        && (stringWithQualityHeaders.Any(header => header is null)
+                            || stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader)),
 
-            Message = "Accept Encoding header has invalid configuration, fix errors and try again."
-        };
+                Message = "Accept Encoding header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidAcceptLanguageHeader(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
-        {
-            Condition =
+            {
+                Condition =
                 stringWithQualityHeaders is not null
                     && stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader),
 
-            Message = "Accept Language header has invalid configuration, fix errors and try again."
-        };
+                Message = "Accept Language header has invalid configuration, fix errors and try again."
+            };
 
         private static bool IsInvalidMediaTypeHeader(MediaTypeHeader header)
         {
@@ -59,7 +62,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static bool IaInvalidStringWithQualityHeader(StringWithQualityHeader header)
         {
             return header is not null
-                && (string.IsNullOrWhiteSpace(header.Value));
+                && (string.IsNullOrWhiteSpace(header.Value)
+                    || (header.Quality is not null
+                        && !IsDoubleBetweenZeroAndOne(header.Quality)));
+        }
+
+        private static bool IsDoubleBetweenZeroAndOne(double? value)
+        {
+            return value >= 0.0 && value <= 1.0;
         }
 
         private static dynamic IsInvalidRangeConditionHeader(RangeConditionHeader rangeConditionHeader) => new
@@ -94,7 +104,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 (Rule: IsInvalidRangeConditionHeader(httpExchangeRequestHeaders.IfRange),
                 Parameter: nameof(HttpExchangeRequestHeaders.IfRange)));
         }
-
 
         private static void ValidateHttpRequestHeaders(params (dynamic Rule, string Parameter)[] validations)
         {
