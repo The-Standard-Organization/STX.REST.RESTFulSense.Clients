@@ -26,27 +26,29 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Condition =
                 stringWithQualityHeaders is not null
                     && (stringWithQualityHeaders.Any(header => header is null)
-                        || stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader)),
+                        || stringWithQualityHeaders.Any(IsInvalidStringWithQualityHeader)),
 
             Message = "Accept Charset header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidAcceptEncodingHeader(StringWithQualityHeader[] stringWithQualityHeaders) => new
-        {
-            Condition =
-                    stringWithQualityHeaders is not null
-                        && (stringWithQualityHeaders.Any(header => header is null)
-                            || stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader)),
+        private static dynamic IsInvalidAcceptEncodingHeader(
+            StringWithQualityHeader[] stringWithQualityHeaders) => new
+            {
+                Condition =
+                stringWithQualityHeaders is not null
+                    && (stringWithQualityHeaders.Any(header => header is null)
+                        || stringWithQualityHeaders.Any(IsInvalidStringWithQualityHeader)),
 
-            Message = "Accept Encoding header has invalid configuration, fix errors and try again."
-        };
+                Message = "Accept Encoding header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidAcceptLanguageHeader(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
             {
                 Condition =
-                stringWithQualityHeaders is not null
-                    && stringWithQualityHeaders.Any(IaInvalidStringWithQualityHeader),
+                    stringWithQualityHeaders is not null
+                        && (stringWithQualityHeaders.Any(header => header is null)
+                            || stringWithQualityHeaders.Any(IsInvalidStringWithQualityHeader)),
 
                 Message = "Accept Language header has invalid configuration, fix errors and try again."
             };
@@ -58,7 +60,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     || string.IsNullOrWhiteSpace(header.CharSet));
         }
 
-        private static bool IaInvalidStringWithQualityHeader(StringWithQualityHeader header)
+        private static bool IsInvalidStringWithQualityHeader(StringWithQualityHeader header)
         {
             return header is not null
                 && (string.IsNullOrWhiteSpace(header.Value)
