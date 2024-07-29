@@ -45,6 +45,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+        <InternalsVisibleTo Include="STX.REST.RESTFulSense.TestApp" />
 		<InternalsVisibleTo Include="STX.REST.RESTFulSense.Clients.Tests.Unit" />
 		<InternalsVisibleTo Include="STX.REST.RESTFulSense.Clients.Tests.Acceptance" />
 		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
