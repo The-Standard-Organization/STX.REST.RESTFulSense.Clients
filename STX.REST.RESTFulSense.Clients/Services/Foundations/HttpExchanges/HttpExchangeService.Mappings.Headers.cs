@@ -17,7 +17,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             if (httpExchangeRequestHeaders is null)
                 return;
 
-            httpExchangeRequestHeaders.Accept.Select(header =>
+            if (httpExchangeRequestHeaders.Accept != null)
+            {
+                httpExchangeRequestHeaders.Accept.Select(header =>
                 {
                     var mediaTypeWithQualityHeaderValue =
                         MapToMediaTypeWithQualityHeaderValue(header);
@@ -26,37 +28,47 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
                     return header;
                 }
-            ).ToArray();
+                ).ToArray();
+            }
 
-            httpExchangeRequestHeaders.AcceptCharset.Select(header =>
+            if (httpExchangeRequestHeaders.AcceptCharset != null)
             {
-                var stringWithQualityHeaderValue =
-                    MapToStringWithQualityHeaderValue(header);
+                httpExchangeRequestHeaders.AcceptCharset.Select(header =>
+                {
+                    var stringWithQualityHeaderValue =
+                        MapToStringWithQualityHeaderValue(header);
 
-                httpRequestHeaders.AcceptCharset.Add(stringWithQualityHeaderValue);
+                    httpRequestHeaders.AcceptCharset.Add(stringWithQualityHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
-            httpExchangeRequestHeaders.AcceptEncoding.Select(header =>
+            if (httpExchangeRequestHeaders.AcceptEncoding != null)
             {
-                var stringWithQualityHeaderValue =
-                    MapToStringWithQualityHeaderValue(header);
+                httpExchangeRequestHeaders.AcceptEncoding.Select(header =>
+                {
+                    var stringWithQualityHeaderValue =
+                        MapToStringWithQualityHeaderValue(header);
 
-                httpRequestHeaders.AcceptEncoding.Add(stringWithQualityHeaderValue);
+                    httpRequestHeaders.AcceptEncoding.Add(stringWithQualityHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
-            httpExchangeRequestHeaders.AcceptLanguage.Select(header =>
+            if (httpExchangeRequestHeaders.AcceptLanguage != null)
             {
-                var stringWithQualityHeaderValue =
-                    MapToStringWithQualityHeaderValue(header);
+                httpExchangeRequestHeaders.AcceptLanguage.Select(header =>
+                {
+                    var stringWithQualityHeaderValue =
+                        MapToStringWithQualityHeaderValue(header);
 
-                httpRequestHeaders.AcceptLanguage.Add(stringWithQualityHeaderValue);
+                    httpRequestHeaders.AcceptLanguage.Add(stringWithQualityHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
             httpRequestHeaders.Authorization =
                 MapToAuthenticationHeaderValue(
@@ -66,12 +78,15 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                MapToCacheControlHeaderValue(
                    httpExchangeRequestHeaders.CacheControl);
 
-            httpExchangeRequestHeaders.Connection.Select(header =>
+            if (httpExchangeRequestHeaders.Connection != null)
             {
-                httpRequestHeaders.Connection.Add(header);
+                httpExchangeRequestHeaders.Connection.Select(header =>
+                {
+                    httpRequestHeaders.Connection.Add(header);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
             httpRequestHeaders.ConnectionClose =
                 httpExchangeRequestHeaders.ConnectionClose;
@@ -79,15 +94,18 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.Date =
                 httpExchangeRequestHeaders.Date;
 
-            httpExchangeRequestHeaders.Expect.Select(header =>
+            if (httpExchangeRequestHeaders.Expect != null)
             {
-                var nameValueWithParametersHeaderValue =
-                    MapToNameValueWithParametersHeaderValue(header);
+                httpExchangeRequestHeaders.Expect.Select(header =>
+                {
+                    var nameValueWithParametersHeaderValue =
+                        MapToNameValueWithParametersHeaderValue(header);
 
-                httpRequestHeaders.Expect.Add(nameValueWithParametersHeaderValue);
+                    httpRequestHeaders.Expect.Add(nameValueWithParametersHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
             httpRequestHeaders.ExpectContinue =
                 httpExchangeRequestHeaders.ExpectContinue;
@@ -98,24 +116,30 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.Host =
                 httpExchangeRequestHeaders.Host;
 
-            httpExchangeRequestHeaders.IfMatch
-                .Select(header =>
+            if (httpExchangeRequestHeaders.IfMatch != null)
             {
-                httpRequestHeaders.IfMatch.Add(new EntityTagHeaderValue(header));
+                httpExchangeRequestHeaders.IfMatch
+                    .Select(header =>
+                {
+                    httpRequestHeaders.IfMatch.Add(new EntityTagHeaderValue(header));
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
             httpRequestHeaders.IfModifiedSince =
                 httpExchangeRequestHeaders.IfModifiedSince;
 
-            httpExchangeRequestHeaders.IfNoneMatch
-                .Select(header =>
-                {
-                    httpRequestHeaders.IfNoneMatch.Add(new EntityTagHeaderValue(header));
+            if (httpExchangeRequestHeaders.IfNoneMatch != null)
+            {
+                httpExchangeRequestHeaders.IfNoneMatch
+                    .Select(header =>
+                    {
+                        httpRequestHeaders.IfNoneMatch.Add(new EntityTagHeaderValue(header));
 
-                    return header;
-                }).ToArray();
+                        return header;
+                    }).ToArray();
+            }
 
             httpRequestHeaders.IfRange =
                 MapToRangeConditionHeaderValue(
@@ -127,15 +151,18 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.MaxForwards =
                 httpExchangeRequestHeaders.MaxForwards;
 
-            httpExchangeRequestHeaders.Pragma.Select(header =>
+            if (httpExchangeRequestHeaders.Pragma != null)
             {
-                var nameValueHeaderValue =
-                    MapToNameValueHeaderValue(header);
+                httpExchangeRequestHeaders.Pragma.Select(header =>
+                {
+                    var nameValueHeaderValue =
+                        MapToNameValueHeaderValue(header);
 
-                httpRequestHeaders.Pragma.Add(nameValueHeaderValue);
+                    httpRequestHeaders.Pragma.Add(nameValueHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
             httpRequestHeaders.Protocol =
                 httpExchangeRequestHeaders.Protocol;
@@ -150,7 +177,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.Referrer =
                 httpExchangeRequestHeaders.Referrer;
 
-            httpExchangeRequestHeaders.TE.Select(header =>
+            if (httpExchangeRequestHeaders.TE != null)
+            {
+                httpExchangeRequestHeaders.TE.Select(header =>
                 {
                     var transferCodingWithQualityHeaderValue =
                         MapToTransferCodingWithQualityHeaderValue(
@@ -159,62 +188,82 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     httpRequestHeaders.TE.Add(transferCodingWithQualityHeaderValue);
 
                     return header;
-                }
-            ).ToArray();
+                }).ToArray();
+            }
 
-            httpExchangeRequestHeaders.Trailer.Select(header =>
+            if (httpExchangeRequestHeaders.TE != null)
             {
-                httpRequestHeaders.Trailer.Add(header);
+                httpExchangeRequestHeaders.Trailer.Select(header =>
+                {
+                    httpRequestHeaders.Trailer.Add(header);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
-            httpExchangeRequestHeaders.TransferEncoding.Select(header =>
+            if (httpExchangeRequestHeaders.TransferEncoding != null)
             {
-                var transferCodingHeaderValue =
-                    MapToTransferCodingHeaderValue(header);
+                httpExchangeRequestHeaders.TransferEncoding.Select(header =>
+                {
+                    var transferCodingHeaderValue =
+                        MapToTransferCodingHeaderValue(header);
 
-                httpRequestHeaders.TransferEncoding.Add(transferCodingHeaderValue);
+                    httpRequestHeaders.TransferEncoding.Add(transferCodingHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
             httpRequestHeaders.TransferEncodingChunked =
                 httpExchangeRequestHeaders.TransferEncodingChunked;
 
-            httpExchangeRequestHeaders.Upgrade.Select(header =>
+            if (httpExchangeRequestHeaders.Upgrade != null)
             {
-                var productHeaderValue = MapToProductHeaderValue(header);
-                httpRequestHeaders.Upgrade.Add(productHeaderValue);
+                httpExchangeRequestHeaders.Upgrade.Select(header =>
+                {
+                    var productHeaderValue = MapToProductHeaderValue(header);
+                    httpRequestHeaders.Upgrade.Add(productHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
-            httpExchangeRequestHeaders.UserAgent.Select(header =>
+            if (httpExchangeRequestHeaders.UserAgent != null)
             {
-                var productInfoHeaderValue =
-                    MapToProductInfoHeaderValue(header);
+                httpExchangeRequestHeaders.UserAgent.Select(header =>
+                {
+                    var productInfoHeaderValue =
+                        MapToProductInfoHeaderValue(header);
 
-                httpRequestHeaders.UserAgent.Add(productInfoHeaderValue);
+                    httpRequestHeaders.UserAgent.Add(productInfoHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
-            httpExchangeRequestHeaders.Via.Select(header =>
+            if (httpExchangeRequestHeaders.Via != null)
             {
-                ViaHeaderValue viaHeaderValue = MapToViaHeaderValue(header);
-                httpRequestHeaders.Via.Add(viaHeaderValue);
+                httpExchangeRequestHeaders.Via.Select(header =>
+                {
+                    ViaHeaderValue viaHeaderValue = MapToViaHeaderValue(header);
+                    httpRequestHeaders.Via.Add(viaHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
-            httpExchangeRequestHeaders.Warning.Select(header =>
+            if (httpExchangeRequestHeaders.Warning != null)
             {
-                WarningHeaderValue warningHeaderValue = MapToWarningHeaderValue(header);
-                httpRequestHeaders.Warning.Add(warningHeaderValue);
+                httpExchangeRequestHeaders.Warning.Select(header =>
+                {
+                    WarningHeaderValue warningHeaderValue =
+                        MapToWarningHeaderValue(header);
 
-                return header;
-            }).ToArray();
+                    httpRequestHeaders.Warning.Add(warningHeaderValue);
+
+                    return header;
+                }).ToArray();
+            }
         }
 
         private static HttpExchangeResponseHeaders MapHttpExchangeResponseHeaders(

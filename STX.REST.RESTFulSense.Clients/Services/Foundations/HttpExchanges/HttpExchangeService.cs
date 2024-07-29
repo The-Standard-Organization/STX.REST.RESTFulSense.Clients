@@ -38,7 +38,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 defaultHttpVersion,
                 defaultHttpVersionPolicy);
 
-            HttpRequestMessage httpRequestMessage =
+           HttpRequestMessage httpRequestMessage =
                 MapToHttpRequest(
                     httpExchangeRequest: httpExchange.Request,
                     defaultHttpMethod: defaultHttpMethod,

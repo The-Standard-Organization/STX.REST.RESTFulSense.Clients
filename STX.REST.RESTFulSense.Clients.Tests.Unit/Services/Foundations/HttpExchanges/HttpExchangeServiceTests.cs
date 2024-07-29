@@ -156,9 +156,16 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .Concat(
                     Enumerable.Range(0, GetRandomNumber())
                     .Select(index => GetRandomNumber() as object))
+                .Select(value =>
+                    new
+                    {
+                        Key = GetRandomString(),
+                        Value = value
+                    })
+                .DistinctBy(x=>x.Key)
                 .ToDictionary(
-                    key => GetRandomString(),
-                    value => value);
+                    key => key.Key,
+                    value => value.Value);
         }
 
         private static bool CreateSuccessStatusCode(HttpStatusCode httpStatusCode)
