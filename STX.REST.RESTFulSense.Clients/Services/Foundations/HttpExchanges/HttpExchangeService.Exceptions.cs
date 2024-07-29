@@ -102,6 +102,16 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeDependencyException(
                     invalidFormatHttpExchangeException);
             }
+            catch(Exception serviceException)
+            {
+                var failedHttpExchangeServiceException =
+                new FailedHttpExchangeServiceException(
+                    message: "Failed HttpExchange service error occurred, contact support.",
+                    innerException: serviceException);
+
+                throw CreateHttpExchangeServiceException(
+                    failedHttpExchangeServiceException);
+            }
         }
 
         private static HttpExchangeValidationException CreateHttpExchangeValidationException(
@@ -117,6 +127,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             return new HttpExchangeDependencyException(
                 message: "HttpExchange dependency error occurred, contact support.",
+                innerException: exception);
+        }
+
+        private static HttpExchangeServiceException CreateHttpExchangeServiceException(
+            Xeption exception)
+        {
+            return new HttpExchangeServiceException(
+                message: "HttpExchange service error occurred, contact support.",
                 innerException: exception);
         }
     }

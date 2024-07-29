@@ -7,9 +7,9 @@ using Xeptions;
 
 namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions
 {
-    public class HttpExchangeServiceException : Xeption
+    public class FailedHttpExchangeServiceException : Xeption
     {
-        public HttpExchangeServiceException(string message, Xeption innerException)
+        public FailedHttpExchangeServiceException(string message, Exception innerException)
             : base(message, innerException)
         { }
     }

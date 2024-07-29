@@ -78,10 +78,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var serviceException = new Exception();
 
+            var failedHttpExchangeServiceException =
+                new FailedHttpExchangeServiceException(
+                    message: "Failed HttpExchange service error occurred, contact support.",
+                    innerException: serviceException);
+
             var expectedHttpExchangeDependencyException =
                 new HttpExchangeServiceException(
                     message: "HttpExchange service error occurred, contact support.",
-                    innerException: serviceException);
+                    innerException: failedHttpExchangeServiceException);
 
             this.httpBroker.Setup(
                 broker => broker.SendRequestAsync(
