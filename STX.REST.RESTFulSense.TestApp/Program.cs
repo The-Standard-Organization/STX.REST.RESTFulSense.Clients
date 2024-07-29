@@ -5,7 +5,6 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-
 using STX.REST.RESTFulSense.Clients.Brokers.Https;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges;
