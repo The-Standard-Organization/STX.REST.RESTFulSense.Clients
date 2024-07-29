@@ -60,5 +60,51 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             this.httpBroker.VerifyNoOtherCalls();
         }
+
+        [Fact]
+        private async Task ShouldThrowServiceExceptionIfServiceErrorOccurredAndLogIt()
+        {
+            // given
+            var httpExchange = new HttpExchange
+            {
+                Request = new HttpExchangeRequest
+                {
+                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
+                    RelativeUrl = CreateRandomUri().PathAndQuery,
+                    HttpMethod = HttpMethod.Get.Method,
+                    Version = GetRandomHttpVersion().ToString(),
+                }
+            };
+
+            var serviceException = new Exception();
+
+            var expectedHttpExchangeDependencyException =
+                new HttpExchangeServiceException(
+                    message: "HttpExchange service error occurred, contact support.",
+                    innerException: serviceException);
+
+            this.httpBroker.Setup(
+                broker => broker.SendRequestAsync(
+                    It.IsAny<HttpRequestMessage>(), default))
+                        .Throws(serviceException);
+
+            // when
+            ValueTask<HttpExchange> getTaskAsync = this.httpExchangeService.GetAsync(httpExchange);
+
+            HttpExchangeServiceException actualHttpExchangeDependencyException =
+                await Assert.ThrowsAsync<HttpExchangeServiceException>(
+                    getTaskAsync.AsTask);
+
+            // then
+            actualHttpExchangeDependencyException.Should().BeEquivalentTo(
+                expectedHttpExchangeDependencyException);
+
+            this.httpBroker.Verify(broker =>
+                broker.SendRequestAsync(
+                    It.IsAny<HttpRequestMessage>(), default),
+                    Times.Once);
+
+            this.httpBroker.VerifyNoOtherCalls();
+        }
     }
 }
