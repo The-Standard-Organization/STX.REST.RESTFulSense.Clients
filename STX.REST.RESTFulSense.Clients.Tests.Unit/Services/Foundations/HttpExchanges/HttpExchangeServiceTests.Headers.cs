@@ -775,7 +775,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.ProxyAuthorization),
-                value: "Proxy Authentication header has invalid configuration, fix errors and try again.");
+                value: "ProxyAuthentication header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -859,7 +859,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.TransferEncoding),
-                value: "Transfer Encoding header has invalid configuration, fix errors and try again.");
+                value: "TransferEncoding header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -901,7 +901,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.UserAgent),
-                value: "User Agent header has invalid configuration, fix errors and try again.");
+                value: "UserAgent header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -1169,13 +1169,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                };
 
             return invalidCacheControlHeaders
-                .Prepend(
-                    new CacheControlHeader
-                    {
-                        Extensions = null,
-                        PrivateHeaders = null,
-                        NoCacheHeaders = null
-                    })
                 .ToArray();
         }
 
@@ -1203,6 +1196,15 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return new string[]
             {
                 null,
+                "",
+                " "
+            };
+        }
+
+        private static string[] CreateInvalidStringHeaders()
+        {
+            return new string[]
+            {
                 "",
                 " "
             };
@@ -1244,12 +1246,20 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             IEnumerable<NameValueWithParametersHeader> invalidNameValueWithParametersHeaders =
                 from invalidNameHeader in invalidNameHeaders
+                select new NameValueWithParametersHeader
+                {
+                    Name = invalidNameHeader,
+                    Parameters = null,
+                };
+
+            invalidNameValueWithParametersHeaders = invalidNameValueWithParametersHeaders.Concat(
+                from invalidNameHeader in invalidNameHeaders
                 from invalidParametersHeader in invalidParametersHeaders
                 select new NameValueWithParametersHeader
                 {
                     Name = invalidNameHeader,
                     Parameters = new NameValueHeader[] { invalidParametersHeader }
-                };
+                });
 
             return invalidNameValueWithParametersHeaders.ToArray();
         }
@@ -1263,15 +1273,22 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             IEnumerable<RangeHeader> invalidRangeHeaders =
                 from invalidUnitHeader in invalidUnitHeaders
+                select new RangeHeader
+                {
+                    Unit = invalidUnitHeader,
+                    Ranges = null
+                };
+
+            invalidRangeHeaders = invalidRangeHeaders.Concat(
+                from invalidUnitHeader in invalidUnitHeaders
                 from invalidRangeItemHeader in invalidRangeItemHeaders
                 select new RangeHeader
                 {
                     Unit = invalidUnitHeader,
                     Ranges = new RangeItemHeader[] { invalidRangeItemHeader }
-                };
+                });
 
             return invalidRangeHeaders
-                .Prepend(null)
                 .ToArray();
         }
 
@@ -1283,13 +1300,21 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             string[] invalidValueHeaders = CreateInvalidStringArrayHeaders();
 
             IEnumerable<TransferCodingHeader> invalidTransferCodingHeaders =
+                from invalidValueHeader in invalidValueHeaders
+                select new TransferCodingHeader
+                {
+                    Parameters = null,
+                    Value = invalidValueHeader
+                };
+
+            invalidTransferCodingHeaders = invalidTransferCodingHeaders.Concat(
                 from invalidNameValueHeader in invalidNameValueHeaders
                 from invalidValueHeader in invalidValueHeaders
                 select new TransferCodingHeader
                 {
                     Parameters = new NameValueHeader[] { invalidNameValueHeader },
                     Value = invalidValueHeader
-                };
+                });
 
             return invalidTransferCodingHeaders
                 .Prepend(null)
@@ -1526,7 +1551,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 })
                 .ToArray();
 
-            string[] invalidFromHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidFromHeaders = CreateInvalidStringHeaders();
             invalidFromHeaders
                 .Select(invalidFromHeader =>
                 {
@@ -1537,7 +1562,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 })
                 .ToArray();
 
-            string[] invalidHostHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidHostHeaders = CreateInvalidStringHeaders();
             invalidHostHeaders
                 .Select(invalidHostHeader =>
                 {
@@ -1587,7 +1612,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 })
                 .ToArray();
 
-            string[] invalidProtocolHeaders = CreateInvalidStringArrayHeaders();
+            string[] invalidProtocolHeaders = CreateInvalidStringHeaders();
             invalidProtocolHeaders
                 .Select(invalidProtocolHeader =>
                 {

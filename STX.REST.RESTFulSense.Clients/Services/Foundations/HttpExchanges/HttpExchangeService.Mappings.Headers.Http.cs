@@ -232,27 +232,36 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 ProxyRevalidate = cacheControlHeader.ProxyRevalidate,
             };
 
-            cacheControlHeader.NoCacheHeaders.Select(header =>
+            if (cacheControlHeader.NoCacheHeaders != null)
             {
-                cacheControlHeaderValue.NoCacheHeaders.Add(header);
+                cacheControlHeader.NoCacheHeaders.Select(header =>
+                {
+                    cacheControlHeaderValue.NoCacheHeaders.Add(header);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
-            cacheControlHeader.PrivateHeaders.Select(header =>
+            if (cacheControlHeader.PrivateHeaders != null)
             {
-                cacheControlHeaderValue.PrivateHeaders.Add(header);
+                cacheControlHeader.PrivateHeaders.Select(header =>
+                {
+                    cacheControlHeaderValue.PrivateHeaders.Add(header);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
-            cacheControlHeader.Extensions.Select(header =>
+            if (cacheControlHeader.Extensions != null)
             {
-                var nameValueHeaderValue = MapToNameValueHeaderValue(header);
-                cacheControlHeaderValue.Extensions.Add(nameValueHeaderValue);
+                cacheControlHeader.Extensions.Select(header =>
+                {
+                    var nameValueHeaderValue = MapToNameValueHeaderValue(header);
+                    cacheControlHeaderValue.Extensions.Add(nameValueHeaderValue);
 
-                return header;
-            }).ToArray();
+                    return header;
+                }).ToArray();
+            }
 
             return cacheControlHeaderValue;
         }
