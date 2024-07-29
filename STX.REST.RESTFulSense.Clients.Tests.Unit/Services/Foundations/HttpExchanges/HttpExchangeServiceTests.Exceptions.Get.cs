@@ -62,7 +62,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Fact]
-        private async Task ShouldThrowServiceExceptionIfServiceErrorOccurredAndLogIt()
+        private async Task ShouldThrowServiceExceptionIfServiceErrorOccurs()
         {
             // given
             var httpExchange = new HttpExchange

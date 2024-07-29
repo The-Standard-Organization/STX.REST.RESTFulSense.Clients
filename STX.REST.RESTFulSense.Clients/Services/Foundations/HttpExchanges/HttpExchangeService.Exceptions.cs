@@ -105,9 +105,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             catch(Exception serviceException)
             {
                 var failedHttpExchangeServiceException =
-                new FailedHttpExchangeServiceException(
-                    message: "Failed HttpExchange service error occurred, contact support.",
-                    innerException: serviceException);
+                    new FailedHttpExchangeServiceException(
+                        message: "Failed HttpExchange service error occurred, contact support.",
+                        innerException: serviceException);
 
                 throw CreateHttpExchangeServiceException(
                     failedHttpExchangeServiceException);
