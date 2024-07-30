@@ -3,6 +3,8 @@
 // ----------------------------------------------------------------------------------
 
 using System.Linq;
+using Newtonsoft.Json.Linq;
+
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -251,7 +253,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         || (rangeConditionHeader.Date is null
                             && string.IsNullOrWhiteSpace(rangeConditionHeader.EntityTag))),
 
-            Message = "IfRange header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again."
+            Message = "IfRange header has a invalid configuration." +
+                        "Only one date and one entityTag can be set at a time, fix errors and try again."
         };
 
         private static dynamic IsInvalidPragmaHeader(NameValueHeader[] nameValueHeaders) => new

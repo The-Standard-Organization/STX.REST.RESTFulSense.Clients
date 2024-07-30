@@ -708,7 +708,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.IfRange),
-                value: "IfRange header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again.");
+                value: "IfRange header has a invalid configuration." +
+                        "Only one date and one entityTag can be set at a time, fix errors and try again.");
 
             var httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
