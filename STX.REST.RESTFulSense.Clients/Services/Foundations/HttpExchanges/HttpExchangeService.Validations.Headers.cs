@@ -161,21 +161,21 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             StringWithQualityHeader[] stringWithQualityHeaders) => new
         {
             Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
-            Message = "Accept Charset header has invalid configuration, fix errors and try again."
+            Message = "AcceptCharset header has invalid configuration, fix errors and try again."
         };
 
         private static dynamic IsInvalidAcceptEncodingHeader(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
         {
             Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
-            Message = "Accept Encoding header has invalid configuration, fix errors and try again."
+            Message = "AcceptEncoding header has invalid configuration, fix errors and try again."
         };
 
         private static dynamic IsInvalidAcceptLanguageHeader(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
         {
             Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
-            Message = "Accept Language header has invalid configuration, fix errors and try again."
+            Message = "AcceptLanguage header has invalid configuration, fix errors and try again."
         };
 
         private static dynamic IsInvalidAuthorizationHeader(
