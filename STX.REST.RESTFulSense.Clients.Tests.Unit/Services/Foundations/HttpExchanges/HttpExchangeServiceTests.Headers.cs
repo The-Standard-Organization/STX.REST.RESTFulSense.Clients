@@ -775,7 +775,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.ProxyAuthorization),
-                value: "ProxyAuthentication header has invalid configuration, fix errors and try again.");
+                value: "ProxyAuthorization header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {

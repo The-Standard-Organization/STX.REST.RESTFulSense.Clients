@@ -273,8 +273,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             AuthenticationHeader authenticationHeader) => new
         {
             Condition = IsInvalidAuthenticationHeader(authenticationHeader),
-            Message = "ProxyAuthentication header has invalid configuration, fix errors and try again."
-        };
+            Message = "ProxyAuthorization header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidRangeHeader(
             RangeHeader rangeHeader) => new
