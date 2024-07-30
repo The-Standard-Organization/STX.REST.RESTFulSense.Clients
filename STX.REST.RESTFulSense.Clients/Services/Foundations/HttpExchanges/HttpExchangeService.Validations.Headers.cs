@@ -193,7 +193,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     || IsInvalidStringArray(cacheControlHeader.NoCacheHeaders)
                     || IsInvalidStringArray(cacheControlHeader.PrivateHeaders)),
 
-            Message = "Cache Control header has invalid configuration, fix errors and try again."
+            Message = "CacheControl header has invalid configuration, fix errors and try again."
         };
 
         private static dynamic IsInvalidConnectionHeader(

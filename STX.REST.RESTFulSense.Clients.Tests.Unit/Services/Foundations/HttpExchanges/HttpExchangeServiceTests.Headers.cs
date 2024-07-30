@@ -530,7 +530,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateAuthorizationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
+        private static dynamic CreateAuthenticationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
         {
             var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
               message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
@@ -558,7 +558,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.CacheControl),
-                value: "Cache Control header has invalid configuration, fix errors and try again.");
+                value: "CacheControl header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
