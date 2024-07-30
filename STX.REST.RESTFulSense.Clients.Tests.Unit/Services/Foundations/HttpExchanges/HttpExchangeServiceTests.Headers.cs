@@ -530,7 +530,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateAuthenticationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
+        private static dynamic CreateAuthorizationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
         {
             var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
               message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
