@@ -285,7 +285,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 quality: randomStringWithQualityHeaderValue.Quality);
         }
 
-        private static AuthenticationHeaderValue CreateAuthenticationHeaderValue(
+        private static AuthenticationHeaderValue CreateAuthorizationHeaderValue(
             dynamic randomAuthenticationHeaderValue)
         {
             return new AuthenticationHeaderValue(
@@ -370,7 +370,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }).ToArray();
 
             httpRequestHeaders.Authorization =
-                CreateAuthenticationHeaderValue(randomRequestHeadersProperties.Authorization);
+                CreateAuthorizationHeaderValue(randomRequestHeadersProperties.Authorization);
 
             httpRequestHeaders.CacheControl =
                 CreateCacheControlHeaderValue(randomRequestHeadersProperties.CacheControl);
@@ -454,7 +454,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 randomRequestHeadersProperties.Protocol;
 
             httpRequestHeaders.ProxyAuthorization =
-                CreateAuthenticationHeaderValue(randomRequestHeadersProperties.ProxyAuthorization);
+                CreateAuthorizationHeaderValue(randomRequestHeadersProperties.ProxyAuthorization);
 
             httpRequestHeaders.Range =
                 CreateRangeHeaderValue(randomRequestHeadersProperties.Range);
@@ -592,7 +592,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .Select(header =>
                 {
                     AuthenticationHeaderValue authenticationHeaderValue =
-                        CreateAuthenticationHeaderValue(header);
+                        CreateAuthorizationHeaderValue(header);
 
                     httpResponseHeaders.ProxyAuthenticate.Add(authenticationHeaderValue);
 
@@ -681,7 +681,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .Select(header =>
                 {
                     AuthenticationHeaderValue authenticationHeaderValue =
-                        CreateAuthenticationHeaderValue(header);
+                        CreateAuthorizationHeaderValue(header);
 
                     httpResponseHeaders.WwwAuthenticate.Add(authenticationHeaderValue);
 

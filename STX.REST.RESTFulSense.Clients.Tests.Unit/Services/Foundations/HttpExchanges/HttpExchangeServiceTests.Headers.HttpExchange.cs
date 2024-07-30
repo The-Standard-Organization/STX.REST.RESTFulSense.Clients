@@ -120,7 +120,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return nameValueWithParameters;
         }
 
-        private static AuthenticationHeader CreateAuthenticationHeader(
+        private static AuthenticationHeader CreateAuthoritationHeader(
             dynamic randomAuthenticationHeaderProperties)
         {
             return new AuthenticationHeader
@@ -296,7 +296,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                         .ToArray())
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.Authorization)
-                    .Use((AuthenticationHeader)CreateAuthenticationHeader(
+                    .Use((AuthenticationHeader)CreateAuthoritationHeader(
                             randomHeaderProperties.Authorization))
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.CacheControl)
@@ -355,7 +355,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     .Use((string)randomHeaderProperties.Protocol)
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.ProxyAuthorization)
-                    .Use((AuthenticationHeader)CreateAuthenticationHeader(
+                    .Use((AuthenticationHeader)CreateAuthoritationHeader(
                         randomHeaderProperties.ProxyAuthorization))
 
                 .OnProperty(httpExchangeRequestHeaders => httpExchangeRequestHeaders.Range)
@@ -453,7 +453,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.ProxyAuthenticate)
                     .Use((randomResponseHeadersProperties.ProxyAuthenticate as dynamic[])
                         .Select(proxyAuthenticateHeader =>
-                            (AuthenticationHeader)CreateAuthenticationHeader(proxyAuthenticateHeader))
+                            (AuthenticationHeader)CreateAuthoritationHeader(proxyAuthenticateHeader))
                         .ToArray())
 
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.RetryAfter)
@@ -501,7 +501,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .OnProperty(httpExchangeResponseHeaders => httpExchangeResponseHeaders.WwwAuthenticate)
                     .Use((randomResponseHeadersProperties.WwwAuthenticate as dynamic[])
                         .Select(wwwAuthenticateHeader =>
-                            (AuthenticationHeader)CreateAuthenticationHeader(wwwAuthenticateHeader))
+                            (AuthenticationHeader)CreateAuthoritationHeader(wwwAuthenticateHeader))
                         .ToArray());
 
             return filler;
