@@ -479,12 +479,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         private Expression<Func<HttpRequestMessage, bool>> SameHttpRequestMessageAs(
-            HttpRequestMessage actualHttpRequestMesssage,
-            HttpRequestMessage expectedHttpRequestMesssage)
+            HttpRequestMessage actualHttpRequestMessage,
+            HttpRequestMessage expectedHttpRequestMessage)
         {
             return actualHttpRequestMessage =>
                 this.compareLogic.Compare(
-                    expectedHttpRequestMesssage,
+                    expectedHttpRequestMessage,
                     actualHttpRequestMessage)
                         .AreEqual;
         }
