@@ -472,7 +472,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptCharset),
-                value: "Accept Charset header has invalid configuration, fix errors and try again.");
+                value: "AcceptCharset header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -494,7 +494,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptEncoding),
-                value: "Accept Encoding header has invalid configuration, fix errors and try again.");
+                value: "AcceptEncoding header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -516,7 +516,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptLanguage),
-                value: "Accept Language header has invalid configuration, fix errors and try again.");
+                value: "AcceptLanguage header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -558,7 +558,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.CacheControl),
-                value: "Cache Control header has invalid configuration, fix errors and try again.");
+                value: "CacheControl header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -708,7 +708,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.IfRange),
-                value: "IfRange header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again.");
+                value: "IfRange header has a invalid configuration." +
+                        "Only one date and one entityTag can be set at a time, fix errors and try again.");
+
 
             var httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -775,7 +777,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.ProxyAuthorization),
-                value: "ProxyAuthentication header has invalid configuration, fix errors and try again.");
+                value: "ProxyAuthorization header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {

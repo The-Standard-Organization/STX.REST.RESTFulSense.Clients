@@ -52,7 +52,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             ValidateHttpExchangeRequestNotNull(httpExchangeRequest);
 
-            ValidateInput(
+            ValidateInputArgument(
                 (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
                     Parameter: nameof(HttpExchangeRequest.BaseAddress)),
 
@@ -73,14 +73,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static void ValidateHttpMethod(HttpExchangeRequest httpExchangeRequest, HttpMethod httpMethod)
         {
-            ValidateInput((
+            ValidateInputArgument((
                 Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, httpMethod),
                 Parameter: nameof(HttpExchangeRequest.HttpMethod)));
         }
 
         private static void ValidateVersion(HttpExchangeRequest httpExchangeRequest, Version httpVersion)
         {
-            ValidateInput((
+            ValidateInputArgument((
                 Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
                 Parameter: nameof(HttpExchangeRequest.Version)));
         }
@@ -96,7 +96,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static void ValidateHttpExchangeRequestNotNull(HttpExchangeRequest httpExchangeRequest)
         {
-            ValidateInput(
+            ValidateInputArgument(
                 (Rule: IsInvalid(httpExchangeRequest), Parameter: nameof(HttpExchange.Request)));
         }
 
