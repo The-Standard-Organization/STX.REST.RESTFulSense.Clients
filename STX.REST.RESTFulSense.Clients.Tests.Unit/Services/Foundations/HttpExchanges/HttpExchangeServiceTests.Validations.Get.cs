@@ -105,7 +105,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }
             };
 
-            var invalidArgumentHttpExchangeException =
+            var invalidArgumentHttpExchangeException = 
                 new InvalidArgumentHttpExchangeException(
                     message: "Invalid argument, fix errors and try again.");
 
