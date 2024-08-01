@@ -54,8 +54,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             // given
             var httpExchange = new HttpExchange();
 
-            var invalidArgumentHttpExchangeException = new InvalidArgumentHttpExchangeException(
-                message: "Invalid argument, fix errors and try again.");
+            var invalidArgumentHttpExchangeException =
+                new InvalidArgumentHttpExchangeException(
+                    message: "Invalid argument, fix errors and try again.");
 
             invalidArgumentHttpExchangeException.UpsertDataList(
                 key: nameof(HttpExchange.Request),
@@ -103,8 +104,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }
             };
 
-            var invalidArgumentHttpExchangeException = new InvalidArgumentHttpExchangeException(
-                message: "Invalid argument, fix errors and try again.");
+            var invalidArgumentHttpExchangeException = 
+                new InvalidArgumentHttpExchangeException(
+                    message: "Invalid argument, fix errors and try again.");
 
             invalidArgumentHttpExchangeException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.BaseAddress),
@@ -126,9 +128,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 key: nameof(HttpExchangeRequest.VersionPolicy),
                 value: "HttpVersionPolicy is invalid");
 
-            var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
-                message: "HttpExchange validation errors occurred, fix errors and try again.",
-                innerException: invalidArgumentHttpExchangeException);
+            var expectedHttpExchangeValidationException =
+                new HttpExchangeValidationException(
+                    message: "HttpExchange validation errors occurred, fix errors and try again.",
+                    innerException: invalidArgumentHttpExchangeException);
 
             // when
             ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
@@ -161,9 +164,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }
             };
 
-            var expectedHttpExchangeValidationException = new HttpExchangeValidationException(
-                message: "HttpExchange validation errors occurred, fix errors and try again.",
-                innerException: invalidHeaderException.InvalidHttpExchangeRequestHeaderException);
+            var expectedHttpExchangeValidationException =
+                new HttpExchangeValidationException(
+                    message: "HttpExchange validation errors occurred, fix errors and try again.",
+                    innerException: invalidHeaderException.InvalidHttpExchangeRequestHeaderException);
 
             this.httpBroker
                 .Setup(broker =>

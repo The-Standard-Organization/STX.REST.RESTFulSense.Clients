@@ -472,7 +472,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptCharset),
-                value: "AcceptCharset header has invalid configuration, fix errors and try again.");
+                value: "Accept Charset header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -494,7 +494,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptEncoding),
-                value: "AcceptEncoding header has invalid configuration, fix errors and try again.");
+                value: "Accept Encoding header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -516,7 +516,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptLanguage),
-                value: "AcceptLanguage header has invalid configuration, fix errors and try again.");
+                value: "Accept Language header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -530,7 +530,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateAuthorizationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
+        private static dynamic CreateAuthenticationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
         {
             var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
               message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
@@ -558,7 +558,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.CacheControl),
-                value: "CacheControl header has invalid configuration, fix errors and try again.");
+                value: "Cache Control header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -708,8 +708,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.IfRange),
-                value: "IfRange header has a invalid configuration." +
-                        "Only one date and one entityTag can be set at a time, fix errors and try again.");
+                value: "IfRange header has invalid configuration. Exactly one of date and entityTag can be set at a time, fix errors and try again.");
 
             var httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -776,7 +775,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.ProxyAuthorization),
-                value: "ProxyAuthorization header has invalid configuration, fix errors and try again.");
+                value: "ProxyAuthentication header has invalid configuration, fix errors and try again.");
 
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = new HttpExchangeRequestHeaders
             {
@@ -1511,7 +1510,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .Select(invalidAuthorizationHeader =>
                 {
                     theoryData.Add(
-                        CreateAuthorizationHeaderException(invalidAuthorizationHeader));
+                        CreateAuthenticationHeaderException(invalidAuthorizationHeader));
 
                     return theoryData;
                 })
@@ -1819,9 +1818,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             var someMessage = GetRandomString();
             var httpRequestException = new HttpRequestException();
 
-            var failedRequestHttpExchangeException = new FailedRequestHttpExchangeException(
-                message: "Failed http request error occurred, contact support.",
-                innerException: httpRequestException);
+            var failedRequestHttpExchangeException =
+                new FailedHttpExchangeRequestException(
+                    message: "Failed http request error occurred, contact support.",
+                    innerException: httpRequestException);
 
             theoryData.Add(new
             {
@@ -1831,9 +1831,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var taskCanceledException = new TaskCanceledException();
 
-            var taskCanceledHttpExchangeException = new TaskCanceledHttpExchangeException(
-                message: "Request timeout error occurred, please contact support.",
-                innerException: taskCanceledException);
+            var taskCanceledHttpExchangeException =
+                new TaskCanceledHttpExchangeException(
+                    message: "Request timeout error occurred, please contact support.",
+                    innerException: taskCanceledException);
 
             theoryData.Add(new
             {
@@ -1843,9 +1844,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var objectDisposedException = new ObjectDisposedException(someMessage);
 
-            var objectDisposedHttpExchangeException = new ObjectDisposedHttpExchangeException(
-                message: "Object already disposed error occurred, please fix errors and try again.",
-                innerException: objectDisposedException);
+            var objectDisposedHttpExchangeException =
+                new ObjectDisposedHttpExchangeException(
+                    message: "Object already disposed error occurred, please fix errors and try again.",
+                    innerException: objectDisposedException);
 
             theoryData.Add(new
             {
@@ -1855,9 +1857,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var invalidOperationException = new InvalidOperationException();
 
-            var invalidOperationHttpExchangeException = new InvalidOperationHttpExchangeException(
-                message: "Invalid http request operation error occurred, please contact support.",
-                innerException: invalidOperationException);
+            var invalidOperationHttpExchangeException =
+                new InvalidOperationHttpExchangeException(
+                    message: "Invalid http request operation error occurred, please contact support.",
+                    innerException: invalidOperationException);
 
             theoryData.Add(new
             {
@@ -1867,9 +1870,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var argumentNullException = new ArgumentNullException();
 
-            var invalidArgumentHttpExchangeException = new InvalidArgumentHttpExchangeException(
-                message: "Invalid argument error occurred, contact support.",
-                innerException: argumentNullException);
+            var invalidArgumentHttpExchangeException =
+                new InvalidArgumentHttpExchangeException(
+                    message: "Invalid argument error occurred, contact support.",
+                    innerException: argumentNullException);
 
             theoryData.Add(new
             {
@@ -1879,9 +1883,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var formatException = new FormatException();
 
-            var invalidFormatHttpExchangeException = new InvalidFormatHttpExchangeException(
-                message: "Invalid format error occurred, contact support.",
-                innerException: formatException);
+            var invalidFormatHttpExchangeException =
+                new InvalidFormatHttpExchangeException(
+                    message: "Invalid format error occurred, contact support.",
+                    innerException: formatException);
 
             theoryData.Add(new
             {
