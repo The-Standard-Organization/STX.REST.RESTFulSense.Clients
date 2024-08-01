@@ -1819,9 +1819,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             var someMessage = GetRandomString();
             var httpRequestException = new HttpRequestException();
 
-            var failedRequestHttpExchangeException = new FailedRequestHttpExchangeException(
-                message: "Failed http request error occurred, contact support.",
-                innerException: httpRequestException);
+            var failedRequestHttpExchangeException =
+                new FailedHttpExchangeRequestException(
+                    message: "Failed http request error occurred, contact support.",
+                    innerException: httpRequestException);
 
             theoryData.Add(new
             {
@@ -1831,9 +1832,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var taskCanceledException = new TaskCanceledException();
 
-            var taskCanceledHttpExchangeException = new TaskCanceledHttpExchangeException(
-                message: "Request timeout error occurred, please contact support.",
-                innerException: taskCanceledException);
+            var taskCanceledHttpExchangeException =
+                new TaskCanceledHttpExchangeException(
+                    message: "Request timeout error occurred, please contact support.",
+                    innerException: taskCanceledException);
 
             theoryData.Add(new
             {
@@ -1843,9 +1845,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var objectDisposedException = new ObjectDisposedException(someMessage);
 
-            var objectDisposedHttpExchangeException = new ObjectDisposedHttpExchangeException(
-                message: "Object already disposed error occurred, please fix errors and try again.",
-                innerException: objectDisposedException);
+            var objectDisposedHttpExchangeException =
+                new ObjectDisposedHttpExchangeException(
+                    message: "Object already disposed error occurred, please fix errors and try again.",
+                    innerException: objectDisposedException);
 
             theoryData.Add(new
             {
@@ -1855,9 +1858,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var invalidOperationException = new InvalidOperationException();
 
-            var invalidOperationHttpExchangeException = new InvalidOperationHttpExchangeException(
-                message: "Invalid http request operation error occurred, please contact support.",
-                innerException: invalidOperationException);
+            var invalidOperationHttpExchangeException =
+                new InvalidOperationHttpExchangeException(
+                    message: "Invalid http request operation error occurred, please contact support.",
+                    innerException: invalidOperationException);
 
             theoryData.Add(new
             {
@@ -1867,9 +1871,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var argumentNullException = new ArgumentNullException();
 
-            var invalidArgumentHttpExchangeException = new InvalidArgumentHttpExchangeException(
-                message: "Invalid argument error occurred, contact support.",
-                innerException: argumentNullException);
+            var invalidArgumentHttpExchangeException =
+                new InvalidArgumentHttpExchangeException(
+                    message: "Invalid argument error occurred, contact support.",
+                    innerException: argumentNullException);
 
             theoryData.Add(new
             {
@@ -1879,9 +1884,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var formatException = new FormatException();
 
-            var invalidFormatHttpExchangeException = new InvalidFormatHttpExchangeException(
-                message: "Invalid format error occurred, contact support.",
-                innerException: formatException);
+            var invalidFormatHttpExchangeException =
+                new InvalidFormatHttpExchangeException(
+                    message: "Invalid format error occurred, contact support.",
+                    innerException: formatException);
 
             theoryData.Add(new
             {

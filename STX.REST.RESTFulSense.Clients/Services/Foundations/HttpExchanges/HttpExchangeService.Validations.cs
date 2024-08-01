@@ -52,7 +52,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             ValidateHttpExchangeRequestNotNull(httpExchangeRequest);
 
-            ValidateInput(
+            ValidateInputArgument(
                 (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
                     Parameter: nameof(HttpExchangeRequest.BaseAddress)),
 
@@ -73,14 +73,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static void ValidateHttpMethod(HttpExchangeRequest httpExchangeRequest, HttpMethod httpMethod)
         {
-            ValidateInput((
+            ValidateInputArgument((
                 Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, httpMethod),
                 Parameter: nameof(HttpExchangeRequest.HttpMethod)));
         }
 
         private static void ValidateVersion(HttpExchangeRequest httpExchangeRequest, Version httpVersion)
         {
-            ValidateInput((
+            ValidateInputArgument((
                 Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
                 Parameter: nameof(HttpExchangeRequest.Version)));
         }
@@ -96,7 +96,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static void ValidateHttpExchangeRequestNotNull(HttpExchangeRequest httpExchangeRequest)
         {
-            ValidateInput(
+            ValidateInputArgument(
                 (Rule: IsInvalid(httpExchangeRequest), Parameter: nameof(HttpExchange.Request)));
         }
 
@@ -182,9 +182,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             invalidHttpExchangeException.ThrowIfContainsErrors();
         }
 
-        private static void ValidateInput(params (dynamic Rule, string Parameter)[] validations)
+        private static void ValidateInputArgument(params (dynamic Rule, string Parameter)[] validations)
         {
-            var invalidHttpExchangeRequestException =
+            var invalidArgumentHttpExchangeException =
                 new InvalidArgumentHttpExchangeException(
                     message: "Invalid argument, fix errors and try again.");
 
@@ -192,13 +192,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 if (rule.Condition)
                 {
-                    invalidHttpExchangeRequestException.UpsertDataList(
+                    invalidArgumentHttpExchangeException.UpsertDataList(
                         key: parameter,
                         value: rule.Message);
                 }
             }
 
-            invalidHttpExchangeRequestException.ThrowIfContainsErrors();
+            invalidArgumentHttpExchangeException.ThrowIfContainsErrors();
         }
     }
 }
