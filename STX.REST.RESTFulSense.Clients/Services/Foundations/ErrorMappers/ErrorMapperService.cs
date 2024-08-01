@@ -21,7 +21,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         {
             ValidateStatusCode(statusCode);
 
-            StatusDetail statusDetail = errorBroker.SelectAllStatusDetails()
+            IQueryable<StatusDetail> statusDetails = await errorBroker.SelectAllStatusDetailsAsync();
+
+            StatusDetail statusDetail = statusDetails
                 .FirstOrDefault(statusDetail =>
                     statusDetail != null && statusDetail.Code == statusCode);
 
