@@ -79,7 +79,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 || IsInvalidNameValueHeaderArray(nameValueWithParametersHeader.Parameters);
         }
 
-        private static bool IsInvalidNameValueWithParametersHeaderArray(NameValueWithParametersHeader[] nameValueWithParametersHeaders)
+        private static bool IsInvalidNameValueWithParametersHeaderArray(
+            NameValueWithParametersHeader[] nameValueWithParametersHeaders)
         {
             return nameValueWithParametersHeaders is not null
                 && nameValueWithParametersHeaders.Any(header => header is null
