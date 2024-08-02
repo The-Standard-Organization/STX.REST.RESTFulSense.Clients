@@ -982,7 +982,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             };
         }
 
-        private static dynamic CreateAllowHeaderException(string[] invalidAllowHeader)
+        private static dynamic CreateContentAllowHeaderException(string[] invalidAllowHeader)
         {
             var invalidHttpExchangeContentHeaderException =
                 new InvalidHttpExchangeContentHeaderException(
@@ -1771,7 +1771,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 .Select(invalidAllowHeader =>
                 {
                     theoryData.Add(
-                        CreateAllowHeaderException(
+                        CreateContentAllowHeaderException(
                             new string[] { invalidAllowHeader }));
 
                     return theoryData;
