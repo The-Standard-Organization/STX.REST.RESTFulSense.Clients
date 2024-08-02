@@ -27,11 +27,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeValidationException(
                     exception: invalidHttpExchangeException);
             }
-            catch (InvalidArgumentHttpExchangeException invalidArgumentHttpExchangeException)
-            {
-                throw CreateHttpExchangeValidationException(
-                    exception: invalidArgumentHttpExchangeException);
-            }
             catch (InvalidHttpExchangeRequestException invalidHttpExchangeRequestException)
             {
                 throw CreateHttpExchangeValidationException(
@@ -102,7 +97,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 throw CreateHttpExchangeDependencyException(
                     invalidFormatHttpExchangeException);
             }
-            catch(Exception serviceException)
+            catch (Exception serviceException)
             {
                 var failedHttpExchangeServiceException =
                     new FailedHttpExchangeServiceException(

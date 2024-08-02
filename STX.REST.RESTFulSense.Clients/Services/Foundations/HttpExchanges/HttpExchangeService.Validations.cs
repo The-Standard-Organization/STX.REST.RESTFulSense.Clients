@@ -73,8 +73,11 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static void ValidateHttpExchangeRequestNotNull(HttpExchangeRequest httpExchangeRequest)
         {
-            ValidateHttpExchangeRequestObject(
-                (Rule: IsInvalid(httpExchangeRequest), Parameter: nameof(HttpExchange.Request)));
+            if (httpExchangeRequest is null)
+            {
+                throw new NullHttpExchangeRequestException(
+                    message: "Null HttpExchange request error occurred, fix errors and try again.");
+            }
         }
 
         private static dynamic IsInvalid(object @object) =>
