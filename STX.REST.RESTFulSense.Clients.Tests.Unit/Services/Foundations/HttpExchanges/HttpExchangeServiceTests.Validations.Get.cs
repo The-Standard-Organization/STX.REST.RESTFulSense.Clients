@@ -55,8 +55,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             var httpExchange = new HttpExchange();
 
             var invalidArgumentHttpExchangeException =
-                new InvalidArgumentHttpExchangeException(
-                    message: "Invalid argument, fix errors and try again.");
+                new InvalidHttpExchangeRequestException(
+                    message: "Invalid request, fix errors and try again.");
 
             invalidArgumentHttpExchangeException.UpsertDataList(
                 key: nameof(HttpExchange.Request),
