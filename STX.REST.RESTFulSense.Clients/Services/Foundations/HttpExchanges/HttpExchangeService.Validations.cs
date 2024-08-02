@@ -52,7 +52,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             ValidateHttpExchangeRequestNotNull(httpExchangeRequest);
 
-            ValidateInputArgument(
+            ValidateHttpExchangeRequestObject(
                 (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
                     Parameter: nameof(HttpExchangeRequest.BaseAddress)),
 
@@ -71,32 +71,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             ValidateHttpExchangeRequestHeaders(httpExchangeRequestHeaders: httpExchangeRequest.Headers);
         }
 
-        private static void ValidateHttpMethod(HttpExchangeRequest httpExchangeRequest, HttpMethod httpMethod)
-        {
-            ValidateInputArgument((
-                Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, httpMethod),
-                Parameter: nameof(HttpExchangeRequest.HttpMethod)));
-        }
-
-        private static void ValidateVersion(HttpExchangeRequest httpExchangeRequest, Version httpVersion)
-        {
-            ValidateInputArgument((
-                Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
-                Parameter: nameof(HttpExchangeRequest.Version)));
-        }
-
-        private static void ValidateHttpExchangeNotNull(HttpExchange httpExchange)
-        {
-            if (httpExchange is null)
-            {
-                throw new NullHttpExchangeException(
-                    message: "Null HttpExchange error occurred, fix errors and try again.");
-            }
-        }
-
         private static void ValidateHttpExchangeRequestNotNull(HttpExchangeRequest httpExchangeRequest)
         {
-            ValidateInputArgument(
+            ValidateHttpExchangeRequestObject(
                 (Rule: IsInvalid(httpExchangeRequest), Parameter: nameof(HttpExchange.Request)));
         }
 
@@ -182,23 +159,23 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             invalidHttpExchangeException.ThrowIfContainsErrors();
         }
 
-        private static void ValidateInputArgument(params (dynamic Rule, string Parameter)[] validations)
+        private static void ValidateHttpExchangeRequestObject(params (dynamic Rule, string Parameter)[] validations)
         {
-            var invalidArgumentHttpExchangeException =
-                new InvalidArgumentHttpExchangeException(
-                    message: "Invalid argument, fix errors and try again.");
+            var invalidHttpExchangeRequestException =
+                new InvalidHttpExchangeRequestException(
+                    message: "Invalid request, fix errors and try again.");
 
             foreach ((dynamic rule, string parameter) in validations)
             {
                 if (rule.Condition)
                 {
-                    invalidArgumentHttpExchangeException.UpsertDataList(
+                    invalidHttpExchangeRequestException.UpsertDataList(
                         key: parameter,
                         value: rule.Message);
                 }
             }
 
-            invalidArgumentHttpExchangeException.ThrowIfContainsErrors();
+            invalidHttpExchangeRequestException.ThrowIfContainsErrors();
         }
     }
 }
