@@ -445,8 +445,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateAcceptHeaderException(MediaTypeHeader[] invalidAcceptHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Accept),
@@ -467,8 +468,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic CreateAcceptCharsetHeaderException(
             StringWithQualityHeader[] invalidAcceptCharsetHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptCharset),
@@ -489,8 +491,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic CreateAcceptEncodingHeaderException(
             StringWithQualityHeader[] invalidAcceptEncodingHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptEncoding),
@@ -511,8 +514,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic CreateAcceptLanguageHeaderException(
             StringWithQualityHeader[] invalidAcceptLanguageHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.AcceptLanguage),
@@ -532,8 +536,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateAuthorizationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Authorization),
@@ -553,8 +558,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateCacheControlHeaderException(CacheControlHeader invalidCacheControlHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.CacheControl),
@@ -574,8 +580,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateConnectionHeaderException(string[] invalidConnectionHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Connection),
@@ -595,8 +602,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateExpectHeaderException(NameValueWithParametersHeader[] invalidExpectHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Expect),
@@ -616,8 +624,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateFromHeaderException(string invalidFromHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.From),
@@ -637,8 +646,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateHostHeaderException(string invalidHostHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Host),
@@ -658,8 +668,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateIfMatchHeaderException(string[] invalidIfMatchHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.IfMatch),
@@ -679,8 +690,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateIfNoneMatchHeaderException(string[] invalidIfNoneMatchHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.IfNoneMatch),
@@ -703,8 +715,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             string randomString = GetRandomString();
             DateTimeOffset randomDateTimeOffset = GetRandomDateTime();
 
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-               message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.IfRange),
@@ -729,8 +742,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreatePragmaHeaderException(NameValueHeader[] invalidPragmaHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Pragma),
@@ -750,8 +764,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateProtocolHeaderException(string invalidProtocolHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Protocol),
@@ -771,8 +786,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateProxyAuthorizationHeaderException(AuthenticationHeader invalidAuthenticationHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.ProxyAuthorization),
@@ -792,8 +808,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateRangeHeaderException(RangeHeader invalidRangeHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Range),
@@ -813,8 +830,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateTEHeaderException(TransferCodingHeader[] invalidTEHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.TE),
@@ -834,8 +852,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateTrailerHeaderException(string[] invalidTrailerHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Trailer),
@@ -855,8 +874,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateTransferEncodingException(TransferCodingHeader[] invalidTransferEncodingHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.TransferEncoding),
@@ -876,8 +896,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateUpgradeHeaderException(ProductHeader[] invalidUpgradeHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Upgrade),
@@ -897,8 +918,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateUserAgentHeaderException(ProductInfoHeader[] invalidUserAgentHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.UserAgent),
@@ -918,8 +940,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateViaHeaderException(ViaHeader[] invalidViaHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Via),
@@ -939,8 +962,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateWarningHeaderException(WarningHeader[] invalidWarningHeader)
         {
-            var invalidHttpExchangeRequestHeaderException = new InvalidHttpExchangeRequestHeaderException(
-              message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
+            var invalidHttpExchangeRequestHeaderException =
+                new InvalidHttpExchangeRequestHeaderException(
+                    message: "Invalid HttpExchange request header error occurred, fix errors and try again.");
 
             invalidHttpExchangeRequestHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeRequestHeaders.Warning),
@@ -960,8 +984,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateAllowHeaderException(string[] invalidAllowHeader)
         {
-            var invalidHttpExchangeContentHeaderException = new InvalidHttpExchangeContentHeaderException(
-              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+            var invalidHttpExchangeContentHeaderException =
+                new InvalidHttpExchangeContentHeaderException(
+                    message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
 
             invalidHttpExchangeContentHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.Allow),
@@ -982,8 +1007,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic CreateContentDispositionHeaderException(
             ContentDispositionHeader invalidContentDispositionHeader)
         {
-            var invalidHttpExchangeContentHeaderException = new InvalidHttpExchangeContentHeaderException(
-              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+            var invalidHttpExchangeContentHeaderException =
+                new InvalidHttpExchangeContentHeaderException(
+                    message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
 
             invalidHttpExchangeContentHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.ContentDisposition),
@@ -1003,8 +1029,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateContentEncodingHeaderException(string[] invalidContentEncodingHeader)
         {
-            var invalidHttpExchangeContentHeaderException = new InvalidHttpExchangeContentHeaderException(
-              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+            var invalidHttpExchangeContentHeaderException =
+                new InvalidHttpExchangeContentHeaderException(
+                    message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
 
             invalidHttpExchangeContentHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.ContentEncoding),
@@ -1024,8 +1051,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
         private static dynamic CreateContentLanguageHeaderException(string[] invalidContentLanguageHeader)
         {
-            var invalidHttpExchangeContentHeaderException = new InvalidHttpExchangeContentHeaderException(
-              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+            var invalidHttpExchangeContentHeaderException =
+                new InvalidHttpExchangeContentHeaderException(
+                    message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
 
             invalidHttpExchangeContentHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.ContentLanguage),
@@ -1046,8 +1074,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic CreateContentRangeHeaderException(
             ContentRangeHeader invalidContentRangeHeader)
         {
-            var invalidHttpExchangeContentHeaderException = new InvalidHttpExchangeContentHeaderException(
-              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+            var invalidHttpExchangeContentHeaderException =
+                new InvalidHttpExchangeContentHeaderException(
+                    message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
 
             invalidHttpExchangeContentHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.ContentRange),
@@ -1068,8 +1097,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static dynamic CreateContentTypeHeaderException(
             MediaTypeHeader invalidContentTypeHeader)
         {
-            var invalidHttpExchangeContentHeaderException = new InvalidHttpExchangeContentHeaderException(
-              message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
+            var invalidHttpExchangeContentHeaderException =
+                new InvalidHttpExchangeContentHeaderException(
+                    message: "Invalid HttpExchange content header error occurred, fix errors and try again.");
 
             invalidHttpExchangeContentHeaderException.UpsertDataList(
                 key: nameof(HttpExchangeContentHeaders.ContentType),
@@ -1733,7 +1763,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return theoryData;
         }
 
-        private static TheoryData<dynamic> CreateRequestContentHeadersValidationExceptions(TheoryData<dynamic> theoryData)
+        private static TheoryData<dynamic> CreateRequestContentHeadersValidationExceptions(
+            TheoryData<dynamic> theoryData)
         {
             string[] invalidAllowHeaders = CreateInvalidStringArrayHeaders();
             invalidAllowHeaders
