@@ -58,10 +58,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 new NullHttpExchangeRequestException(
                     message: "Null HttpExchange request error occurred, fix errors and try again.");
 
-            nullHttpExchangeRequestException.UpsertDataList(
-                key: nameof(HttpExchange.Request),
-                value: "Value is required");
-
             var expectedHttpExchangeValidationException =
                 new HttpExchangeValidationException(
                     message: "HttpExchange validation errors occurred, fix errors and try again.",
