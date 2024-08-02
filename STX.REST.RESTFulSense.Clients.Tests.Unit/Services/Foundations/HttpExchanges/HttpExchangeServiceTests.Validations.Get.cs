@@ -56,7 +56,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             var nullHttpExchangeRequestException =
                 new NullHttpExchangeRequestException(
-                    message: "Null HttpExchange request error occurred, fix errors and try again.");
+                    message: "Null HttpExchangeRequest error occurred, fix errors and try again.");
 
             var expectedHttpExchangeValidationException =
                 new HttpExchangeValidationException(

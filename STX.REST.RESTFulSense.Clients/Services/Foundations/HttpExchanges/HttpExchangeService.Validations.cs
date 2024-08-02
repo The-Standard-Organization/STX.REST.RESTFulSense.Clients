@@ -76,7 +76,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             if (httpExchangeRequest is null)
             {
                 throw new NullHttpExchangeRequestException(
-                    message: "Null HttpExchange request error occurred, fix errors and try again.");
+                    message: "Null HttpExchangeRequest error occurred, fix errors and try again.");
             }
         }
 
