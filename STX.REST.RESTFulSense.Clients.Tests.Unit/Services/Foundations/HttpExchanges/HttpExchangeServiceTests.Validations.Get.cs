@@ -54,18 +54,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             // given
             var httpExchange = new HttpExchange();
 
-            var invalidArgumentHttpExchangeException =
+            var invalidHttpExchangeRequestException =
                 new InvalidHttpExchangeRequestException(
                     message: "Invalid request, fix errors and try again.");
 
-            invalidArgumentHttpExchangeException.UpsertDataList(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchange.Request),
                 value: "Value is required");
 
             var expectedHttpExchangeValidationException =
                 new HttpExchangeValidationException(
                     message: "HttpExchange validation errors occurred, fix errors and try again.",
-                    innerException: invalidArgumentHttpExchangeException);
+                    innerException: invalidHttpExchangeRequestException);
 
             // when
             ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
