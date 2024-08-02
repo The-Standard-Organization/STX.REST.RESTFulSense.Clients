@@ -191,7 +191,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static dynamic IsInvalidCacheControlHeader(
             CacheControlHeader cacheControlHeader) => new
         {
-            Condition = cacheControlHeader != null
+            Condition = cacheControlHeader is not null
                 && (IsInvalidNameValueHeaderArray(cacheControlHeader.Extensions)
                     || IsInvalidStringArray(cacheControlHeader.NoCacheHeaders)
                     || IsInvalidStringArray(cacheControlHeader.PrivateHeaders)),

@@ -178,7 +178,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static ProductHeader CreateProductHeader(
             dynamic randomProductHeaderProperties)
         {
-            return randomProductHeaderProperties != null
+            return randomProductHeaderProperties is not null
                 ? new ProductHeader
                 {
                     Name = randomProductHeaderProperties.Name,
@@ -255,7 +255,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             HttpExchangeRequestHeaders httpExchangeRequestHeaders = null;
 
-            if (randomHeaderProperties != null)
+            if (randomHeaderProperties is not null)
             {
                 httpExchangeRequestHeaders =
                     CreateHttpExchangeRequestHeadersFiller(randomHeaderProperties)

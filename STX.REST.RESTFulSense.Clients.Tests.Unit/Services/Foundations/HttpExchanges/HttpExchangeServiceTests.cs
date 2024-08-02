@@ -353,7 +353,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
            dynamic randomContentProperties)
         {
             HttpExchangeContent httpExchangeContent = null;
-            if (randomContentProperties != null)
+            if (randomContentProperties is not null)
             {
                 httpExchangeContent =
                     CreateHttpExchangeContentFiller(
@@ -387,7 +387,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         {
             Uri requestUri = randomProperties.Url;
 
-            if (randomProperties.UrlParameters != null)
+            if (randomProperties.UrlParameters is not null)
             {
                 IEnumerable<string> additionalParameters =
                     (randomProperties.UrlParameters as IDictionary<string, object>)
@@ -418,7 +418,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     VersionPolicy = randomProperties.VersionPolicy,
                 };
 
-            if (randomProperties.RequestHeaders != null)
+            if (randomProperties.RequestHeaders is not null)
             {
                 CreateHttpRequestHeaders(
                     randomProperties.RequestHeaders,

@@ -232,7 +232,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 ProxyRevalidate = cacheControlHeader.ProxyRevalidate,
             };
 
-            if (cacheControlHeader.NoCacheHeaders != null)
+            if (cacheControlHeader.NoCacheHeaders is not null)
             {
                 cacheControlHeader.NoCacheHeaders.Select(header =>
                 {
@@ -242,7 +242,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }).ToArray();
             }
 
-            if (cacheControlHeader.PrivateHeaders != null)
+            if (cacheControlHeader.PrivateHeaders is not null)
             {
                 cacheControlHeader.PrivateHeaders.Select(header =>
                 {
@@ -252,7 +252,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }).ToArray();
             }
 
-            if (cacheControlHeader.Extensions != null)
+            if (cacheControlHeader.Extensions is not null)
             {
                 cacheControlHeader.Extensions.Select(header =>
                 {

@@ -19,7 +19,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Func<TInput, TOutput> functionMapping)
         {
             TOutput[] outputElements = null;
-            if (elements != null)
+            if (elements is not null)
             {
                 outputElements =
                     elements
@@ -37,7 +37,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         {
             string fullRelativeUrl = relativeUrl;
 
-            if (urlParameters != null)
+            if (urlParameters is not null)
             {
                 IEnumerable<string> additionalParameters =
                     urlParameters
@@ -130,7 +130,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static HttpExchangeContent MapToHttpExchangeContent(HttpContent httpContent)
         {
             HttpExchangeContentHeaders httpExchangeContentHeaders = null;
-            if (httpContent.Headers != null)
+            if (httpContent.Headers is not null)
             {
                 httpExchangeContentHeaders =
                      MapHttpExchangeContentHeaders(

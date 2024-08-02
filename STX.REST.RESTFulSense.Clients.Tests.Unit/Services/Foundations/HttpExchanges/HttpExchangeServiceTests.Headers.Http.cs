@@ -135,7 +135,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             dynamic randomRangeConditionHeaderProperities)
         {
             RangeConditionHeaderValue rangeConditionHeaderValue =
-                randomRangeConditionHeaderProperities.Date != null
+                randomRangeConditionHeaderProperities.Date is not null
                     ? new RangeConditionHeaderValue(randomRangeConditionHeaderProperities.Date)
                     : new RangeConditionHeaderValue(randomRangeConditionHeaderProperities.EntityTag);
 
@@ -242,7 +242,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             dynamic randomRetryConditionHeaderProperties)
         {
             RetryConditionHeaderValue retryConditionHeaderValue = null;
-            if (randomRetryConditionHeaderProperties.Date != null)
+            if (randomRetryConditionHeaderProperties.Date is not null)
             {
                 retryConditionHeaderValue =
                     new RetryConditionHeaderValue(

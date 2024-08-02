@@ -17,7 +17,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             if (httpExchangeRequestHeaders is null)
                 return;
 
-            if (httpExchangeRequestHeaders.Accept != null)
+            if (httpExchangeRequestHeaders.Accept is not null)
             {
                 httpExchangeRequestHeaders.Accept.Select(header =>
                 {
@@ -31,7 +31,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 ).ToArray();
             }
 
-            if (httpExchangeRequestHeaders.AcceptCharset != null)
+            if (httpExchangeRequestHeaders.AcceptCharset is not null)
             {
                 httpExchangeRequestHeaders.AcceptCharset.Select(header =>
                 {
@@ -44,7 +44,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }).ToArray();
             }
 
-            if (httpExchangeRequestHeaders.AcceptEncoding != null)
+            if (httpExchangeRequestHeaders.AcceptEncoding is not null)
             {
                 httpExchangeRequestHeaders.AcceptEncoding.Select(header =>
                 {
@@ -57,7 +57,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }).ToArray();
             }
 
-            if (httpExchangeRequestHeaders.AcceptLanguage != null)
+            if (httpExchangeRequestHeaders.AcceptLanguage is not null)
             {
                 httpExchangeRequestHeaders.AcceptLanguage.Select(header =>
                 {
@@ -78,7 +78,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                MapToCacheControlHeaderValue(
                    httpExchangeRequestHeaders.CacheControl);
 
-            if (httpExchangeRequestHeaders.Connection != null)
+            if (httpExchangeRequestHeaders.Connection is not null)
             {
                 httpExchangeRequestHeaders.Connection.Select(header =>
                 {
@@ -94,7 +94,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.Date =
                 httpExchangeRequestHeaders.Date;
 
-            if (httpExchangeRequestHeaders.Expect != null)
+            if (httpExchangeRequestHeaders.Expect is not null)
             {
                 httpExchangeRequestHeaders.Expect.Select(header =>
                 {
@@ -116,7 +116,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.Host =
                 httpExchangeRequestHeaders.Host;
 
-            if (httpExchangeRequestHeaders.IfMatch != null)
+            if (httpExchangeRequestHeaders.IfMatch is not null)
             {
                 httpExchangeRequestHeaders.IfMatch
                     .Select(header =>
@@ -130,7 +130,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.IfModifiedSince =
                 httpExchangeRequestHeaders.IfModifiedSince;
 
-            if (httpExchangeRequestHeaders.IfNoneMatch != null)
+            if (httpExchangeRequestHeaders.IfNoneMatch is not null)
             {
                 httpExchangeRequestHeaders.IfNoneMatch
                     .Select(header =>
@@ -151,7 +151,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.MaxForwards =
                 httpExchangeRequestHeaders.MaxForwards;
 
-            if (httpExchangeRequestHeaders.Pragma != null)
+            if (httpExchangeRequestHeaders.Pragma is not null)
             {
                 httpExchangeRequestHeaders.Pragma.Select(header =>
                 {
@@ -177,7 +177,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.Referrer =
                 httpExchangeRequestHeaders.Referrer;
 
-            if (httpExchangeRequestHeaders.TE != null)
+            if (httpExchangeRequestHeaders.TE is not null)
             {
                 httpExchangeRequestHeaders.TE.Select(header =>
                 {
@@ -191,7 +191,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }).ToArray();
             }
 
-            if (httpExchangeRequestHeaders.TE != null)
+            if (httpExchangeRequestHeaders.TE is not null)
             {
                 httpExchangeRequestHeaders.Trailer.Select(header =>
                 {
@@ -201,7 +201,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }).ToArray();
             }
 
-            if (httpExchangeRequestHeaders.TransferEncoding != null)
+            if (httpExchangeRequestHeaders.TransferEncoding is not null)
             {
                 httpExchangeRequestHeaders.TransferEncoding.Select(header =>
                 {
@@ -217,7 +217,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             httpRequestHeaders.TransferEncodingChunked =
                 httpExchangeRequestHeaders.TransferEncodingChunked;
 
-            if (httpExchangeRequestHeaders.Upgrade != null)
+            if (httpExchangeRequestHeaders.Upgrade is not null)
             {
                 httpExchangeRequestHeaders.Upgrade.Select(header =>
                 {
@@ -228,7 +228,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }).ToArray();
             }
 
-            if (httpExchangeRequestHeaders.UserAgent != null)
+            if (httpExchangeRequestHeaders.UserAgent is not null)
             {
                 httpExchangeRequestHeaders.UserAgent.Select(header =>
                 {
@@ -241,7 +241,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }).ToArray();
             }
 
-            if (httpExchangeRequestHeaders.Via != null)
+            if (httpExchangeRequestHeaders.Via is not null)
             {
                 httpExchangeRequestHeaders.Via.Select(header =>
                 {
@@ -252,7 +252,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 }).ToArray();
             }
 
-            if (httpExchangeRequestHeaders.Warning != null)
+            if (httpExchangeRequestHeaders.Warning is not null)
             {
                 httpExchangeRequestHeaders.Warning.Select(header =>
                 {
