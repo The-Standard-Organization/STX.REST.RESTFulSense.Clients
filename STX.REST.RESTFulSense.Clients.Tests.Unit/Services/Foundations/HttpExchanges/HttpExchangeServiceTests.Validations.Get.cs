@@ -105,34 +105,34 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }
             };
 
-            var invalidArgumentHttpExchangeException = 
-                new InvalidArgumentHttpExchangeException(
-                    message: "Invalid argument, fix errors and try again.");
+            var invalidHttpExchangeRequestException = 
+                new InvalidHttpExchangeRequestException(
+                    message: "Invalid request, fix errors and try again.");
 
-            invalidArgumentHttpExchangeException.UpsertDataList(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.BaseAddress),
                 value: "Value is required");
 
-            invalidArgumentHttpExchangeException.UpsertDataList(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.RelativeUrl),
                 value: "Value is required");
 
-            invalidArgumentHttpExchangeException.UpsertDataList(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.HttpMethod),
                 value: "HttpMethod is invalid");
 
-            invalidArgumentHttpExchangeException.UpsertDataList(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.Version),
                 value: "HttpVersion is invalid");
 
-            invalidArgumentHttpExchangeException.UpsertDataList(
+            invalidHttpExchangeRequestException.UpsertDataList(
                 key: nameof(HttpExchangeRequest.VersionPolicy),
                 value: "HttpVersionPolicy is invalid");
 
             var expectedHttpExchangeValidationException =
                 new HttpExchangeValidationException(
                     message: "HttpExchange validation errors occurred, fix errors and try again.",
-                    innerException: invalidArgumentHttpExchangeException);
+                    innerException: invalidHttpExchangeRequestException);
 
             // when
             ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
