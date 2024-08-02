@@ -59,7 +59,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             string customHttpMethod,
             HttpMethod defaultHttpMethod)
         {
-            if (string.IsNullOrEmpty(customHttpMethod))
+            if (String.IsNullOrEmpty(customHttpMethod))
             {
                 return defaultHttpMethod;
             }
@@ -71,7 +71,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
            string customHttpVersion,
            Version defaultHttpVersion)
         {
-            if (string.IsNullOrEmpty(customHttpVersion))
+            if (String.IsNullOrEmpty(customHttpVersion))
             {
                 return defaultHttpVersion;
             }

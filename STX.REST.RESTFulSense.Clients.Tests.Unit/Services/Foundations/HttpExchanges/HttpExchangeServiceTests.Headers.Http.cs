@@ -211,7 +211,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             dynamic randomProductInfoHeaderProperities)
         {
             ProductInfoHeaderValue productInfoHeaderValue =
-                string.IsNullOrEmpty(randomProductInfoHeaderProperities.Comment)
+                String.IsNullOrEmpty(randomProductInfoHeaderProperities.Comment)
                     ? CreateProductInforHeaderValue(randomProductInfoHeaderProperities.Product)
                     : CreateProductInforHeaderValue(randomProductInfoHeaderProperities.Comment);
 

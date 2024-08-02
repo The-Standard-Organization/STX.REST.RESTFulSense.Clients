@@ -140,7 +140,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             randomRelativeURL =
                 randomRelativeURL +
                 "?" +
-                string.Join("&",
+                String.Join("&",
                     urlParameters.Select(item =>
                         $"{item.Key}={item.Value}"));
 
@@ -395,7 +395,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                             $"{urlParameter.Key}={urlParameter.Value}");
 
                 string query =
-                    string.Join("&",
+                    String.Join("&",
                         requestUri.Query
                             .Split("&")
                             .Concat(additionalParameters));

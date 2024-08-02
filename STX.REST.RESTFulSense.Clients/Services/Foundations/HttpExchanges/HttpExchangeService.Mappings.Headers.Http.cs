@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Linq;
 using System.Net.Http.Headers;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -183,7 +184,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             if (productInfoHeader is null)
                 return null;
 
-            return string.IsNullOrEmpty(productInfoHeader.Comment)
+            return String.IsNullOrEmpty(productInfoHeader.Comment)
                 ? new ProductInfoHeaderValue(MapToProductHeaderValue(productInfoHeader.Product))
                 : new ProductInfoHeaderValue(productInfoHeader.Comment);
         }

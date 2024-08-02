@@ -2,9 +2,8 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System;
 using System.Linq;
-using Newtonsoft.Json.Linq;
-
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -17,8 +16,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             MediaTypeHeader mediaTypeHeader)
         {
             return mediaTypeHeader is not null
-                && (string.IsNullOrWhiteSpace(mediaTypeHeader.MediaType)
-                    || string.IsNullOrWhiteSpace(mediaTypeHeader.CharSet));
+                && (String.IsNullOrWhiteSpace(mediaTypeHeader.MediaType)
+                    || String.IsNullOrWhiteSpace(mediaTypeHeader.CharSet));
         }
 
         private static bool IsInvalidMediaTypeHeaderArray(
@@ -39,7 +38,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             StringWithQualityHeader stringWithQualityHeader)
         {
             return stringWithQualityHeader is not null
-                && (string.IsNullOrWhiteSpace(stringWithQualityHeader.Value)
+                && (String.IsNullOrWhiteSpace(stringWithQualityHeader.Value)
                     || (stringWithQualityHeader.Quality is not null
                         && !IsDoubleBetweenZeroAndOne(
                             stringWithQualityHeader.Quality.Value)));
@@ -56,14 +55,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static bool IsInvalidAuthenticationHeader(AuthenticationHeader authenticationHeader)
         {
             return authenticationHeader is not null
-                && (string.IsNullOrWhiteSpace(authenticationHeader.Value)
-                    || string.IsNullOrWhiteSpace(authenticationHeader.Schema));
+                && (String.IsNullOrWhiteSpace(authenticationHeader.Value)
+                    || String.IsNullOrWhiteSpace(authenticationHeader.Schema));
         }
 
         private static bool IsInvalidNameValueHeader(NameValueHeader nameValueHeader)
         {
-            return string.IsNullOrWhiteSpace(nameValueHeader.Value)
-                || string.IsNullOrWhiteSpace(nameValueHeader.Name);
+            return String.IsNullOrWhiteSpace(nameValueHeader.Value)
+                || String.IsNullOrWhiteSpace(nameValueHeader.Name);
         }
 
         private static bool IsInvalidNameValueHeaderArray(NameValueHeader[] nameValueHeaders)
@@ -75,7 +74,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static bool IsInvalidNameValueHeader(NameValueWithParametersHeader nameValueWithParametersHeader)
         {
-            return string.IsNullOrWhiteSpace(nameValueWithParametersHeader.Name)
+            return String.IsNullOrWhiteSpace(nameValueWithParametersHeader.Name)
                 || IsInvalidNameValueHeaderArray(nameValueWithParametersHeader.Parameters);
         }
 
@@ -90,7 +89,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static bool IsInvalidStringArray(string[] stringArrayHeaders)
         {
             return stringArrayHeaders is not null
-                && stringArrayHeaders.Any(header => string.IsNullOrWhiteSpace(header));
+                && stringArrayHeaders.Any(header => String.IsNullOrWhiteSpace(header));
         }
 
         private static bool IsInvalidRangeItemHeader(RangeItemHeader rangeItemHeader)
@@ -109,7 +108,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static bool IsInvalidTransferCodingHeader(TransferCodingHeader transferCodingHeader)
         {
-            return string.IsNullOrWhiteSpace(transferCodingHeader.Value)
+            return String.IsNullOrWhiteSpace(transferCodingHeader.Value)
                 || IsInvalidNameValueHeaderArray(transferCodingHeader.Parameters)
                 || (transferCodingHeader.Quality is not null
                         && !IsDoubleBetweenZeroAndOne(
@@ -126,14 +125,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static bool IsInvalidProductHeader(ProductHeader productHeader)
         {
             return productHeader is not null
-                && (string.IsNullOrWhiteSpace(productHeader.Name)
-                    || string.IsNullOrWhiteSpace(productHeader.Version));
+                && (String.IsNullOrWhiteSpace(productHeader.Name)
+                    || String.IsNullOrWhiteSpace(productHeader.Version));
         }
 
         private static bool IsInvalidProductInfoHeader(ProductInfoHeader productInfoHeader)
         {
             return productInfoHeader is not null
-                && string.IsNullOrWhiteSpace(productInfoHeader.Comment)
+                && String.IsNullOrWhiteSpace(productInfoHeader.Comment)
                 && (productInfoHeader.Product is null
                     || IsInvalidProductHeader(productInfoHeader.Product));
         }
@@ -141,17 +140,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static bool IsInvalidViaHeader(ViaHeader viaHeader)
         {
             return viaHeader is not null
-                && (string.IsNullOrWhiteSpace(viaHeader.Comment)
-                    || string.IsNullOrWhiteSpace(viaHeader.ProtocolName)
-                    || string.IsNullOrWhiteSpace(viaHeader.ProtocolVersion)
-                    || string.IsNullOrWhiteSpace(viaHeader.ReceivedBy));
+                && (String.IsNullOrWhiteSpace(viaHeader.Comment)
+                    || String.IsNullOrWhiteSpace(viaHeader.ProtocolName)
+                    || String.IsNullOrWhiteSpace(viaHeader.ProtocolVersion)
+                    || String.IsNullOrWhiteSpace(viaHeader.ReceivedBy));
         }
 
         private static bool IsInvalidWarningHeader(WarningHeader warningHeader)
         {
             return warningHeader is not null
-                && (string.IsNullOrWhiteSpace(warningHeader.Agent)
-                    || string.IsNullOrWhiteSpace(warningHeader.Text));
+                && (String.IsNullOrWhiteSpace(warningHeader.Agent)
+                    || String.IsNullOrWhiteSpace(warningHeader.Text));
         }
 
         private static dynamic IsInvalidAcceptHeader(MediaTypeHeader[] mediaTypeHeaders) => new
@@ -162,42 +161,42 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static dynamic IsInvalidAcceptCharsetHeader(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
-        {
-            Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
-            Message = "AcceptCharset header has invalid configuration, fix errors and try again."
-        };
+            {
+                Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
+                Message = "AcceptCharset header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidAcceptEncodingHeader(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
-        {
-            Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
-            Message = "AcceptEncoding header has invalid configuration, fix errors and try again."
-        };
+            {
+                Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
+                Message = "AcceptEncoding header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidAcceptLanguageHeader(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
-        {
-            Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
-            Message = "AcceptLanguage header has invalid configuration, fix errors and try again."
-        };
+            {
+                Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
+                Message = "AcceptLanguage header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidAuthorizationHeader(
             AuthenticationHeader authenticationHeader) => new
-        {
-            Condition = IsInvalidAuthenticationHeader(authenticationHeader),
-            Message = "Authorization header has invalid configuration, fix errors and try again."
-        };
+            {
+                Condition = IsInvalidAuthenticationHeader(authenticationHeader),
+                Message = "Authorization header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidCacheControlHeader(
             CacheControlHeader cacheControlHeader) => new
-        {
-            Condition = cacheControlHeader is not null
+            {
+                Condition = cacheControlHeader is not null
                 && (IsInvalidNameValueHeaderArray(cacheControlHeader.Extensions)
                     || IsInvalidStringArray(cacheControlHeader.NoCacheHeaders)
                     || IsInvalidStringArray(cacheControlHeader.PrivateHeaders)),
 
-            Message = "CacheControl header has invalid configuration, fix errors and try again."
-        };
+                Message = "CacheControl header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidConnectionHeader(
             string[] connectionHeader) => new
@@ -217,7 +216,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             string fromHeader) => new
             {
                 Condition = fromHeader is not null
-                    && string.IsNullOrWhiteSpace(fromHeader),
+                    && String.IsNullOrWhiteSpace(fromHeader),
 
                 Message = "From header has invalid configuration, fix errors and try again."
             };
@@ -226,7 +225,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             string hostHeader) => new
             {
                 Condition = hostHeader is not null
-                    && string.IsNullOrWhiteSpace(hostHeader),
+                    && String.IsNullOrWhiteSpace(hostHeader),
 
                 Message = "Host header has invalid configuration, fix errors and try again."
             };
@@ -240,10 +239,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static dynamic IsInvalidIfNoneMatchHeader(
             string[] ifMatchHeader) => new
-        {
-            Condition = IsInvalidStringArray(ifMatchHeader),
-            Message = "IfNoneMatch header has invalid configuration, fix errors and try again."
-        };
+            {
+                Condition = IsInvalidStringArray(ifMatchHeader),
+                Message = "IfNoneMatch header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidIfRangeHeader(RangeConditionHeader rangeConditionHeader) => new
         {
@@ -252,7 +251,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     && rangeConditionHeader.Date is not null
                     && (rangeConditionHeader.EntityTag is not null
                         || (rangeConditionHeader.Date is null
-                            && string.IsNullOrWhiteSpace(rangeConditionHeader.EntityTag))),
+                            && String.IsNullOrWhiteSpace(rangeConditionHeader.EntityTag))),
 
             Message = "IfRange header has a invalid configuration." +
                         "Only one date and one entityTag can be set at a time, fix errors and try again."
@@ -266,29 +265,29 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static dynamic IsInvalidProtocolHeader(
             string protocolHeader) => new
-        {
-            Condition = protocolHeader is not null
-                && string.IsNullOrWhiteSpace(protocolHeader),
+            {
+                Condition = protocolHeader is not null
+                && String.IsNullOrWhiteSpace(protocolHeader),
 
-            Message = "Protocol header has invalid configuration, fix errors and try again."
-        };
+                Message = "Protocol header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidProxyAuthorizationHeader(
             AuthenticationHeader authenticationHeader) => new
-        {
-            Condition = IsInvalidAuthenticationHeader(authenticationHeader),
-            Message = "ProxyAuthorization header has invalid configuration, fix errors and try again."
+            {
+                Condition = IsInvalidAuthenticationHeader(authenticationHeader),
+                Message = "ProxyAuthorization header has invalid configuration, fix errors and try again."
             };
 
         private static dynamic IsInvalidRangeHeader(
             RangeHeader rangeHeader) => new
-        {
-            Condition = rangeHeader is not null
-                && (string.IsNullOrWhiteSpace(rangeHeader.Unit)
+            {
+                Condition = rangeHeader is not null
+                && (String.IsNullOrWhiteSpace(rangeHeader.Unit)
                     || IsInvalidRangeItemHeaderArray(rangeHeader.Ranges)),
 
-            Message = "Range header has invalid configuration, fix errors and try again."
-        };
+                Message = "Range header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidTEHeader(TransferCodingHeader[] transferCodingHeaders) => new
         {
@@ -298,10 +297,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static dynamic IsInvalidTrailerHeader(
             string[] trailerHeader) => new
-        {
-            Condition = IsInvalidStringArray(trailerHeader),
-            Message = "Trailer header has invalid configuration, fix errors and try again."
-        };
+            {
+                Condition = IsInvalidStringArray(trailerHeader),
+                Message = "Trailer header has invalid configuration, fix errors and try again."
+            };
 
         private static dynamic IsInvalidTransferEncodingHeaderArray(TransferCodingHeader[] transferCodingHeaders) => new
         {

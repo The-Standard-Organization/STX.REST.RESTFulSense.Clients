@@ -110,7 +110,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         private static dynamic IsInvalid(string text) =>
             new
             {
-                Condition = string.IsNullOrWhiteSpace(text),
+                Condition = String.IsNullOrWhiteSpace(text),
                 Message = "Value is required"
             };
 
@@ -119,9 +119,9 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 Condition =
                     (defaultHttpMethod is null
-                        && string.IsNullOrWhiteSpace(customHttpMethod))
+                        && String.IsNullOrWhiteSpace(customHttpMethod))
                     || (defaultHttpMethod is not null
-                        && !string.IsNullOrWhiteSpace(customHttpMethod)
+                        && !String.IsNullOrWhiteSpace(customHttpMethod)
                         && customHttpMethod != defaultHttpMethod.Method),
 
                 Message = "HttpMethod is invalid"

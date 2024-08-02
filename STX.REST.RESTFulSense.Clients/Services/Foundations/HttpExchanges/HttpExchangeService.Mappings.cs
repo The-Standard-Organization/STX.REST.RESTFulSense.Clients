@@ -45,7 +45,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                             $"{urlParameter.Key}={urlParameter.Value}");
 
                 fullRelativeUrl =
-                    string.Join("&",
+                    String.Join("&",
                         relativeUrl
                             .Split("&")
                             .Concat(additionalParameters));
