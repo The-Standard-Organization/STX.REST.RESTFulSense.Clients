@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-02-02T22:39:26.900Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/22.0.3 Chrome/114.0.5735.289 Electron/25.8.4 Safari/537.36" etag="nTxLiMzLXPl-msR2O9F2" version="22.0.3" type="device">
+<mxfile host="Electron" modified="2024-08-02T23:03:21.865Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.6.4 Chrome/124.0.6367.207 Electron/30.0.6 Safari/537.36" etag="dh428ccSJnQcJFmQKHdA" version="24.6.4" type="device">
   <diagram name="Page-1" id="6Qn3QU3YE5SgPKuJZF0y">
-    <mxGraphModel dx="3197" dy="1640" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="3301" dy="2233" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -16,13 +16,13 @@
         <mxCell id="LlCKWEEeV9lsxUlKN8iy-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="LlCKWEEeV9lsxUlKN8iy-1" target="LlCKWEEeV9lsxUlKN8iy-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="LlCKWEEeV9lsxUlKN8iy-1" value="Http Orchestration Service" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="LlCKWEEeV9lsxUlKN8iy-1" value="HttpExchange Orchestration Service" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="210" y="380" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="LlCKWEEeV9lsxUlKN8iy-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="LlCKWEEeV9lsxUlKN8iy-2" target="LlCKWEEeV9lsxUlKN8iy-12" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="LlCKWEEeV9lsxUlKN8iy-2" value="Http Service" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="LlCKWEEeV9lsxUlKN8iy-2" value="HttpExchange Service" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="400" y="260" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="LlCKWEEeV9lsxUlKN8iy-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="LlCKWEEeV9lsxUlKN8iy-3" target="LlCKWEEeV9lsxUlKN8iy-5" edge="1">
@@ -48,7 +48,7 @@
             <mxPoint x="1080" y="290" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="LlCKWEEeV9lsxUlKN8iy-12" value="Http Broker" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="LlCKWEEeV9lsxUlKN8iy-12" value="HttpClient Broker" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="560" y="260" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="LlCKWEEeV9lsxUlKN8iy-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="LlCKWEEeV9lsxUlKN8iy-16" target="LlCKWEEeV9lsxUlKN8iy-18" edge="1">
