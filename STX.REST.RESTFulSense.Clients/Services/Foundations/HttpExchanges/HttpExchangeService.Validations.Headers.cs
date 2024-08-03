@@ -254,7 +254,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                             && String.IsNullOrWhiteSpace(rangeConditionHeader.EntityTag))),
 
             Message = "IfRange header has a invalid configuration." +
-                        "Only one date and one entityTag can be set at a time, fix errors and try again."
+                        "Only one of either date or entityTag can be set at a time. Please fix the errors and try again."
         };
 
         private static dynamic IsInvalidPragmaHeader(NameValueHeader[] nameValueHeaders) => new
