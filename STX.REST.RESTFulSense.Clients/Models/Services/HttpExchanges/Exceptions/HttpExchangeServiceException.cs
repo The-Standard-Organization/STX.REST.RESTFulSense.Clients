@@ -3,12 +3,14 @@
 // ----------------------------------------------------------------------------------
 
 using System;
+using Xeptions;
 
-namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
+namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions
 {
-    public class RangeConditionHeader
+    public class HttpExchangeServiceException : Xeption
     {
-        public DateTimeOffset? Date { get; init; }
-        public string EntityTag { get; init; }
+        public HttpExchangeServiceException(string message, Xeption innerException)
+            : base(message, innerException)
+        { }
     }
 }

@@ -6,13 +6,18 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-
 namespace STX.REST.RESTFulSense.Clients.Brokers.Https
 {
-    internal interface IHttpClientBroker
+    internal class HttpBroker : IHttpBroker
     {
-        ValueTask<HttpResponseMessage> SendRequestAsync(
+        private readonly HttpClient httpClient;
+
+        public HttpBroker(HttpClient httpClient) =>
+            this.httpClient = httpClient;
+
+        public async ValueTask<HttpResponseMessage> SendRequestAsync(
             HttpRequestMessage httpRequestMessage,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken = default) =>
+            await this.httpClient.SendAsync(httpRequestMessage, cancellationToken);
     }
 }
