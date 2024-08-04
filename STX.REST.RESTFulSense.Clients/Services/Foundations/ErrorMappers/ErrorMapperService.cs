@@ -26,7 +26,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
 
             StatusDetail statusDetail = statusDetails
                 .FirstOrDefault(statusDetail =>
-                    statusDetail != null && statusDetail.Code == statusCode);
+                    statusDetail != null
+                        && statusDetail.Code == statusCode);
 
             ValidateStatusDetail(statusDetail);
 
