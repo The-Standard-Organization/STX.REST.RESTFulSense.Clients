@@ -2,9 +2,9 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using System.Threading;
 using System.Threading.Tasks;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 
 namespace STX.REST.RESTFulSense.Clients.Clients
 {

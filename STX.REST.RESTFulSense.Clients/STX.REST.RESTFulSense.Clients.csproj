@@ -46,6 +46,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+        <InternalsVisibleTo Include="STX.REST.RESTFulSense.TestApp" />
 		<InternalsVisibleTo Include="STX.REST.RESTFulSense.Clients.Tests.Unit" />
 		<InternalsVisibleTo Include="STX.REST.RESTFulSense.Clients.Tests.Acceptance" />
 		<InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
@@ -53,7 +54,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	  <PackageReference Include="Xeption" Version="2.6.0" />
+	  <PackageReference Include="Xeption" Version="2.8.0" />
 	</ItemGroup>
 
 	<ItemGroup>
