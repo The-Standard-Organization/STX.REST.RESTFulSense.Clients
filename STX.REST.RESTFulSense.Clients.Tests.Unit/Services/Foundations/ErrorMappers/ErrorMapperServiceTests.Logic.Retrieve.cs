@@ -8,7 +8,7 @@ using System.Net;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
-using STX.REST.RESTFulSense.Clients.Models.Errors;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers;
 using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMappers
@@ -16,7 +16,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
     public partial class ErrorMapperServiceTests
     {
         [Fact]
-        private async ValueTask ShouldRetrieveStatusDetailByStatusCodeAsync()
+        private async Task ShouldRetrieveStatusDetailByStatusCodeAsync()
         {
             // given
             HttpStatusCode randomStatusCode = GetRandomHttpStatusCode();

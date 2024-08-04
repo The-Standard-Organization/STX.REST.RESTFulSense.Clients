@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STX.REST.RESTFulSense.Clients.Infrastructure.Build", "STX.REST.RESTFulSense.Clients.Infrastructure.Build\STX.REST.RESTFulSense.Clients.Infrastructure.Build.csproj", "{86F966F3-3687-4039-AF8B-7725A2C37DA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STX.REST.RESTFulSense.Clients.Infrastructure.Build", "STX.REST.RESTFulSense.Clients.Infrastructure.Build\STX.REST.RESTFulSense.Clients.Infrastructure.Build.csproj", "{86F966F3-3687-4039-AF8B-7725A2C37DA1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STX.REST.RESTFulSense.Clients", "STX.REST.RESTFulSense.Clients\STX.REST.RESTFulSense.Clients.csproj", "{CF3DDBED-856C-422B-B301-C3034C738D99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STX.REST.RESTFulSense.Clients", "STX.REST.RESTFulSense.Clients\STX.REST.RESTFulSense.Clients.csproj", "{CF3DDBED-856C-422B-B301-C3034C738D99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STX.REST.RESTFulSense.Clients.Tests.Unit", "STX.REST.RESTFulSense.Clients.Tests.Unit\STX.REST.RESTFulSense.Clients.Tests.Unit.csproj", "{88EFB98C-9B35-4AE4-99F3-7ED49EC9885F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STX.REST.RESTFulSense.Clients.Tests.Unit", "STX.REST.RESTFulSense.Clients.Tests.Unit\STX.REST.RESTFulSense.Clients.Tests.Unit.csproj", "{88EFB98C-9B35-4AE4-99F3-7ED49EC9885F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STX.REST.RESTFulSense.Clients.Tests.Acceptance", "STX.REST.RESTFulSense.Clients.Tests.Acceptance\STX.REST.RESTFulSense.Clients.Tests.Acceptance.csproj", "{2D9B2FFC-7B41-4DE7-A187-AA58CCD763BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "STX.REST.RESTFulSense.Clients.Tests.Acceptance", "STX.REST.RESTFulSense.Clients.Tests.Acceptance\STX.REST.RESTFulSense.Clients.Tests.Acceptance.csproj", "{2D9B2FFC-7B41-4DE7-A187-AA58CCD763BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "STX.REST.RESTFulSense.TestApp", "STX.REST.RESTFulSense.TestApp\STX.REST.RESTFulSense.TestApp.csproj", "{D68478CA-9B0B-455A-A538-7DE548381398}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2D9B2FFC-7B41-4DE7-A187-AA58CCD763BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D9B2FFC-7B41-4DE7-A187-AA58CCD763BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D9B2FFC-7B41-4DE7-A187-AA58CCD763BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D68478CA-9B0B-455A-A538-7DE548381398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D68478CA-9B0B-455A-A538-7DE548381398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D68478CA-9B0B-455A-A538-7DE548381398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D68478CA-9B0B-455A-A538-7DE548381398}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

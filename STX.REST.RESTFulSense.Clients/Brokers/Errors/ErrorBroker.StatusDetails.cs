@@ -3,13 +3,13 @@
 // ----------------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using STX.REST.RESTFulSense.Clients.Models.Errors;
+using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers;
 
 namespace STX.REST.RESTFulSense.Clients.Brokers.Errors
 {
     internal partial class ErrorBroker : IErrorBroker
     {
-        private IEnumerable<StatusDetail> statusDetails = new List<StatusDetail>
+        private static IEnumerable<StatusDetail> statusDetails = new List<StatusDetail>
         {
             new StatusDetail
             {

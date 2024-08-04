@@ -2,11 +2,13 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-namespace STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers
+namespace STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers
 {
-    public class NameValueWithParameters
+    internal class StatusDetail
     {
-        public string Name { get; init; }
-        public NameValueHeader[] Parameters { get; init; }
+        public int Code { get; set; }
+        public string Reason { get; set; }
+        public string Description { get; set; }
+        public string Type { get; set; }
     }
 }

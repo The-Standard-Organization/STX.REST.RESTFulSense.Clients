@@ -8,18 +8,10 @@ using System.Threading.Tasks;
 
 namespace STX.REST.RESTFulSense.Clients.Brokers.Https
 {
-    internal class HttpClientBroker : IHttpClientBroker
+    internal interface IHttpBroker
     {
-        private readonly HttpClient httpClient;
-
-        public HttpClientBroker(HttpClient httpClient) =>
-            this.httpClient = httpClient;
-
-        public async ValueTask<HttpResponseMessage> SendRequestAsync(
+        ValueTask<HttpResponseMessage> SendRequestAsync(
             HttpRequestMessage httpRequestMessage,
-            CancellationToken cancellationToken) =>
-                await this.httpClient.SendAsync(
-                    httpRequestMessage,
-                    cancellationToken);
+            CancellationToken cancellationToken = default);
     }
 }
