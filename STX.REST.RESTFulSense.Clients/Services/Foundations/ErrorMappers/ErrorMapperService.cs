@@ -21,7 +21,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         {
             ValidateStatusCode(statusCode);
 
-            IQueryable<StatusDetail> statusDetails = await errorBroker.SelectAllStatusDetailsAsync();
+            IQueryable<StatusDetail> statusDetails =
+                await errorBroker.SelectAllStatusDetailsAsync();
 
             StatusDetail statusDetail = statusDetails
                 .FirstOrDefault(statusDetail =>
@@ -29,7 +30,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
 
             ValidateStatusDetail(statusDetail);
 
-            return await ValueTask.FromResult(statusDetail);
+            return statusDetail;
         });
     }
 }
