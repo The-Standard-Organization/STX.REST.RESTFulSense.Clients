@@ -26,8 +26,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
                 CreateRandomStatusDetail(randomStatusCodeValue);
 
             this.errorBrokerMock.Setup(broker =>
-                 broker.SelectAllStatusDetails())
-                    .Returns(new List<StatusDetail> { expectedStatusDetail }
+                 broker.SelectAllStatusDetailsAsync())
+                    .ReturnsAsync(new List<StatusDetail> { expectedStatusDetail }
                     .AsQueryable());
 
             // when
@@ -39,7 +39,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.ErrorMap
             actualStatusDetail.Should().BeEquivalentTo(expectedStatusDetail);
 
             this.errorBrokerMock.Verify(broker =>
-                broker.SelectAllStatusDetails(), Times.Once);
+                broker.SelectAllStatusDetailsAsync(), Times.Once);
 
             this.errorBrokerMock.VerifyNoOtherCalls();
         }

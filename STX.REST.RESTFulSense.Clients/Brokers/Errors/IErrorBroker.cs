@@ -3,12 +3,13 @@
 // ----------------------------------------------------------------------------------
 
 using System.Linq;
+using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers;
 
 namespace STX.REST.RESTFulSense.Clients.Brokers.Errors
 {
     internal interface IErrorBroker
     {
-        IQueryable<StatusDetail> SelectAllStatusDetails();
+        ValueTask<IQueryable<StatusDetail>> SelectAllStatusDetailsAsync();
     }
 }
