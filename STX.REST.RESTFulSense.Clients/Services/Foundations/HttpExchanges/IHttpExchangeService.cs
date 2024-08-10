@@ -13,5 +13,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         ValueTask<HttpExchange> GetAsync(
             HttpExchange localHttpClient,
             CancellationToken cancellationToken = default);
+
+        ValueTask<HttpExchange> PostAsync(HttpExchange localHttpClient);
     }
 }

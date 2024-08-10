@@ -78,5 +78,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
             return Version.Parse(customHttpVersion);
         }
+
+        public ValueTask<HttpExchange> PostAsync(
+            HttpExchange httpExchange,
+            CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
