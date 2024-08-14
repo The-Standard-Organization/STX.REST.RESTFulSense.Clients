@@ -22,15 +22,15 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
             }
             catch (InvalidErrorMapperException invalidErrorMapperException)
             {
-                throw await CreateErrorMapperException(invalidErrorMapperException);
+                throw await CreateErrorMapperExceptionAsync(invalidErrorMapperException);
             }
             catch (NotFoundErrorMapperException notFoundErrorMapperException)
             {
-                throw await CreateErrorMapperException(notFoundErrorMapperException);
+                throw await CreateErrorMapperExceptionAsync(notFoundErrorMapperException);
             }
         }
 
-        private static async ValueTask<ErrorMapperValidationException> CreateErrorMapperException(
+        private static async ValueTask<ErrorMapperValidationException> CreateErrorMapperExceptionAsync(
             Xeption innerException) =>
                 new ErrorMapperValidationException(
                     message: "Error mapper validation errors occurred, please try again.",
