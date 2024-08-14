@@ -19,7 +19,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
         public ValueTask<StatusDetail> RetrieveStatusDetailByStatusCodeAsync(int statusCode) =>
         TryCatch(async () =>
         {
-            ValidateStatusCode(statusCode);
+            await ValidateStatusCodeAsync(statusCode);
 
             IQueryable<StatusDetail> statusDetails =
                 await errorBroker.SelectAllStatusDetailsAsync();
@@ -29,7 +29,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
                     statusDetail != null
                         && statusDetail.Code == statusCode);
 
-            ValidateStatusDetail(statusDetail);
+            await ValidateStatusDetailAsync(statusDetail);
 
             return statusDetail;
         });
