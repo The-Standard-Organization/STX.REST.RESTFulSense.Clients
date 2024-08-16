@@ -27,7 +27,9 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 CreateRandomHttpProperties(
                     sendUrlParameters,
                     sendRequestHeaders,
-                    sendRequestContent: false);
+                    sendRequestContent: false,
+                    sendRequestContentHeaders: false,
+                    sendRequestHttpMethod: HttpMethod.Get.Method);
 
             HttpExchange inputHttpExchange =
                 CreateRandomHttpExchangeRequest(
