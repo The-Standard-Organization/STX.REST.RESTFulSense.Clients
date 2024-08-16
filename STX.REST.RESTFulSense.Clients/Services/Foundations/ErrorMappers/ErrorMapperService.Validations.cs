@@ -2,6 +2,7 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
+using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers;
 using STX.REST.RESTFulSense.Clients.Models.Services.ErrorMappers.Exceptions;
 
@@ -9,7 +10,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
 {
     internal partial class ErrorMapperService
     {
-        private static void ValidateStatusCode(int statusCode)
+        private static async ValueTask ValidateStatusCodeAsync(int statusCode)
         {
             if (statusCode == default(int))
             {
@@ -18,7 +19,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.ErrorMappers
             }
         }
 
-        private static void ValidateStatusDetail(
+        private static async ValueTask ValidateStatusDetailAsync(
             StatusDetail maybeStatusDetail)
         {
             if (maybeStatusDetail is null)
