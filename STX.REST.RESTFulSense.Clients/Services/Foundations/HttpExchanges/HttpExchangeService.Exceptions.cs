@@ -24,22 +24,22 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             }
             catch (InvalidHttpExchangeException invalidHttpExchangeException)
             {
-                throw CreateHttpExchangeValidationException(
+                throw await CreateHttpExchangeValidationException(
                     exception: invalidHttpExchangeException);
             }
             catch (NullHttpExchangeRequestException nullHttpExchangeRequestException)
             {
-                throw CreateHttpExchangeValidationException(
+                throw await CreateHttpExchangeValidationException(
                     exception: nullHttpExchangeRequestException);
             }
             catch (InvalidHttpExchangeRequestException invalidHttpExchangeRequestException)
             {
-                throw CreateHttpExchangeValidationException(
+                throw await CreateHttpExchangeValidationException(
                     invalidHttpExchangeRequestException);
             }
             catch (InvalidHttpExchangeRequestHeaderException invalidHttpExchangeHeaderException)
             {
-                throw CreateHttpExchangeValidationException(
+                throw await CreateHttpExchangeValidationException(
                     invalidHttpExchangeHeaderException);
             }
             catch (HttpRequestException httpRequestException)
@@ -49,7 +49,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         message: "Failed http request error occurred, contact support.",
                         innerException: httpRequestException);
 
-                throw CreateHttpExchangeDependencyException(
+                throw await CreateHttpExchangeDependencyException(
                     failedHttpExchangeRequestException);
             }
             catch (TaskCanceledException taskCanceledException)
@@ -59,7 +59,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         message: "Request timeout error occurred, please contact support.",
                         innerException: taskCanceledException);
 
-                throw CreateHttpExchangeDependencyException(
+                throw await CreateHttpExchangeDependencyException(
                     taskCanceledHttpExchangeException);
             }
             catch (ObjectDisposedException objectDisposedException)
@@ -69,7 +69,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         message: "Object already disposed error occurred, please fix errors and try again.",
                         innerException: objectDisposedException);
 
-                throw CreateHttpExchangeDependencyException(
+                throw await CreateHttpExchangeDependencyException(
                     objectDisposedHttpExchangeException);
             }
             catch (InvalidOperationException invalidOperationException)
@@ -79,7 +79,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         message: "Invalid http request operation error occurred, please contact support.",
                         innerException: invalidOperationException);
 
-                throw CreateHttpExchangeDependencyException(
+                throw await CreateHttpExchangeDependencyException(
                     invalidOperationHttpExchangeException);
             }
             catch (ArgumentException argumentException)
@@ -89,7 +89,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         message: "Invalid argument error occurred, contact support.",
                         innerException: argumentException);
 
-                throw CreateHttpExchangeDependencyException(
+                throw await CreateHttpExchangeDependencyException(
                     invalidArgumentHttpExchangeException);
             }
             catch (FormatException formatException)
@@ -99,7 +99,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         message: "Invalid format error occurred, contact support.",
                         innerException: formatException);
 
-                throw CreateHttpExchangeDependencyException(
+                throw await CreateHttpExchangeDependencyException(
                     invalidFormatHttpExchangeException);
             }
             catch (Exception serviceException)
@@ -109,12 +109,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         message: "Failed HttpExchange service error occurred, contact support.",
                         innerException: serviceException);
 
-                throw CreateHttpExchangeServiceException(
+                throw await CreateHttpExchangeServiceException(
                     failedHttpExchangeServiceException);
             }
         }
 
-        private static HttpExchangeValidationException CreateHttpExchangeValidationException(
+        private static async ValueTask<HttpExchangeValidationException> CreateHttpExchangeValidationException(
             Xeption exception)
         {
             return new HttpExchangeValidationException(
@@ -122,7 +122,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 innerException: exception);
         }
 
-        private static HttpExchangeDependencyException CreateHttpExchangeDependencyException(
+        private static async ValueTask<HttpExchangeDependencyException> CreateHttpExchangeDependencyException(
             Xeption exception)
         {
             return new HttpExchangeDependencyException(
@@ -130,7 +130,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 innerException: exception);
         }
 
-        private static HttpExchangeServiceException CreateHttpExchangeServiceException(
+        private static async ValueTask<HttpExchangeServiceException> CreateHttpExchangeServiceException(
             Xeption exception)
         {
             return new HttpExchangeServiceException(

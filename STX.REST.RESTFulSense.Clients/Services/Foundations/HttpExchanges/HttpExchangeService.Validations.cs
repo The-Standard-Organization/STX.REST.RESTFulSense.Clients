@@ -5,6 +5,7 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 
@@ -12,7 +13,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
-        private static void ValidateOnGet(
+        private static async ValueTask ValidateOnGet(
             HttpExchange httpExchange,
             HttpMethod defaultHttpMethod,
             Version defaultHttpVersion,
@@ -24,33 +25,33 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 (Rule: IsInvalid(defaultHttpVersion), Parameter: nameof(Version)),
                 (Rule: IsInvalid(defaultHttpVersionPolicy), Parameter: nameof(HttpVersionPolicy)));
 
-            ValidateHttpExchange(
+            await ValidateHttpExchange(
                 httpExchange,
                 defaultHttpMethod,
                 defaultHttpVersion,
                 defaultHttpVersionPolicy);
         }
 
-        private static void ValidateHttpExchange(
+        private static async ValueTask ValidateHttpExchange(
             HttpExchange httpExchange,
             HttpMethod httpMethod,
             Version httpVersion,
             HttpVersionPolicy httpVersionPolicy)
         {
-            ValidateHttpExchangeRequest(
+            await ValidateHttpExchangeRequest(
                 httpExchangeRequest: httpExchange.Request,
                 httpMethod,
                 httpVersion,
                 httpVersionPolicy);
         }
 
-        private static void ValidateHttpExchangeRequest(
+        private static async ValueTask ValidateHttpExchangeRequest(
             HttpExchangeRequest httpExchangeRequest,
             HttpMethod httpMethod,
             Version httpVersion,
             HttpVersionPolicy httpVersionPolicy)
         {
-            ValidateHttpExchangeRequestNotNull(httpExchangeRequest);
+            await ValidateHttpExchangeRequestNotNull(httpExchangeRequest);
 
             ValidateHttpExchangeRequestObject(
                 (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
@@ -71,7 +72,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             ValidateHttpExchangeRequestHeaders(httpExchangeRequestHeaders: httpExchangeRequest.Headers);
         }
 
-        private static void ValidateHttpExchangeRequestNotNull(HttpExchangeRequest httpExchangeRequest)
+        private static async ValueTask ValidateHttpExchangeRequestNotNull(HttpExchangeRequest httpExchangeRequest)
         {
             if (httpExchangeRequest is null)
             {
