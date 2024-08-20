@@ -19,7 +19,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Version defaultHttpVersion,
             HttpVersionPolicy defaultHttpVersionPolicy)
         {
-            Validate(
+            await ValidateAsync(
                 (Rule: IsInvalid(httpExchange), Parameter: nameof(HttpExchange)),
                 (Rule: IsInvalid(defaultHttpMethod), Parameter: nameof(HttpMethod)),
                 (Rule: IsInvalid(defaultHttpVersion), Parameter: nameof(Version)),
@@ -69,7 +69,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 (Rule: IsInvalidHttpVersionPolicy(httpExchangeRequest.VersionPolicy, httpVersionPolicy),
                     Parameter: nameof(HttpExchangeRequest.VersionPolicy)));
 
-            ValidateHttpExchangeRequestHeaders(httpExchangeRequestHeaders: httpExchangeRequest.Headers);
+            await ValidateHttpExchangeRequestHeadersAsync(httpExchangeRequestHeaders: httpExchangeRequest.Headers);
         }
 
         private static async ValueTask ValidateHttpExchangeRequestNotNullAsync(HttpExchangeRequest httpExchangeRequest)
@@ -144,7 +144,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "HttpVersionPolicy is invalid"
             };
 
-        private static void Validate(params (dynamic Rule, string Parameter)[] validations)
+        private static async ValueTask ValidateAsync(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeException =
                 new InvalidHttpExchangeException(
@@ -163,7 +163,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             invalidHttpExchangeException.ThrowIfContainsErrors();
         }
 
-        private static async ValueTask ValidateHttpExchangeRequestObjectAsync(params (dynamic Rule, string Parameter)[] validations)
+        private static async ValueTask ValidateHttpExchangeRequestObjectAsync(
+            params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeRequestException =
                 new InvalidHttpExchangeRequestException(

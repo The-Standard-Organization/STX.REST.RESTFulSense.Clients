@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -344,13 +345,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Message = "Warning header has invalid configuration, fix errors and try again."
         };
 
-        private static void ValidateHttpExchangeRequestHeaders(
+        private static async ValueTask ValidateHttpExchangeRequestHeadersAsync(
             HttpExchangeRequestHeaders httpExchangeRequestHeaders)
         {
             if (httpExchangeRequestHeaders is null)
                 return;
 
-            ValidateHttpRequestHeaders(
+            await ValidateHttpRequestHeadersAsync(
                 (Rule: IsInvalidAcceptHeader(httpExchangeRequestHeaders.Accept),
                 Parameter: nameof(HttpExchangeRequestHeaders.Accept)),
 
@@ -421,11 +422,11 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Parameter: nameof(HttpExchangeRequestHeaders.Via)),
 
                 (Rule: IsInvalidWarningHeaderArray(httpExchangeRequestHeaders.Warning),
-                Parameter: nameof(HttpExchangeRequestHeaders.Warning))
-                );
+                Parameter: nameof(HttpExchangeRequestHeaders.Warning)));
         }
 
-        private static void ValidateHttpRequestHeaders(params (dynamic Rule, string Parameter)[] validations)
+        private static async ValueTask ValidateHttpRequestHeadersAsync(
+            params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeHeaderException =
                 new InvalidHttpExchangeRequestHeaderException(
