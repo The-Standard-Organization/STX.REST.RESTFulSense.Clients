@@ -39,7 +39,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 defaultHttpVersionPolicy);
 
            HttpRequestMessage httpRequestMessage =
-                MapToHttpRequest(
+                await MapToHttpRequestAsync(
                     httpExchangeRequest: httpExchange.Request,
                     defaultHttpMethod: defaultHttpMethod,
                     defaultHttpVersion: defaultHttpVersion,
@@ -50,12 +50,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     httpRequestMessage: httpRequestMessage,
                     cancellationToken: cancellationToken);
 
-            return MapToHttpExchange(
+            return await MapToHttpExchange(
                 httpExchange,
                 httpResponseMessage);
         });
 
-        private static HttpMethod GetHttpMethod(
+        private static async ValueTask<HttpMethod> GetHttpMethodAsync(
             string customHttpMethod,
             HttpMethod defaultHttpMethod)
         {
@@ -67,7 +67,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return HttpMethod.Parse(customHttpMethod);
         }
 
-        private static Version GetHttpVersion(
+        private static async ValueTask<Version> GetHttpVersionAsync(
            string customHttpVersion,
            Version defaultHttpVersion)
         {

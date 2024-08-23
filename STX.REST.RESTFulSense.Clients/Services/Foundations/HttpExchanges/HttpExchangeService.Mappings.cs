@@ -14,7 +14,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
-        private static TOutput[] MapArray<TInput, TOutput>(
+        private static async ValueTask<TOutput[]> MapArrayAsync<TInput, TOutput>(
             IEnumerable<TInput> elements,
             Func<TInput, TOutput> functionMapping)
         {
@@ -54,7 +54,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return fullRelativeUrl;
         }
 
-        private static HttpRequestMessage MapToHttpRequest(
+        private static async ValueTask<HttpRequestMessage> MapToHttpRequestAsync(
             HttpExchangeRequest httpExchangeRequest,
             HttpMethod defaultHttpMethod,
             Version defaultHttpVersion,
@@ -73,12 +73,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     relativeUrl);
 
             HttpMethod httpMethod =
-                GetHttpMethod(
+                await GetHttpMethodAsync(
                     customHttpMethod: httpExchangeRequest.HttpMethod,
                     defaultHttpMethod);
 
             Version httpVersion =
-                GetHttpVersion(
+                await GetHttpVersionAsync(
                     customHttpVersion: httpExchangeRequest.Version,
                     defaultHttpVersion: defaultHttpVersion);
 
@@ -103,7 +103,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return httpRequestMessage;
         }
 
-        private static HttpExchange MapToHttpExchange(
+        private static async ValueTask<HttpExchange> MapToHttpExchange(
             HttpExchange httpExchange,
             HttpResponseMessage httpResponseMessage)
         {
@@ -111,7 +111,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 new HttpExchangeResponse
                 {
                     Headers =
-                        MapHttpExchangeResponseHeaders(
+                        await MapHttpExchangeResponseHeaders(
                             httpResponseMessage.Headers),
 
                     Content =

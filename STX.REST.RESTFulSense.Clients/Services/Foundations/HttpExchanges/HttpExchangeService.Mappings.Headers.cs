@@ -4,6 +4,7 @@
 
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
@@ -266,7 +267,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             }
         }
 
-        private static HttpExchangeResponseHeaders MapHttpExchangeResponseHeaders(
+        private static async ValueTask<HttpExchangeResponseHeaders> MapHttpExchangeResponseHeaders(
             HttpResponseHeaders httpResponseHeaders)
         {
             if (httpResponseHeaders is null)
@@ -275,7 +276,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return new HttpExchangeResponseHeaders
             {
                 AcceptRanges =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.AcceptRanges,
                         @string => @string),
 
@@ -286,7 +287,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         httpResponseHeaders.CacheControl),
 
                 Connection =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.Connection,
                         @string => @string),
 
@@ -296,12 +297,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Location = httpResponseHeaders.Location,
 
                 Pragma =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.Pragma,
                         MapToNameValueHeader),
 
                 ProxyAuthenticate =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.ProxyAuthenticate,
                         MapToAuthenticationHeader),
 
@@ -310,17 +311,17 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         httpResponseHeaders.RetryAfter),
 
                 Server =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.Server,
                         MapToProductInfoHeader),
 
                 Trailer =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.Trailer,
                         @string => @string),
 
                 TransferEncoding =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.TransferEncoding,
                         MapToTransferCodingHeader),
 
@@ -328,33 +329,33 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         httpResponseHeaders.TransferEncodingChunked,
 
                 Upgrade =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.Upgrade,
                         MapToProductHeader),
 
                 Vary =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.Vary,
                         @string => @string),
 
                 Via =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.Via,
                         MapToViaHeader),
 
                 Warning =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.Warning,
                         MapToWarningHeader),
 
                 WwwAuthenticate =
-                    MapArray(
+                    await MapArrayAsync(
                         httpResponseHeaders.WwwAuthenticate,
                         MapToAuthenticationHeader)
             };
         }
 
-        private static HttpExchangeContentHeaders MapHttpExchangeContentHeaders(
+        private static async ValueTask<HttpExchangeContentHeaders> MapHttpExchangeContentHeaders(
             HttpContentHeaders httpContentHeaders)
         {
             if (httpContentHeaders is null)
@@ -363,7 +364,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             return new HttpExchangeContentHeaders
             {
                 Allow =
-                    MapArray(
+                    await MapArrayAsync(
                         httpContentHeaders.Allow,
                         @string => @string),
 
@@ -372,12 +373,12 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         httpContentHeaders.ContentDisposition),
 
                 ContentEncoding =
-                    MapArray(
+                    await MapArrayAsync(
                         httpContentHeaders.ContentEncoding,
                         @string => @string),
 
                 ContentLanguage =
-                    MapArray(
+                    await MapArrayAsync(
                         httpContentHeaders.ContentLanguage,
                         @string => @string),
 
