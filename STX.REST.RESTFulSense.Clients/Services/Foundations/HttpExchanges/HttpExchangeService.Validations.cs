@@ -5,6 +5,7 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 
@@ -12,66 +13,67 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 {
     internal partial class HttpExchangeService
     {
-        private static void ValidateOnGet(
+        private static async ValueTask ValidateOnGetAsync(
             HttpExchange httpExchange,
             HttpMethod defaultHttpMethod,
             Version defaultHttpVersion,
             HttpVersionPolicy defaultHttpVersionPolicy)
         {
-            Validate(
-                (Rule: IsInvalid(httpExchange), Parameter: nameof(HttpExchange)),
-                (Rule: IsInvalid(defaultHttpMethod), Parameter: nameof(HttpMethod)),
-                (Rule: IsInvalid(defaultHttpVersion), Parameter: nameof(Version)),
-                (Rule: IsInvalid(defaultHttpVersionPolicy), Parameter: nameof(HttpVersionPolicy)));
+            await ValidateAsync(
+                (Rule: await IsInvalidAsync(httpExchange), Parameter: nameof(HttpExchange)),
+                (Rule: await IsInvalidAsync(defaultHttpMethod), Parameter: nameof(HttpMethod)),
+                (Rule: await IsInvalidAsync(defaultHttpVersion), Parameter: nameof(Version)),
+                (Rule: await IsInvalidAsync(defaultHttpVersionPolicy), Parameter: nameof(HttpVersionPolicy)));
 
-            ValidateHttpExchange(
+            await ValidateHttpExchangeAsync(
                 httpExchange,
                 defaultHttpMethod,
                 defaultHttpVersion,
                 defaultHttpVersionPolicy);
         }
 
-        private static void ValidateHttpExchange(
+        private static async ValueTask ValidateHttpExchangeAsync(
             HttpExchange httpExchange,
             HttpMethod httpMethod,
             Version httpVersion,
             HttpVersionPolicy httpVersionPolicy)
         {
-            ValidateHttpExchangeRequest(
+            await ValidateHttpExchangeRequestAsync(
                 httpExchangeRequest: httpExchange.Request,
                 httpMethod,
                 httpVersion,
                 httpVersionPolicy);
         }
 
-        private static void ValidateHttpExchangeRequest(
+        private static async ValueTask ValidateHttpExchangeRequestAsync(
             HttpExchangeRequest httpExchangeRequest,
             HttpMethod httpMethod,
             Version httpVersion,
             HttpVersionPolicy httpVersionPolicy)
         {
-            ValidateHttpExchangeRequestNotNull(httpExchangeRequest);
+            await ValidateHttpExchangeRequestNotNullAsync(httpExchangeRequest);
 
-            ValidateHttpExchangeRequestObject(
-                (Rule: IsInvalid(httpExchangeRequest.BaseAddress),
+            await ValidateHttpExchangeRequestObjectAsync(
+                (Rule: await IsInvalidAsync(httpExchangeRequest.BaseAddress),
                     Parameter: nameof(HttpExchangeRequest.BaseAddress)),
 
-                (Rule: IsInvalid(httpExchangeRequest.RelativeUrl),
+                (Rule: await IsInvalidAsync(httpExchangeRequest.RelativeUrl),
                     Parameter: nameof(HttpExchangeRequest.RelativeUrl)),
 
-                (Rule: IsInvalidHttpMethod(httpExchangeRequest.HttpMethod, httpMethod),
+                (Rule: await IsInvalidHttpMethodAsync(httpExchangeRequest.HttpMethod, httpMethod),
                     Parameter: nameof(HttpExchangeRequest.HttpMethod)),
 
-                (Rule: IsInvalidHttpVersion(httpExchangeRequest.Version, httpVersion),
+                (Rule: await IsInvalidHttpVersionAsync(httpExchangeRequest.Version, httpVersion),
                     Parameter: nameof(HttpExchangeRequest.Version)),
 
-                (Rule: IsInvalidHttpVersionPolicy(httpExchangeRequest.VersionPolicy, httpVersionPolicy),
+                (Rule: await IsInvalidHttpVersionPolicyAsync(httpExchangeRequest.VersionPolicy, httpVersionPolicy),
                     Parameter: nameof(HttpExchangeRequest.VersionPolicy)));
 
-            ValidateHttpExchangeRequestHeaders(httpExchangeRequestHeaders: httpExchangeRequest.Headers);
+            await ValidateHttpExchangeRequestHeadersAsync(httpExchangeRequestHeaders: httpExchangeRequest.Headers);
         }
 
-        private static void ValidateHttpExchangeRequestNotNull(HttpExchangeRequest httpExchangeRequest)
+        private static async ValueTask ValidateHttpExchangeRequestNotNullAsync(
+            HttpExchangeRequest httpExchangeRequest)
         {
             if (httpExchangeRequest is null)
             {
@@ -80,21 +82,22 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             }
         }
 
-        private static dynamic IsInvalid(object @object) =>
+        private static async ValueTask<dynamic> IsInvalidAsync(object @object) =>
             new
             {
                 Condition = @object is null,
                 Message = "Value is required"
             };
 
-        private static dynamic IsInvalid(string text) =>
+        private static async ValueTask<dynamic> IsInvalidAsync(string text) =>
             new
             {
                 Condition = String.IsNullOrWhiteSpace(text),
                 Message = "Value is required"
             };
 
-        private static dynamic IsInvalidHttpMethod(string customHttpMethod, HttpMethod defaultHttpMethod) =>
+        private static async ValueTask<dynamic> IsInvalidHttpMethodAsync(
+            string customHttpMethod, HttpMethod defaultHttpMethod) =>
             new
             {
                 Condition =
@@ -107,7 +110,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "HttpMethod is invalid"
             };
 
-        private static dynamic IsInvalidHttpVersion(string customHttpVersion, Version defaultHttpVersion) =>
+        private static async ValueTask<dynamic> IsInvalidHttpVersionAsync(
+            string customHttpVersion, Version defaultHttpVersion) =>
             new
             {
                 Condition =
@@ -125,7 +129,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "HttpVersion is invalid"
             };
 
-        private static dynamic IsInvalidHttpVersionPolicy(
+        private static async ValueTask<dynamic> IsInvalidHttpVersionPolicyAsync(
             int? customHttpVersionPolicy,
             HttpVersionPolicy defaultHttpVersionPolicy) =>
             new
@@ -143,7 +147,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "HttpVersionPolicy is invalid"
             };
 
-        private static void Validate(params (dynamic Rule, string Parameter)[] validations)
+        private static async ValueTask ValidateAsync(params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeException =
                 new InvalidHttpExchangeException(
@@ -162,7 +166,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             invalidHttpExchangeException.ThrowIfContainsErrors();
         }
 
-        private static void ValidateHttpExchangeRequestObject(params (dynamic Rule, string Parameter)[] validations)
+        private static async ValueTask ValidateHttpExchangeRequestObjectAsync(
+            params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeRequestException =
                 new InvalidHttpExchangeRequestException(
