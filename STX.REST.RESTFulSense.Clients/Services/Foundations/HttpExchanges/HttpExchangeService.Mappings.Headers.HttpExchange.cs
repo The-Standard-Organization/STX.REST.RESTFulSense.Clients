@@ -3,7 +3,6 @@
 // ----------------------------------------------------------------------------------
 
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
 
 namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
@@ -23,7 +22,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             };
         }
 
-        private static async ValueTask<TransferCodingHeader> MapToTransferCodingHeader(
+        private static TransferCodingHeader MapToTransferCodingHeader(
             TransferCodingHeaderValue transferCodingHeaderValue)
         {
             if (transferCodingHeaderValue is null)
@@ -33,7 +32,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             {
                 Value = transferCodingHeaderValue.Value,
                 Parameters =
-                    await MapArrayAsync(
+                    MapArray(
                         transferCodingHeaderValue.Parameters,
                         MapToNameValueHeader)
             };
