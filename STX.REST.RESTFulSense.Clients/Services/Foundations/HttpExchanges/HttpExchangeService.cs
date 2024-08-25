@@ -32,7 +32,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             HttpVersionPolicy defaultHttpVersionPolicy =
                 HttpVersionPolicy.RequestVersionOrLower;
 
-            ValidateOnGet(
+            await ValidateOnGetAsync(
                 httpExchange,
                 defaultHttpMethod,
                 defaultHttpVersion,

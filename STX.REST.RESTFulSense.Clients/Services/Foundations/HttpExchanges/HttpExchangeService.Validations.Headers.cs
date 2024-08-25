@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Headers;
@@ -153,41 +154,41 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     || String.IsNullOrWhiteSpace(warningHeader.Text));
         }
 
-        private static dynamic IsInvalidAcceptHeader(MediaTypeHeader[] mediaTypeHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidAcceptHeaderAsync(MediaTypeHeader[] mediaTypeHeaders) => new
         {
             Condition = IsInvalidMediaTypeHeaderArray(mediaTypeHeaders),
             Message = "Accept header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidAcceptCharsetHeader(
+        private static async ValueTask<dynamic> IsInvalidAcceptCharsetHeaderAsync(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
             {
                 Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
                 Message = "AcceptCharset header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidAcceptEncodingHeader(
+        private static async ValueTask<dynamic> IsInvalidAcceptEncodingHeaderAsync(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
             {
                 Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
                 Message = "AcceptEncoding header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidAcceptLanguageHeader(
+        private static async ValueTask<dynamic> IsInvalidAcceptLanguageHeaderAsync(
             StringWithQualityHeader[] stringWithQualityHeaders) => new
             {
                 Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
                 Message = "AcceptLanguage header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidAuthorizationHeader(
+        private static async ValueTask<dynamic> IsInvalidAuthorizationHeaderAsync(
             AuthenticationHeader authenticationHeader) => new
             {
                 Condition = IsInvalidAuthenticationHeader(authenticationHeader),
                 Message = "Authorization header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidCacheControlHeader(
+        private static async ValueTask<dynamic> IsInvalidCacheControlHeaderAsync(
             CacheControlHeader cacheControlHeader) => new
             {
                 Condition = cacheControlHeader is not null
@@ -198,21 +199,21 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "CacheControl header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidConnectionHeader(
+        private static async ValueTask<dynamic> IsInvalidConnectionHeaderAsync(
             string[] connectionHeader) => new
             {
                 Condition = IsInvalidStringArray(connectionHeader),
                 Message = "Connection header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidExpectHeader(
+        private static async ValueTask<dynamic> IsInvalidExpectHeaderAsync(
             NameValueWithParametersHeader[] expectHeader) => new
             {
                 Condition = IsInvalidNameValueWithParametersHeaderArray(expectHeader),
                 Message = "Expect header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidFromHeader(
+        private static async ValueTask<dynamic> IsInvalidFromHeaderAsync(
             string fromHeader) => new
             {
                 Condition = fromHeader is not null
@@ -221,7 +222,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "From header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidHostHeader(
+        private static async ValueTask<dynamic> IsInvalidHostHeaderAsync(
             string hostHeader) => new
             {
                 Condition = hostHeader is not null
@@ -230,21 +231,21 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "Host header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidIfMatchHeader(
+        private static async ValueTask<dynamic> IsInvalidIfMatchHeaderAsync(
             string[] ifMatchHeader) => new
             {
                 Condition = IsInvalidStringArray(ifMatchHeader),
                 Message = "IfMatch header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidIfNoneMatchHeader(
+        private static async ValueTask<dynamic> IsInvalidIfNoneMatchHeaderAsync(
             string[] ifMatchHeader) => new
             {
                 Condition = IsInvalidStringArray(ifMatchHeader),
                 Message = "IfNoneMatch header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidIfRangeHeader(RangeConditionHeader rangeConditionHeader) => new
+        private static async ValueTask<dynamic> IsInvalidIfRangeHeaderAsync(RangeConditionHeader rangeConditionHeader) => new
         {
             Condition =
                 rangeConditionHeader is not null
@@ -257,13 +258,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                         "Only one of either date or entityTag can be set at a time. Please fix the errors and try again."
         };
 
-        private static dynamic IsInvalidPragmaHeader(NameValueHeader[] nameValueHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidPragmaHeaderAsync(NameValueHeader[] nameValueHeaders) => new
         {
             Condition = IsInvalidNameValueHeaderArray(nameValueHeaders),
             Message = "Pragma header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidProtocolHeader(
+        private static async ValueTask<dynamic> IsInvalidProtocolHeaderAsync(
             string protocolHeader) => new
             {
                 Condition = protocolHeader is not null
@@ -272,14 +273,14 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "Protocol header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidProxyAuthorizationHeader(
+        private static async ValueTask<dynamic> IsInvalidProxyAuthorizationHeaderAsync(
             AuthenticationHeader authenticationHeader) => new
             {
                 Condition = IsInvalidAuthenticationHeader(authenticationHeader),
                 Message = "ProxyAuthorization header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidRangeHeader(
+        private static async ValueTask<dynamic> IsInvalidRangeHeaderAsync(
             RangeHeader rangeHeader) => new
             {
                 Condition = rangeHeader is not null
@@ -289,26 +290,28 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 Message = "Range header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidTEHeader(TransferCodingHeader[] transferCodingHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidTEHeaderAsync(
+            TransferCodingHeader[] transferCodingHeaders) => new
         {
             Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
             Message = "TE header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidTrailerHeader(
+        private static async ValueTask<dynamic> IsInvalidTrailerHeaderAsync(
             string[] trailerHeader) => new
             {
                 Condition = IsInvalidStringArray(trailerHeader),
                 Message = "Trailer header has invalid configuration, fix errors and try again."
             };
 
-        private static dynamic IsInvalidTransferEncodingHeaderArray(TransferCodingHeader[] transferCodingHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidTransferEncodingHeaderArrayAsync(
+            TransferCodingHeader[] transferCodingHeaders) => new
         {
             Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
             Message = "TransferEncoding header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidUpgradeHeaderArray(ProductHeader[] productHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidUpgradeHeaderArrayAsync(ProductHeader[] productHeaders) => new
         {
             Condition = productHeaders is not null
                 && productHeaders.Any(header => header is null
@@ -317,7 +320,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Message = "Upgrade header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidUserAgentHeaderArray(ProductInfoHeader[] productInfoHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidUserAgentHeaderArrayAsync(
+            ProductInfoHeader[] productInfoHeaders) => new
         {
             Condition = productInfoHeaders is not null
                 && productInfoHeaders.Any(header => header is null
@@ -326,7 +330,7 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Message = "UserAgent header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidViaHeaderArray(ViaHeader[] viaHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidViaHeaderArrayAsync(ViaHeader[] viaHeaders) => new
         {
             Condition = viaHeaders is not null
                 && viaHeaders.Any(header => header is null
@@ -335,7 +339,8 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Message = "Via header has invalid configuration, fix errors and try again."
         };
 
-        private static dynamic IsInvalidWarningHeaderArray(WarningHeader[] warningHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidWarningHeaderArrayAsync(
+            WarningHeader[] warningHeaders) => new
         {
             Condition = warningHeaders is not null
                 && warningHeaders.Any(header => header is null
@@ -344,88 +349,88 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             Message = "Warning header has invalid configuration, fix errors and try again."
         };
 
-        private static void ValidateHttpExchangeRequestHeaders(
+        private static async ValueTask ValidateHttpExchangeRequestHeadersAsync(
             HttpExchangeRequestHeaders httpExchangeRequestHeaders)
         {
             if (httpExchangeRequestHeaders is null)
                 return;
 
-            ValidateHttpRequestHeaders(
-                (Rule: IsInvalidAcceptHeader(httpExchangeRequestHeaders.Accept),
+            await ValidateHttpRequestHeadersAsync(
+                (Rule: await IsInvalidAcceptHeaderAsync(httpExchangeRequestHeaders.Accept),
                 Parameter: nameof(HttpExchangeRequestHeaders.Accept)),
 
-                (Rule: IsInvalidAcceptCharsetHeader(httpExchangeRequestHeaders.AcceptCharset),
+                (Rule: await IsInvalidAcceptCharsetHeaderAsync(httpExchangeRequestHeaders.AcceptCharset),
                 Parameter: nameof(HttpExchangeRequestHeaders.AcceptCharset)),
 
-                (Rule: IsInvalidAcceptEncodingHeader(httpExchangeRequestHeaders.AcceptEncoding),
+                (Rule: await IsInvalidAcceptEncodingHeaderAsync(httpExchangeRequestHeaders.AcceptEncoding),
                 Parameter: nameof(HttpExchangeRequestHeaders.AcceptEncoding)),
 
-                (Rule: IsInvalidAcceptLanguageHeader(httpExchangeRequestHeaders.AcceptLanguage),
+                (Rule: await IsInvalidAcceptLanguageHeaderAsync(httpExchangeRequestHeaders.AcceptLanguage),
                 Parameter: nameof(HttpExchangeRequestHeaders.AcceptLanguage)),
 
-                (Rule: IsInvalidAuthorizationHeader(httpExchangeRequestHeaders.Authorization),
+                (Rule: await IsInvalidAuthorizationHeaderAsync(httpExchangeRequestHeaders.Authorization),
                 Parameter: nameof(HttpExchangeRequestHeaders.Authorization)),
 
-                (Rule: IsInvalidCacheControlHeader(httpExchangeRequestHeaders.CacheControl),
+                (Rule: await IsInvalidCacheControlHeaderAsync(httpExchangeRequestHeaders.CacheControl),
                 Parameter: nameof(HttpExchangeRequestHeaders.CacheControl)),
 
-                (Rule: IsInvalidConnectionHeader(httpExchangeRequestHeaders.Connection),
+                (Rule: await IsInvalidConnectionHeaderAsync(httpExchangeRequestHeaders.Connection),
                 Parameter: nameof(HttpExchangeRequestHeaders.Connection)),
 
-                (Rule: IsInvalidExpectHeader(httpExchangeRequestHeaders.Expect),
+                (Rule: await IsInvalidExpectHeaderAsync(httpExchangeRequestHeaders.Expect),
                 Parameter: nameof(HttpExchangeRequestHeaders.Expect)),
 
-                (Rule: IsInvalidFromHeader(httpExchangeRequestHeaders.From),
+                (Rule: await IsInvalidFromHeaderAsync(httpExchangeRequestHeaders.From),
                 Parameter: nameof(HttpExchangeRequestHeaders.From)),
 
-                (Rule: IsInvalidHostHeader(httpExchangeRequestHeaders.Host),
+                (Rule: await IsInvalidHostHeaderAsync(httpExchangeRequestHeaders.Host),
                 Parameter: nameof(HttpExchangeRequestHeaders.Host)),
 
-                (Rule: IsInvalidIfMatchHeader(httpExchangeRequestHeaders.IfMatch),
+                (Rule: await IsInvalidIfMatchHeaderAsync(httpExchangeRequestHeaders.IfMatch),
                 Parameter: nameof(HttpExchangeRequestHeaders.IfMatch)),
 
-                (Rule: IsInvalidIfNoneMatchHeader(httpExchangeRequestHeaders.IfNoneMatch),
+                (Rule: await IsInvalidIfNoneMatchHeaderAsync(httpExchangeRequestHeaders.IfNoneMatch),
                 Parameter: nameof(HttpExchangeRequestHeaders.IfNoneMatch)),
 
-                (Rule: IsInvalidIfRangeHeader(httpExchangeRequestHeaders.IfRange),
+                (Rule: await IsInvalidIfRangeHeaderAsync(httpExchangeRequestHeaders.IfRange),
                 Parameter: nameof(HttpExchangeRequestHeaders.IfRange)),
 
-                (Rule: IsInvalidPragmaHeader(httpExchangeRequestHeaders.Pragma),
+                (Rule: await IsInvalidPragmaHeaderAsync(httpExchangeRequestHeaders.Pragma),
                 Parameter: nameof(HttpExchangeRequestHeaders.Pragma)),
 
-                (Rule: IsInvalidProtocolHeader(httpExchangeRequestHeaders.Protocol),
+                (Rule: await IsInvalidProtocolHeaderAsync(httpExchangeRequestHeaders.Protocol),
                 Parameter: nameof(HttpExchangeRequestHeaders.Protocol)),
 
-                (Rule: IsInvalidProxyAuthorizationHeader(httpExchangeRequestHeaders.ProxyAuthorization),
+                (Rule: await IsInvalidProxyAuthorizationHeaderAsync(httpExchangeRequestHeaders.ProxyAuthorization),
                 Parameter: nameof(HttpExchangeRequestHeaders.ProxyAuthorization)),
 
-                (Rule: IsInvalidRangeHeader(httpExchangeRequestHeaders.Range),
+                (Rule: await IsInvalidRangeHeaderAsync(httpExchangeRequestHeaders.Range),
                 Parameter: nameof(HttpExchangeRequestHeaders.Range)),
 
-                (Rule: IsInvalidTEHeader(httpExchangeRequestHeaders.TE),
+                (Rule: await IsInvalidTEHeaderAsync(httpExchangeRequestHeaders.TE),
                 Parameter: nameof(HttpExchangeRequestHeaders.TE)),
 
-                (Rule: IsInvalidTrailerHeader(httpExchangeRequestHeaders.Trailer),
+                (Rule: await IsInvalidTrailerHeaderAsync(httpExchangeRequestHeaders.Trailer),
                 Parameter: nameof(HttpExchangeRequestHeaders.Trailer)),
 
-                (Rule: IsInvalidTransferEncodingHeaderArray(httpExchangeRequestHeaders.TransferEncoding),
+                (Rule: await IsInvalidTransferEncodingHeaderArrayAsync(httpExchangeRequestHeaders.TransferEncoding),
                 Parameter: nameof(HttpExchangeRequestHeaders.TransferEncoding)),
 
-                (Rule: IsInvalidUpgradeHeaderArray(httpExchangeRequestHeaders.Upgrade),
+                (Rule: await IsInvalidUpgradeHeaderArrayAsync(httpExchangeRequestHeaders.Upgrade),
                 Parameter: nameof(HttpExchangeRequestHeaders.Upgrade)),
 
-                (Rule: IsInvalidUserAgentHeaderArray(httpExchangeRequestHeaders.UserAgent),
+                (Rule: await IsInvalidUserAgentHeaderArrayAsync(httpExchangeRequestHeaders.UserAgent),
                 Parameter: nameof(HttpExchangeRequestHeaders.UserAgent)),
 
-                (Rule: IsInvalidViaHeaderArray(httpExchangeRequestHeaders.Via),
+                (Rule: await IsInvalidViaHeaderArrayAsync(httpExchangeRequestHeaders.Via),
                 Parameter: nameof(HttpExchangeRequestHeaders.Via)),
 
-                (Rule: IsInvalidWarningHeaderArray(httpExchangeRequestHeaders.Warning),
-                Parameter: nameof(HttpExchangeRequestHeaders.Warning))
-                );
+                (Rule: await IsInvalidWarningHeaderArrayAsync(httpExchangeRequestHeaders.Warning),
+                Parameter: nameof(HttpExchangeRequestHeaders.Warning)));
         }
 
-        private static void ValidateHttpRequestHeaders(params (dynamic Rule, string Parameter)[] validations)
+        private static async ValueTask ValidateHttpRequestHeadersAsync(
+            params (dynamic Rule, string Parameter)[] validations)
         {
             var invalidHttpExchangeHeaderException =
                 new InvalidHttpExchangeRequestHeaderException(
