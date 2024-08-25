@@ -256,8 +256,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             bool sendUrlParameters,
             bool sendRequestHeaders,
             bool sendRequestContent,
-            bool sendRequestContentHeaders,
-            string sendRequestHttpMethod)
+            HttpMethod httpMethod)
         {
             Uri randomUri = CreateRandomUri();
 
@@ -276,15 +275,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             if (sendRequestContent)
                 requestContent = CreateRandomHttpContent();
 
-            dynamic requestContentHeaders = default;
-            if (sendRequestContentHeaders)
-            {
-                dynamic rndomHttpContent = CreateRandomHttpContent();
-                requestContentHeaders = rndomHttpContent.Headers;
-            }
-
-
-
             return new
             {
                 BaseAddress =
@@ -293,7 +283,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 RelativeUrl = randomUri.PathAndQuery,
                 Url = randomUri,
                 UrlParameters = randomUrlParameters,
-                HttpMethod = sendRequestHttpMethod,
+                HttpMethod = httpMethod,
                 Version = GetRandomHttpVersion(),
                 VersionPolicy = GetRandomHttpVersionPolicy(),
                 StatusCode = randomStatusCode,
@@ -306,7 +296,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 RequestHeaders = requestHeaders,
                 ResponseHeaders = CreateRandomHttpResponseHeader(),
                 RequestContent = requestContent,
-                RequestContentHeaders = requestContentHeaders,
                 ResponseContent = CreateRandomHttpContent()
             };
         }
@@ -320,7 +309,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 {
                     BaseAddress = randomProperties.BaseAddress,
                     RelativeUrl = randomProperties.RelativeUrl,
-                    HttpMethod = randomProperties.HttpMethod,
+                    HttpMethod = randomProperties.HttpMethod.Method,
                     Version = randomProperties.Version.ToString(),
                     UrlParameters = randomProperties.UrlParameters,
 
@@ -331,9 +320,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     VersionPolicy = (int)randomProperties.VersionPolicy,
 
                     Content =
-                        CreateHttpExchangeRequestContent(
-                            randomProperties.RequestContent,
-                            randomProperties.RequestContentHeaders)
+                        CreateHttpExchangeContent(
+                            randomProperties.RequestContent)
                 }
             };
         }
@@ -362,44 +350,6 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             return mappedHttpExchange;
         }
 
-        private static HttpExchangeContent CreateHttpExchangeRequestContent(
-           dynamic randomRequestContent,
-           dynamic randomRequestContentHeader)
-        {
-            HttpExchangeContent httpExchangeContent = null;
-            httpExchangeContent = CreateHttpExchangeRequestContentFiller(
-                randomRequestContent,
-                randomRequestContentHeader);
-
-            return httpExchangeContent;
-        }
-
-        private static Filler<HttpExchangeContent> CreateHttpExchangeRequestContentFiller(
-          dynamic randomRequestContent,
-         dynamic randomRequestContentHeader)
-        {
-            var filler = new Filler<HttpExchangeContent>();
-
-            if (randomRequestContent is not null)
-            {
-                filler.Setup()
-                    .OnProperty(httpExchangeContent => httpExchangeContent.StreamContent)
-                    .Use(new ValueTask<Stream>(
-                        ((Stream)randomRequestContent)
-                        .DeepClone()));
-            }
-
-            if (randomRequestContentHeader is not null)
-            {
-                filler.Setup()
-                    .OnProperty(httpExchangeContent => httpExchangeContent.Headers)
-                    .Use((HttpExchangeContentHeaders)CreateHttpExchangeContentHeaders(
-                        randomRequestContentHeader));
-            }
-
-            return filler;
-        }
-
         private static HttpExchangeContent CreateHttpExchangeContent(
            dynamic randomContentProperties)
         {
@@ -422,7 +372,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             filler.Setup()
                 .OnProperty(httpExchangeContent => httpExchangeContent.Headers)
-                    .IgnoreIt()
+                    .Use((HttpExchangeContentHeaders)CreateHttpExchangeContentHeaders(
+                        randomContentProperties.Headers))
 
                 .OnProperty(httpExchangeContent => httpExchangeContent.StreamContent)
                     .Use(new ValueTask<Stream>(

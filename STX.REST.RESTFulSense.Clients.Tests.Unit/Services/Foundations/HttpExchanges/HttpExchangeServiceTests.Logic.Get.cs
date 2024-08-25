@@ -28,8 +28,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     sendUrlParameters,
                     sendRequestHeaders,
                     sendRequestContent: false,
-                    sendRequestContentHeaders: false,
-                    sendRequestHttpMethod: HttpMethod.Get.Method);
+                    httpMethod: HttpMethod.Get);
 
             HttpExchange inputHttpExchange =
                 CreateRandomHttpExchangeRequest(
