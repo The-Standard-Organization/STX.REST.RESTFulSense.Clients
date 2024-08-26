@@ -243,11 +243,16 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private static long CreateRandomLongToValue(long from) =>
             new LongRange(min: from, max: 10).GetValue();
 
-        private static dynamic CreateRandomHttpContent()
+        private static dynamic CreateRandomHttpContent(bool createContentHeaders)
         {
+            dynamic contentHeaders = null;
+
+            if (createContentHeaders)
+                contentHeaders = CreateRandomHttpContentHeader();
+
             return new
             {
-                Headers = CreateRandomHttpContentHeader(),
+                Headers = contentHeaders,
                 StreamContent = CreateRandomStream()
             };
         }
@@ -256,6 +261,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
             bool sendUrlParameters,
             bool sendRequestHeaders,
             bool sendRequestContent,
+            bool sendContentHeaders,
             HttpMethod httpMethod)
         {
             Uri randomUri = CreateRandomUri();
@@ -273,7 +279,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             dynamic requestContent = default;
             if (sendRequestContent)
-                requestContent = CreateRandomHttpContent();
+                requestContent = CreateRandomHttpContent(sendContentHeaders);
 
             return new
             {
@@ -296,7 +302,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 RequestHeaders = requestHeaders,
                 ResponseHeaders = CreateRandomHttpResponseHeader(),
                 RequestContent = requestContent,
-                ResponseContent = CreateRandomHttpContent()
+                ResponseContent = CreateRandomHttpContent(true)
             };
         }
 

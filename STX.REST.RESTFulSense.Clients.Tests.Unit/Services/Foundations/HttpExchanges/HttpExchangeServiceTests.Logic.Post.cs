@@ -27,8 +27,8 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         private async Task ShouldSendHttpRequestWhenPostAsyncIsCalledAsync(
             bool sendUrlParameters,
             bool sendRequestHeaders,
-           bool sendRequestContent,
-           bool sendRequestContentHeaders)
+            bool sendRequestContent,
+            bool sendRequestContentHeaders)
         {
             // given
             dynamic randomProperties =
@@ -36,6 +36,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     sendUrlParameters,
                     sendRequestHeaders,
                     sendRequestContent,
+                    sendRequestContentHeaders,
                     httpMethod: HttpMethod.Post);
 
             HttpExchange inputHttpExchange =

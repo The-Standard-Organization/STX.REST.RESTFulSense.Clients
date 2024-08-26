@@ -508,8 +508,18 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         private static HttpExchangeContentHeaders CreateHttpExchangeContentHeaders(
-                    dynamic randomHeaderProperties) =>
-                        CreateHttpExchangeContentHeadersFiller(randomHeaderProperties).Create();
+            dynamic randomHeaderProperties)
+        {
+            HttpExchangeContentHeaders httpExchangeContentHeaders = null;
+
+            if (randomHeaderProperties is not null)
+            {
+                httpExchangeContentHeaders =
+                    CreateHttpExchangeContentHeadersFiller(randomHeaderProperties).Create();
+            }
+
+            return httpExchangeContentHeaders;
+        }
 
         private static Filler<HttpExchangeContentHeaders> CreateHttpExchangeContentHeadersFiller(
             dynamic randomHeaderProperties)

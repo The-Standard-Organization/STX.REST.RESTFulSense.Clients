@@ -28,6 +28,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     sendUrlParameters,
                     sendRequestHeaders,
                     sendRequestContent: false,
+                    sendContentHeaders: false,
                     httpMethod: HttpMethod.Get);
 
             HttpExchange inputHttpExchange =
