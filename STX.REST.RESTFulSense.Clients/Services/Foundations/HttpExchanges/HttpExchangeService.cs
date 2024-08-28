@@ -55,6 +55,33 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 httpResponseMessage);
         });
 
+        public async ValueTask<HttpExchange> PostAsync(
+            HttpExchange httpExchange,
+            CancellationToken cancellationToken = default)
+        {
+            HttpMethod defaultHttpMethod = HttpMethod.Post;
+            Version defaultHttpVersion = HttpVersion.Version11;
+
+            HttpVersionPolicy defaultHttpVersionPolicy =
+                HttpVersionPolicy.RequestVersionOrLower;
+
+            HttpRequestMessage httpRequestMessage =
+                 MapToHttpRequest(
+                     httpExchangeRequest: httpExchange.Request,
+                     defaultHttpMethod: defaultHttpMethod,
+                     defaultHttpVersion: defaultHttpVersion,
+                     defaultHttpVersionPolicy: defaultHttpVersionPolicy);
+
+            HttpResponseMessage httpResponseMessage =
+                await httpBroker.SendRequestAsync(
+                    httpRequestMessage: httpRequestMessage,
+                    cancellationToken: cancellationToken);
+
+            return MapToHttpExchange(
+                httpExchange,
+                httpResponseMessage);
+        }
+
         private static HttpMethod GetHttpMethod(
             string customHttpMethod,
             HttpMethod defaultHttpMethod)
@@ -77,13 +104,6 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
             }
 
             return Version.Parse(customHttpVersion);
-        }
-
-        public ValueTask<HttpExchange> PostAsync(
-            HttpExchange httpExchange,
-            CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
         }
     }
 }
