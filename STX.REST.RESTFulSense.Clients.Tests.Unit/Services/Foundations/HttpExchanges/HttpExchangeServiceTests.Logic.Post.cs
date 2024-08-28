@@ -45,16 +45,16 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 CreateRandomHttpExchangeRequest(
                     randomProperties);
 
-            HttpExchange expectedHttpExchange =
-                CreateHttpExchangeResponse(
-                     httpExchange: inputHttpExchange,
-                     randomProperties: randomProperties);
-
             HttpRequestMessage inputHttpRequestMessage =
                 CreateHttpRequestMessage(randomProperties);
 
             HttpRequestMessage expectedHttpRequestMessage =
                 inputHttpRequestMessage;
+
+            HttpExchange expectedHttpExchange =
+                CreateHttpExchangeResponse(
+                     httpExchange: inputHttpExchange,
+                     randomProperties: randomProperties);
 
             HttpResponseMessage randomHttpResponseMessage =
                 CreateHttpResponseMessage(randomProperties);
