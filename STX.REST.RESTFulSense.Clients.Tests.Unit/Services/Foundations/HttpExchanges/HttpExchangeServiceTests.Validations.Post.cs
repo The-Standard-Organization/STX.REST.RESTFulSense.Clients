@@ -2,11 +2,11 @@
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
-using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using System.Threading.Tasks;
-using Xunit;
 using FluentAssertions;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
+using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
+using Xunit;
 
 namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExchanges
 {

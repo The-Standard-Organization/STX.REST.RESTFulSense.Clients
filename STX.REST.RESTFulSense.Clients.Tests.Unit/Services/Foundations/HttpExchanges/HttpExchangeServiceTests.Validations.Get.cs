@@ -101,7 +101,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 }
             };
 
-            var invalidHttpExchangeRequestException = 
+            var invalidHttpExchangeRequestException =
                 new InvalidHttpExchangeRequestException(
                     message: "Invalid request, fix errors and try again.");
 
