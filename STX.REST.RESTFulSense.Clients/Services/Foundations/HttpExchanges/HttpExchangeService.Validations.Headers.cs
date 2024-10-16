@@ -292,10 +292,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static async ValueTask<dynamic> IsInvalidTEHeaderAsync(
             TransferCodingHeader[] transferCodingHeaders) => new
-        {
-            Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
-            Message = "TE header has invalid configuration, fix errors and try again."
-        };
+            {
+                Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
+                Message = "TE header has invalid configuration, fix errors and try again."
+            };
 
         private static async ValueTask<dynamic> IsInvalidTrailerHeaderAsync(
             string[] trailerHeader) => new
@@ -306,10 +306,10 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static async ValueTask<dynamic> IsInvalidTransferEncodingHeaderArrayAsync(
             TransferCodingHeader[] transferCodingHeaders) => new
-        {
-            Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
-            Message = "TransferEncoding header has invalid configuration, fix errors and try again."
-        };
+            {
+                Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
+                Message = "TransferEncoding header has invalid configuration, fix errors and try again."
+            };
 
         private static async ValueTask<dynamic> IsInvalidUpgradeHeaderArrayAsync(ProductHeader[] productHeaders) => new
         {
@@ -322,13 +322,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static async ValueTask<dynamic> IsInvalidUserAgentHeaderArrayAsync(
             ProductInfoHeader[] productInfoHeaders) => new
-        {
-            Condition = productInfoHeaders is not null
+            {
+                Condition = productInfoHeaders is not null
                 && productInfoHeaders.Any(header => header is null
                     || IsInvalidProductInfoHeader(header)),
 
-            Message = "UserAgent header has invalid configuration, fix errors and try again."
-        };
+                Message = "UserAgent header has invalid configuration, fix errors and try again."
+            };
 
         private static async ValueTask<dynamic> IsInvalidViaHeaderArrayAsync(ViaHeader[] viaHeaders) => new
         {
@@ -341,13 +341,13 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
         private static async ValueTask<dynamic> IsInvalidWarningHeaderArrayAsync(
             WarningHeader[] warningHeaders) => new
-        {
-            Condition = warningHeaders is not null
+            {
+                Condition = warningHeaders is not null
                 && warningHeaders.Any(header => header is null
                     || IsInvalidWarningHeader(header)),
 
-            Message = "Warning header has invalid configuration, fix errors and try again."
-        };
+                Message = "Warning header has invalid configuration, fix errors and try again."
+            };
 
         private static async ValueTask ValidateHttpExchangeRequestHeadersAsync(
             HttpExchangeRequestHeaders httpExchangeRequestHeaders)
