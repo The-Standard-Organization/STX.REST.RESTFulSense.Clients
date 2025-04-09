@@ -11,7 +11,11 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
     internal interface IHttpExchangeService
     {
         ValueTask<HttpExchange> GetAsync(
-            HttpExchange localHttpClient,
+            HttpExchange httpExchange,
+            CancellationToken cancellationToken = default);
+
+        ValueTask<HttpExchange> PostAsync(
+            HttpExchange httpExchange,
             CancellationToken cancellationToken = default);
     }
 }

@@ -1,12 +1,9 @@
-// ----------------------------------------------------------------------------------
+﻿// ----------------------------------------------------------------------------------
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
-using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Moq;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges;
 using STX.REST.RESTFulSense.Clients.Models.Services.HttpExchanges.Exceptions;
 using Xunit;
@@ -16,7 +13,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
     public partial class HttpExchangeServiceTests
     {
         [Fact]
-        private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeIsInvalidAsync()
+        private async Task ShouldThrowHttpExchangeValidationExceptionOnPostIfHttpExchangeIsInvalidAsync()
         {
             // given
             HttpExchange nullHttpExchange = null;
@@ -41,7 +38,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                 await Assert.ThrowsAsync<HttpExchangeValidationException>(
                     getAsyncTask.AsTask);
 
-            //then
+            // then
             actualHttpExchangeValidationException.Should().BeEquivalentTo(
                 expectedHttpExchangeValidationException);
 
@@ -49,7 +46,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Fact]
-        private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsNullAsync()
+        public async Task ShouldThrowHttpExchangeValidationExceptionOnPostIfHttpExchangeRequestIsNullAsync()
         {
             // given
             var httpExchange = new HttpExchange();
@@ -64,13 +61,12 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     innerException: nullHttpExchangeRequestException);
 
             // when
-            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
+            ValueTask<HttpExchange> postAsyncTask = this.httpExchangeService.PostAsync(httpExchange);
 
             HttpExchangeValidationException actualHttpExchangeValidationException =
-                await Assert.ThrowsAsync<HttpExchangeValidationException>(
-                    getAsyncTask.AsTask);
+                await Assert.ThrowsAsync<HttpExchangeValidationException>(postAsyncTask.AsTask);
 
-            //then
+            // then
             actualHttpExchangeValidationException.Should().BeEquivalentTo(
                 expectedHttpExchangeValidationException);
 
@@ -78,10 +74,10 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
         }
 
         [Theory]
-        [InlineData(null, null, "POST", "0.1", InvalidVersionPolicy)]
-        [InlineData("", "", "POST", "0.1", InvalidVersionPolicy)]
-        [InlineData(" ", " ", "POST", "0.1", InvalidVersionPolicy)]
-        private async Task ShouldThrowHttpExchangeValidationExceptionOnGetIfHttpExchangeRequestIsInvalidAsync(
+        [InlineData(null, null, "GET", "0.1", InvalidVersionPolicy)]
+        [InlineData("", "", "GET", "0.1", InvalidVersionPolicy)]
+        [InlineData(" ", " ", "GET", "0.1", InvalidVersionPolicy)]
+        private async Task ShouldThrowHttpExchangeValidationExceptionOnPostIfHttpExchangeRequestIsInvalidAsync(
             string invalidBaseAddress,
             string invalidRelativeUrl,
             string invalidHttpMethod,
@@ -131,63 +127,14 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
                     innerException: invalidHttpExchangeRequestException);
 
             // when
-            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
+            ValueTask<HttpExchange> postAsyncTask = httpExchangeService.PostAsync(httpExchange);
 
             HttpExchangeValidationException actualHttpExchangeValidationException =
-               await Assert.ThrowsAsync<HttpExchangeValidationException>(getAsyncTask.AsTask);
+               await Assert.ThrowsAsync<HttpExchangeValidationException>(postAsyncTask.AsTask);
 
             // then
             actualHttpExchangeValidationException.Should().BeEquivalentTo(
                 expectedHttpExchangeValidationException);
-
-            this.httpBroker.VerifyNoOtherCalls();
-        }
-
-        [Theory]
-        [MemberData(nameof(GetRequestValidationExceptions))]
-        private async Task ShouldThrowHttpExchangeValidationExceptionIfInvalidRequestHeaderWhenGetAsync(
-            dynamic invalidHeaderException)
-        {
-            // given
-            var httpExchange = new HttpExchange
-            {
-                Request = new HttpExchangeRequest
-                {
-                    BaseAddress = CreateRandomUri().GetLeftPart(UriPartial.Authority),
-                    RelativeUrl = CreateRandomUri().PathAndQuery,
-                    HttpMethod = HttpMethod.Get.Method,
-                    Version = GetRandomHttpVersion().ToString(),
-                    Headers = invalidHeaderException.HttpExchangeRequestHeaders
-                }
-            };
-
-            var expectedHttpExchangeValidationException =
-                new HttpExchangeValidationException(
-                    message: "HttpExchange validation errors occurred, fix errors and try again.",
-                    innerException: invalidHeaderException.InvalidHttpExchangeRequestHeaderException);
-
-            this.httpBroker
-                .Setup(broker =>
-                    broker.SendRequestAsync(
-                        It.IsAny<HttpRequestMessage>(),
-                        default));
-
-            // when
-            ValueTask<HttpExchange> getAsyncTask = httpExchangeService.GetAsync(httpExchange);
-
-            HttpExchangeValidationException actualHttpExchangeValidationException =
-                await Assert.ThrowsAsync<HttpExchangeValidationException>(getAsyncTask.AsTask);
-
-            // then
-            actualHttpExchangeValidationException.Should().BeEquivalentTo(
-                expectedHttpExchangeValidationException);
-
-            this.httpBroker
-                .Verify(broker =>
-                    broker.SendRequestAsync(
-                        It.IsAny<HttpRequestMessage>(),
-                        default),
-                    Times.Never);
 
             this.httpBroker.VerifyNoOtherCalls();
         }

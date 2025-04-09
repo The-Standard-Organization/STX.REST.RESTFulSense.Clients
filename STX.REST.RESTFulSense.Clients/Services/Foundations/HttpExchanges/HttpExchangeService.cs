@@ -38,12 +38,46 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                 defaultHttpVersion,
                 defaultHttpVersionPolicy);
 
-           HttpRequestMessage httpRequestMessage =
-                MapToHttpRequest(
-                    httpExchangeRequest: httpExchange.Request,
-                    defaultHttpMethod: defaultHttpMethod,
-                    defaultHttpVersion: defaultHttpVersion,
-                    defaultHttpVersionPolicy: defaultHttpVersionPolicy);
+            HttpRequestMessage httpRequestMessage =
+                 MapToHttpRequest(
+                     httpExchangeRequest: httpExchange.Request,
+                     defaultHttpMethod: defaultHttpMethod,
+                     defaultHttpVersion: defaultHttpVersion,
+                     defaultHttpVersionPolicy: defaultHttpVersionPolicy);
+
+            HttpResponseMessage httpResponseMessage =
+                await httpBroker.SendRequestAsync(
+                    httpRequestMessage: httpRequestMessage,
+                    cancellationToken: cancellationToken);
+
+            return MapToHttpExchange(
+                httpExchange,
+                httpResponseMessage);
+        });
+
+        public ValueTask<HttpExchange> PostAsync(
+            HttpExchange httpExchange,
+            CancellationToken cancellationToken = default) =>
+        TryCatch(async () =>
+        {
+            HttpMethod defaultHttpMethod = HttpMethod.Post;
+            Version defaultHttpVersion = HttpVersion.Version11;
+
+            HttpVersionPolicy defaultHttpVersionPolicy =
+                HttpVersionPolicy.RequestVersionOrLower;
+
+            await ValidateHttpExchangeRequestAsync(
+                httpExchangeRequest: httpExchange.Request,
+                httpMethod: defaultHttpMethod,
+                httpVersion: defaultHttpVersion,
+                httpVersionPolicy: defaultHttpVersionPolicy);
+
+            HttpRequestMessage httpRequestMessage =
+                 MapToHttpRequest(
+                     httpExchangeRequest: httpExchange.Request,
+                     defaultHttpMethod: defaultHttpMethod,
+                     defaultHttpVersion: defaultHttpVersion,
+                     defaultHttpVersionPolicy: defaultHttpVersionPolicy);
 
             HttpResponseMessage httpResponseMessage =
                 await httpBroker.SendRequestAsync(

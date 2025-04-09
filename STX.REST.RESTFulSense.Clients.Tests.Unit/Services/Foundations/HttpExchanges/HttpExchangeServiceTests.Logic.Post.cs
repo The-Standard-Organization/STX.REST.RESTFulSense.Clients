@@ -1,4 +1,4 @@
-// ----------------------------------------------------------------------------------
+﻿// ----------------------------------------------------------------------------------
 // Copyright (c) The Standard Organization: A coalition of the Good-Hearted Engineers
 // ----------------------------------------------------------------------------------
 
@@ -14,37 +14,47 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
     public partial class HttpExchangeServiceTests
     {
         [Theory]
-        [InlineData(false, false)]
-        [InlineData(false, true)]
-        [InlineData(true, false)]
-        [InlineData(true, true)]
-        private async Task ShouldSendHttpRequestWhenGetAsyncIsCalledAsync(
+        [InlineData(false, false, false, false)]
+        [InlineData(false, false, true, false)]
+        [InlineData(false, false, true, true)]
+        [InlineData(false, true, false, false)]
+        [InlineData(false, true, true, false)]
+        [InlineData(false, true, true, true)]
+        [InlineData(true, false, false, false)]
+        [InlineData(true, false, true, false)]
+        [InlineData(true, false, true, true)]
+        [InlineData(true, true, false, false)]
+        [InlineData(true, true, true, false)]
+        [InlineData(true, true, true, true)]
+        private async Task ShouldSendHttpRequestWhenPostAsyncIsCalledAsync(
             bool sendUrlParameters,
-            bool sendRequestHeaders)
+            bool sendRequestHeaders,
+            bool sendRequestContent,
+            bool sendRequestContentHeaders)
         {
             // given
             dynamic randomProperties =
                 CreateRandomHttpProperties(
                     sendUrlParameters,
                     sendRequestHeaders,
-                    sendRequestContent: false,
-                    sendContentHeaders: false,
-                    httpMethod: HttpMethod.Get);
+                    sendRequestContent,
+                    sendRequestContentHeaders,
+                    httpMethod: HttpMethod.Post);
 
             HttpExchange inputHttpExchange =
                 CreateRandomHttpExchangeRequest(
                     randomProperties);
-
-            HttpExchange expectedHttpExchange =
-                CreateHttpExchangeResponse(
-                     httpExchange: inputHttpExchange,
-                     randomProperties: randomProperties);
 
             HttpRequestMessage inputHttpRequestMessage =
                 CreateHttpRequestMessage(randomProperties);
 
             HttpRequestMessage expectedHttpRequestMessage =
                 inputHttpRequestMessage;
+
+            HttpExchange expectedHttpExchange =
+                CreateHttpExchangeResponse(
+                     httpExchange: inputHttpExchange,
+                     randomProperties: randomProperties);
 
             HttpResponseMessage randomHttpResponseMessage =
                 CreateHttpResponseMessage(randomProperties);
@@ -61,7 +71,7 @@ namespace STX.REST.RESTFulSense.Clients.Tests.Unit.Services.Foundations.HttpExch
 
             // when
             HttpExchange actualHttpExchange =
-                await this.httpExchangeService.GetAsync(
+                await this.httpExchangeService.PostAsync(
                     inputHttpExchange);
 
             // then

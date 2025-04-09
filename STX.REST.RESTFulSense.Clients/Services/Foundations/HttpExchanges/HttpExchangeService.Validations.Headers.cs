@@ -154,134 +154,183 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
                     || String.IsNullOrWhiteSpace(warningHeader.Text));
         }
 
-        private static async ValueTask<dynamic> IsInvalidAcceptHeaderAsync(MediaTypeHeader[] mediaTypeHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidAcceptHeaderAsync(
+            MediaTypeHeader[] mediaTypeHeaders)
         {
-            Condition = IsInvalidMediaTypeHeaderArray(mediaTypeHeaders),
-            Message = "Accept header has invalid configuration, fix errors and try again."
-        };
+            return new
+            {
+                Condition = IsInvalidMediaTypeHeaderArray(mediaTypeHeaders),
+                Message = "Accept header has invalid configuration, fix errors and try again."
+            };
+        }
 
         private static async ValueTask<dynamic> IsInvalidAcceptCharsetHeaderAsync(
-            StringWithQualityHeader[] stringWithQualityHeaders) => new
+            StringWithQualityHeader[] stringWithQualityHeaders)
+        {
+            return new
             {
                 Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
                 Message = "AcceptCharset header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidAcceptEncodingHeaderAsync(
-            StringWithQualityHeader[] stringWithQualityHeaders) => new
+            StringWithQualityHeader[] stringWithQualityHeaders)
+        {
+            return new
             {
                 Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
                 Message = "AcceptEncoding header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidAcceptLanguageHeaderAsync(
-            StringWithQualityHeader[] stringWithQualityHeaders) => new
+            StringWithQualityHeader[] stringWithQualityHeaders)
+        {
+            return new
             {
                 Condition = IsInvalidStringWithQualityHeaderArray(stringWithQualityHeaders),
                 Message = "AcceptLanguage header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidAuthorizationHeaderAsync(
-            AuthenticationHeader authenticationHeader) => new
+            AuthenticationHeader authenticationHeader)
+        {
+            return new
             {
                 Condition = IsInvalidAuthenticationHeader(authenticationHeader),
                 Message = "Authorization header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidCacheControlHeaderAsync(
-            CacheControlHeader cacheControlHeader) => new
+            CacheControlHeader cacheControlHeader)
+        {
+            return new
             {
                 Condition = cacheControlHeader is not null
-                && (IsInvalidNameValueHeaderArray(cacheControlHeader.Extensions)
-                    || IsInvalidStringArray(cacheControlHeader.NoCacheHeaders)
-                    || IsInvalidStringArray(cacheControlHeader.PrivateHeaders)),
+            && (IsInvalidNameValueHeaderArray(cacheControlHeader.Extensions)
+                || IsInvalidStringArray(cacheControlHeader.NoCacheHeaders)
+                || IsInvalidStringArray(cacheControlHeader.PrivateHeaders)),
 
                 Message = "CacheControl header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidConnectionHeaderAsync(
-            string[] connectionHeader) => new
+            string[] connectionHeader)
+        {
+            return new
             {
                 Condition = IsInvalidStringArray(connectionHeader),
                 Message = "Connection header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidExpectHeaderAsync(
-            NameValueWithParametersHeader[] expectHeader) => new
+            NameValueWithParametersHeader[] expectHeader)
+        {
+            return new
             {
                 Condition = IsInvalidNameValueWithParametersHeaderArray(expectHeader),
                 Message = "Expect header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidFromHeaderAsync(
-            string fromHeader) => new
+            string fromHeader)
+        {
+            return new
             {
                 Condition = fromHeader is not null
                     && String.IsNullOrWhiteSpace(fromHeader),
 
                 Message = "From header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidHostHeaderAsync(
-            string hostHeader) => new
+            string hostHeader)
+        {
+            return new
             {
                 Condition = hostHeader is not null
-                    && String.IsNullOrWhiteSpace(hostHeader),
+                && String.IsNullOrWhiteSpace(hostHeader),
 
                 Message = "Host header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidIfMatchHeaderAsync(
-            string[] ifMatchHeader) => new
+            string[] ifMatchHeader)
+        {
+            return new
             {
                 Condition = IsInvalidStringArray(ifMatchHeader),
                 Message = "IfMatch header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidIfNoneMatchHeaderAsync(
-            string[] ifMatchHeader) => new
+            string[] ifMatchHeader)
+        {
+            return new
             {
                 Condition = IsInvalidStringArray(ifMatchHeader),
                 Message = "IfNoneMatch header has invalid configuration, fix errors and try again."
             };
+        }
 
-        private static async ValueTask<dynamic> IsInvalidIfRangeHeaderAsync(RangeConditionHeader rangeConditionHeader) => new
+        private static async ValueTask<dynamic> IsInvalidIfRangeHeaderAsync(RangeConditionHeader rangeConditionHeader)
         {
-            Condition =
+            return new
+            {
+                Condition =
                 rangeConditionHeader is not null
                     && rangeConditionHeader.Date is not null
                     && (rangeConditionHeader.EntityTag is not null
                         || (rangeConditionHeader.Date is null
                             && String.IsNullOrWhiteSpace(rangeConditionHeader.EntityTag))),
 
-            Message = "IfRange header has a invalid configuration." +
+                Message = "IfRange header has a invalid configuration." +
                         "Only one of either date or entityTag can be set at a time. Please fix the errors and try again."
-        };
+            };
+        }
 
-        private static async ValueTask<dynamic> IsInvalidPragmaHeaderAsync(NameValueHeader[] nameValueHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidPragmaHeaderAsync(NameValueHeader[] nameValueHeaders)
         {
-            Condition = IsInvalidNameValueHeaderArray(nameValueHeaders),
-            Message = "Pragma header has invalid configuration, fix errors and try again."
-        };
+            return new
+            {
+                Condition = IsInvalidNameValueHeaderArray(nameValueHeaders),
+                Message = "Pragma header has invalid configuration, fix errors and try again."
+            };
+        }
 
         private static async ValueTask<dynamic> IsInvalidProtocolHeaderAsync(
-            string protocolHeader) => new
+            string protocolHeader)
+        {
+            return new
             {
-                Condition = protocolHeader is not null
-                && String.IsNullOrWhiteSpace(protocolHeader),
-
+                Condition = protocolHeader is not null && String.IsNullOrWhiteSpace(protocolHeader),
                 Message = "Protocol header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidProxyAuthorizationHeaderAsync(
-            AuthenticationHeader authenticationHeader) => new
+            AuthenticationHeader authenticationHeader)
+        {
+            return new
             {
                 Condition = IsInvalidAuthenticationHeader(authenticationHeader),
                 Message = "ProxyAuthorization header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidRangeHeaderAsync(
-            RangeHeader rangeHeader) => new
+            RangeHeader rangeHeader)
+        {
+            return new
             {
                 Condition = rangeHeader is not null
                 && (String.IsNullOrWhiteSpace(rangeHeader.Unit)
@@ -289,27 +338,37 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
 
                 Message = "Range header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidTEHeaderAsync(
-            TransferCodingHeader[] transferCodingHeaders) => new
+            TransferCodingHeader[] transferCodingHeaders)
         {
-            Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
-            Message = "TE header has invalid configuration, fix errors and try again."
-        };
+            return new
+            {
+                Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
+                Message = "TE header has invalid configuration, fix errors and try again."
+            };
+        }
 
         private static async ValueTask<dynamic> IsInvalidTrailerHeaderAsync(
-            string[] trailerHeader) => new
+            string[] trailerHeader)
+        {
+            return new
             {
                 Condition = IsInvalidStringArray(trailerHeader),
                 Message = "Trailer header has invalid configuration, fix errors and try again."
             };
+        }
 
         private static async ValueTask<dynamic> IsInvalidTransferEncodingHeaderArrayAsync(
-            TransferCodingHeader[] transferCodingHeaders) => new
+            TransferCodingHeader[] transferCodingHeaders)
         {
-            Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
-            Message = "TransferEncoding header has invalid configuration, fix errors and try again."
-        };
+            return new
+            {
+                Condition = IsInvalidTransferCodingHeaderArray(transferCodingHeaders),
+                Message = "TransferEncoding header has invalid configuration, fix errors and try again."
+            };
+        }
 
         private static async ValueTask<dynamic> IsInvalidUpgradeHeaderArrayAsync(ProductHeader[] productHeaders) => new
         {
@@ -321,33 +380,42 @@ namespace STX.REST.RESTFulSense.Clients.Services.Foundations.HttpExchanges
         };
 
         private static async ValueTask<dynamic> IsInvalidUserAgentHeaderArrayAsync(
-            ProductInfoHeader[] productInfoHeaders) => new
+            ProductInfoHeader[] productInfoHeaders)
         {
-            Condition = productInfoHeaders is not null
+            return new
+            {
+                Condition = productInfoHeaders is not null
                 && productInfoHeaders.Any(header => header is null
                     || IsInvalidProductInfoHeader(header)),
 
-            Message = "UserAgent header has invalid configuration, fix errors and try again."
-        };
+                Message = "UserAgent header has invalid configuration, fix errors and try again."
+            };
+        }
 
-        private static async ValueTask<dynamic> IsInvalidViaHeaderArrayAsync(ViaHeader[] viaHeaders) => new
+        private static async ValueTask<dynamic> IsInvalidViaHeaderArrayAsync(ViaHeader[] viaHeaders)
         {
-            Condition = viaHeaders is not null
+            return new
+            {
+                Condition = viaHeaders is not null
                 && viaHeaders.Any(header => header is null
                     || IsInvalidViaHeader(header)),
 
-            Message = "Via header has invalid configuration, fix errors and try again."
-        };
+                Message = "Via header has invalid configuration, fix errors and try again."
+            };
+        }
 
         private static async ValueTask<dynamic> IsInvalidWarningHeaderArrayAsync(
-            WarningHeader[] warningHeaders) => new
+            WarningHeader[] warningHeaders)
         {
-            Condition = warningHeaders is not null
+            return new
+            {
+                Condition = warningHeaders is not null
                 && warningHeaders.Any(header => header is null
                     || IsInvalidWarningHeader(header)),
 
-            Message = "Warning header has invalid configuration, fix errors and try again."
-        };
+                Message = "Warning header has invalid configuration, fix errors and try again."
+            };
+        }
 
         private static async ValueTask ValidateHttpExchangeRequestHeadersAsync(
             HttpExchangeRequestHeaders httpExchangeRequestHeaders)
